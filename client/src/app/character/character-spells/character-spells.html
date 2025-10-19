@@ -1,0 +1,62 @@
+<div id="spells" class="flex flex-row bg-yellow-200/50 text-3xl rounded-3xl p-3 m-5 space-x-1">
+        <div class="flex flex-col">
+        <label class="text-center text-2xl font-bold bg-yellow-600 py-2 rounded">SPELLS</label>
+        
+        @for (level of getSpellLevels(); track level) {
+            <div class="p-4 rounded-2xl space-y-3">
+            <!-- Spell Level Header (appears once per level) -->
+            <h3 class="bg-yellow-500 text-center text-xl font-semibold py-1 rounded">
+                LEVEL {{ level }}
+            </h3>
+                
+            <!-- Spell Slots -->
+            @if (level > 0) {
+                <div class="flex items-center space-x-2">
+                <span class="font-bold mr-2 text-xl">Slots:</span>
+                <input type="text" readonly class="w-8 h-8 text-center rounded border bg-white border-yellow-700" value="">
+                <input type="text" readonly class="w-8 h-8 text-center rounded border bg-white border-yellow-700" value="">
+                <input type="text" readonly class="w-8 h-8 text-center rounded border bg-white border-yellow-700" value="">
+                <input type="text" readonly class="w-8 h-8 text-center rounded border bg-white border-yellow-700" value="">
+                <button class="bg-amber-700 text-base text-white px-1 py-1 rounded hover:bg-orange-800">FREE</button>
+                </div>
+            }
+                
+            <!-- Spell Table -->
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse text-lg">
+                <thead>
+                    <tr class="bg-yellow-200">
+                    <th class="border border-yellow-700 px-2 py-1 text-center">Name</th>
+                    <th class="border border-yellow-700 px-2 py-1 text-center">Time</th>
+                    <th class="border border-yellow-700 px-2 py-1 text-center">Range</th>
+                    <th class="border border-yellow-700 px-2 py-1 text-center">Hit/DC</th>
+                    <th class="border border-yellow-700 px-2 py-1 text-center">Cast</th>
+                    <th class="border border-yellow-700 px-2 py-1 text-center">Cease</th>
+                    <th class="border border-yellow-700 px-2 py-1 text-center">Effect</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (spell of spellsByLevel[level]; track spell.id) {
+                    <tr class="bg-white">
+                        <td class="border border-yellow-700 px-2 py-1 text-center">{{ spell.name }}</td>
+                        <td class="border border-yellow-700 px-2 py-1 text-center">{{ spell.castingTime }}</td>
+                        <td class="border border-yellow-700 px-2 py-1 text-center">{{ spell.range == 0 ? 'Touch' : (spell.range == -1 ? 'Self' : spell.range) }}</td>
+                        <td class="border border-yellow-700 px-2 py-1 text-center">-</td>
+                        <td class="border border-yellow-900 px-2 py-1 text-center">
+                        <button class="bg-amber-700 text-base text-white px-1 py-1 rounded hover:bg-orange-800">CAST</button>
+                        </td>
+                        <td class="border border-yellow-900 px-2 py-1 text-center">
+                        <button class="bg-amber-700 text-base text-white px-1 py-1 rounded hover:bg-orange-800">CEASE</button>
+                        </td>
+                        <td class="border border-yellow-900 px-2 py-1 text-center">
+                        <button class="bg-amber-700 text-base text-white px-1 py-1 rounded hover:bg-orange-800">EFFECT</button>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+                </table>
+            </div>
+        </div>
+        }
+        </div>
+    </div>

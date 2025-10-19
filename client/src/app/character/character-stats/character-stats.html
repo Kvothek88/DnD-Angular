@@ -1,0 +1,104 @@
+<div class="flex flex-row">
+    <div id="stats" class="flex flex-row bg-yellow-200/50 rounded-3xl p-3 m-5 space-x-1">
+        <div class="flex flex-row mx-2">
+            <div class="flex flex-col p-5 rounded-3xl mb-8">
+                <!-- HP Label -->
+                <label class="w-[310px] ml-3 text-center text-2xl font-bold bg-yellow-600/90 py-2 rounded">
+                HP
+                </label>
+
+                <!-- HP Container -->
+                <div class="flex flex-row bg-yellow-500/90 rounded-lg p-1 mt-2 mb-2 ml-3">
+
+                    <!-- MAX HP -->
+                    <div class="flex flex-col justify-center items-center p-1 mr-[-10px]">
+                        <label class="w-[100px] text-center text-xl font-bold mb-1">MAX HP</label>
+                        <input type="text" id="max-hp" 
+                            class="w-[55px] h-[45px] text-center text-xl p-1 rounded shadow-lg bg-white">
+                    </div>
+
+                    <!-- CUR HP -->
+                    <div class="flex flex-col justify-center items-center p-1 mr-[-10px]">
+                        <label class="w-[100px] text-center text-xl font-bold mb-1">CUR HP</label>
+                        <input type="text" id="cur-hp" 
+                            class="w-[55px] h-[45px] text-center text-xl p-1 rounded shadow-lg bg-white">
+                    </div>
+
+                    <!-- TEMP HP -->
+                    <div class="flex flex-col justify-center items-center p-1">
+                        <label class="w-[100px] text-center text-xl font-bold mb-1">TEMP</label>
+                        <input type="text" id="temp-hp" 
+                            class="w-[55px] h-[45px] text-center text-xl p-1 rounded shadow-lg bg-white">
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="flex flex-col p-5 rounded-3xl mb-8 ml-5">
+                <div class="flex flex-col mx-2">
+
+                    <!-- AC Label -->
+                    <label class="text-center text-2xl font-bold bg-yellow-600 py-2 rounded">
+                        AC
+                    </label>
+
+                    <!-- AC Container -->
+                    <div class="flex flex-col bg-yellow-500 p-2 rounded mt-2 mb-2">
+
+                        <!-- Input Row -->
+                        <div class="flex items-center gap-2">
+
+                            <!-- TOTAL -->
+                            <div class="flex flex-col items-center text-center">
+                                <label class="text-center text-xl font-bold mb-1">TOTAL</label>
+                                <input type="text" id="ac-total" 
+                                    class="w-[55px] h-[45px] text-center text-xl p-1 rounded shadow-lg bg-white">
+                            </div>
+
+                            <!-- "=10+" Text -->
+                            <span class="text-2xl text-black">=10+</span>
+
+                            <!-- DEX -->
+                            <div class="flex flex-col items-center text-center">
+                                <label class="text-xl font-bold mb-1">DEX</label>
+                                <input type="text" id="ac-dex" 
+                                    class="w-[55px] h-[45px] text-center text-xl p-1 rounded shadow-lg bg-white">
+                            </div>
+
+                            <!-- ARMOR -->
+                            <div class="flex flex-col items-center text-center">
+                                <label class="text-xl font-bold mb-1">ARMOR</label>
+                                <input type="text" id="ac-armor" 
+                                    class="w-[55px] h-[45px] text-center text-xl p-1 rounded shadow-lg bg-white">
+                            </div>
+
+                            <!-- SHIELD -->
+                            <div class="flex flex-col items-center text-center">
+                                <label class="text-xl font-bold mb-1">SHIELD</label>
+                                <input type="text" id="ac-shield" 
+                                    class="w-[55px] h-[45px] text-center text-xl p-1 rounded shadow-lg bg-white">
+                            </div>
+
+                            <!-- ITEM -->
+                            <div class="flex flex-col items-center text-center">
+                                <label class="text-xl font-bold mb-1">ITEM</label>
+                                <input type="text" id="ac-item" 
+                                    class="w-[55px] h-[45px] text-center text-xl p-1 rounded shadow-lg bg-white">
+                            </div>
+
+                            <!-- OTHER -->
+                            <div class="flex flex-col items-center text-center">
+                                <label class="text-xl font-bold mb-1">OTHER</label>
+                                <input type="text" id="ac-other" 
+                                    class="w-[55px] h-[45px] text-center text-xl p-1 rounded shadow-lg bg-white">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <app-character-spells [character]="character"></app-character-spells>
+
+</div>

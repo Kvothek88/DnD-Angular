@@ -1,0 +1,120 @@
+@if (isLoading) {
+  <div class="flex flex-col justify-center items-center h-screen">
+    <div class="animate-spin rounded-full h-16 w-16 border-b-4 border-yellow-600"></div>
+    <p class="mt-4 text-xl text-gray-700">Loading character...</p>
+  </div>
+}
+@else if (!character) {
+  <div class="bg-yellow-200/50 p-4 m-5 rounded">
+    <p class="text-yellow-800">{{error}}</p>
+  </div>
+}
+@else if (character) {
+  <!-- Main Row -->
+  <div class="flex flex-row bg-yellow-200/50 rounded-3xl p-3 m-5 space-x-1">
+
+    <!-- Images -->
+    <div class="relative w-[370px] h-[300px] p-6 mt-11 ml-5 flex-shrink-0">
+      <img src="assets/images/radni.jpg" alt="Character Image" class="w-[260px] h-[260px] rounded-[60%]">
+      <img src="assets/images/portrait.png" alt="Portrait" class="absolute -top-7 -left-7 w-[380px] h-[380px]">
+    </div>
+
+    <!-- Column 1 -->
+    <div class="flex flex-col mx-1 mt-6 space-y-2">
+      <div>
+        <label for="character-name" class="block text-2xl font-bold mb-1">Character Name</label>
+        <input type="text" id="character-name" [(ngModel)]="character.name" placeholder="Character Name" class="w-[200px] text-xl p-2 bg-white rounded shadow-lg border">
+      </div>
+      <div>
+        <label for="race" class="block text-2xl font-bold mb-1">Race</label>
+        <input type="text" id="race" [(ngModel)]="character.race" placeholder="Race" class="w-[200px] text-xl p-2 rounded bg-white shadow-lg border">
+      </div>
+      <div>
+        <label for="background" class="block text-2xl font-bold mb-1">Background</label>
+        <input type="text" id="background" [(ngModel)]="character.background" placeholder="Background" class="w-[200px] text-xl p-2 rounded bg-white shadow-lg border">
+      </div>
+      <div>
+        <label for="religion" class="block text-2xl font-bold mb-1">Religion</label>
+        <input type="text" id="religion" [(ngModel)]="character.religion" placeholder="Religion" class="w-[200px] text-xl p-2 rounded bg-white shadow-lg border">
+      </div>
+    </div>
+
+    <!-- Column 2 -->
+    <div class="flex flex-col mx-2 mt-6 space-y-2">
+      <div>
+        <label for="dndclass" class="block text-2xl font-bold mb-1">Class</label>
+        <input type="text" id="dndclass" [(ngModel)]="character.class" placeholder="Class" class="w-[200px] text-xl p-2 rounded bg-white shadow-lg border">
+      </div>
+      <div>
+        <label for="domain" class="block text-2xl font-bold mb-1">Domain</label>
+        <input type="text" id="domain" [(ngModel)]="character.domain" placeholder="Domain" class="w-[200px] text-xl p-2 rounded bg-white shadow-lg border">
+      </div>
+      <div>
+        <label for="size" class="block text-2xl font-bold mb-1">Size</label>
+        <input type="text" id="size" [(ngModel)]="character.size" placeholder="Size" class="w-[200px] text-xl p-2 rounded bg-white shadow-lg border">
+      </div>
+      <div>
+        <label for="alignment" class="block text-2xl font-bold mb-1">Alignment</label>
+        <input type="text" id="alignment" [(ngModel)]="character.alignment" placeholder="Alignment" class="w-[200px] text-xl p-2 rounded bg-white shadow-lg border">
+      </div>
+    </div>
+
+    <!-- Column 3 -->
+    <div class="flex flex-col mx-2 mt-6 space-y-2">
+      <div>
+        <label for="level" class="block text-2xl font-bold mb-1">Level</label>
+        <input type="text" id="level" [(ngModel)]="character.level" class="w-[50px] text-xl text-center p-2 rounded bg-white ml-1 shadow-lg border">
+      </div>
+    </div>
+
+    <!-- Buttons Container -->
+    <div class="flex flex-col space-y-4 mx-4 mt-7">
+      <button class="w-[120px] h-[60px] bg-yellow-600 text-white rounded hover:bg-yellow-700">ATTACK</button>
+      <button class="w-[120px] h-[60px] bg-yellow-600 text-white rounded hover:bg-yellow-700">SPELL ATTACK</button>
+      <button class="w-[120px] h-[60px] bg-yellow-600 text-white rounded hover:bg-yellow-700">WEAPON DAMAGE</button>
+      <button class="w-[120px] h-[60px] bg-yellow-600 text-white rounded hover:bg-yellow-700">DIVINE STRIKE</button>
+      <button class="w-[120px] h-[60px] bg-yellow-600 text-white rounded hover:bg-yellow-700">HEAL</button>
+    </div>
+
+    <div class="flex flex-col space-y-4 mx-4 mt-7">
+      <button class="w-[120px] h-[60px] bg-yellow-600 text-white rounded hover:bg-yellow-700">HARM</button>
+      <button class="w-[120px] h-[60px] bg-yellow-600 text-white rounded hover:bg-yellow-700">LONG REST</button>
+      <button class="w-[120px] h-[60px] bg-yellow-600 text-white rounded hover:bg-yellow-700">SHORT REST</button>
+      <button class="w-[120px] h-[60px] bg-yellow-600 text-white rounded hover:bg-yellow-700">INITIATIVE</button>
+      <button class="w-[120px] h-[60px] bg-yellow-600 text-white rounded hover:bg-yellow-700">TWILIGHT SANCTUARY</button>
+    </div>
+
+    <div class="flex flex-col space-y-1 mx-4 mt-7">
+      <button class="w-[50px] h-[37px] bg-yellow-600 text-white rounded hover:bg-yellow-700">ADV</button>
+      <input type="text" id="alignment" class="w-[50px] h-[37px] text-xl p-2 mb-4 rounded bg-white shadow-lg border">
+      <button class="w-[50px] h-[37px] bg-yellow-600 text-white rounded hover:bg-yellow-700">DIS</button>
+      <input type="text" id="alignment" class="w-[50px] h-[37px] text-xl p-2 mb-4 rounded bg-white shadow-lg border">
+      <button class="w-[50px] h-[37px] bg-yellow-600 text-white rounded hover:bg-yellow-700">CRIT</button>
+      <input type="text" id="alignment" class="w-[50px] h-[37px] text-xl p-2 rounded bg-white shadow-lg border">
+    </div>
+    
+
+    <!-- Next Page Links -->
+    <div class="flex flex-col space-y-3">
+      <div class="relative w-[165px] h-[136px]">
+        <img src="assets/images/next.png" alt="Next" class="w-full h-full object-cover rounded">
+        <a href="spells.html" class="absolute inset-0 flex items-center justify-center text-white text-lg font-bold">Spells</a>
+      </div>
+      <div class="relative w-[165px] h-[136px]">
+        <img src="assets/images/next.png" alt="Next" class="w-full h-full object-cover rounded">
+        <a href="gear.html" class="absolute inset-0 flex items-center justify-center text-white text-lg font-bold">Gear</a>
+      </div>
+      <div class="relative w-[165px] h-[136px]">
+        <img src="assets/images/next.png" alt="Next" class="w-full h-full object-cover rounded">
+        <a href="features.html" class="absolute inset-0 flex items-center justify-center text-white text-lg font-bold">Features</a>
+      </div>
+    </div>
+  </div>
+
+  <app-character-stats [character]="character"></app-character-stats>
+}
+
+  
+
+
+

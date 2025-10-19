@@ -1,0 +1,16 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.6">
+    <title>DnD Cleric Character Sheet</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+
+// The last two lines in .input-row are not commented out in mobile app
+.input-row {
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  width:100%
+}
+
