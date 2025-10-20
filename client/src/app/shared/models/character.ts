@@ -13,6 +13,6 @@ export interface Character {
     alignment: string;
     level: number;
     stats: any;
-    spellSlots: CharacterSpellSlots;
+    characterSpellSlots: CharacterSpellSlots;
     spells: Spell[];
 }

@@ -1,101 +1,194 @@
 <div class="flex flex-row">
     <div id="stats" class="flex flex-row bg-yellow-200/50 rounded-3xl p-3 m-5 space-x-1">
-        <div class="flex flex-row mx-2">
-            <div class="flex flex-col p-5 rounded-3xl mb-8">
-                <!-- HP Label -->
-                <label class="w-[310px] ml-3 text-center text-2xl font-bold bg-yellow-600/90 py-2 rounded">
-                HP
-                </label>
 
-                <!-- HP Container -->
-                <div class="flex flex-row bg-yellow-500/90 rounded-lg p-1 mt-2 mb-2 ml-3">
+        <div class="flex flex-col">
 
-                    <!-- MAX HP -->
-                    <div class="flex flex-col justify-center items-center p-1 mr-[-10px]">
-                        <label class="w-[100px] text-center text-xl font-bold mb-1">MAX HP</label>
-                        <input type="text" id="max-hp" 
-                            class="w-[55px] h-[45px] text-center text-xl p-1 rounded shadow-lg bg-white">
-                    </div>
-
-                    <!-- CUR HP -->
-                    <div class="flex flex-col justify-center items-center p-1 mr-[-10px]">
-                        <label class="w-[100px] text-center text-xl font-bold mb-1">CUR HP</label>
-                        <input type="text" id="cur-hp" 
-                            class="w-[55px] h-[45px] text-center text-xl p-1 rounded shadow-lg bg-white">
-                    </div>
-
-                    <!-- TEMP HP -->
-                    <div class="flex flex-col justify-center items-center p-1">
-                        <label class="w-[100px] text-center text-xl font-bold mb-1">TEMP</label>
-                        <input type="text" id="temp-hp" 
-                            class="w-[55px] h-[45px] text-center text-xl p-1 rounded shadow-lg bg-white">
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="flex flex-col p-5 rounded-3xl mb-8 ml-5">
-                <div class="flex flex-col mx-2">
-
-                    <!-- AC Label -->
-                    <label class="text-center text-2xl font-bold bg-yellow-600 py-2 rounded">
-                        AC
+            <div class="flex flex-row mx-2">
+                <div class="flex flex-col p-5 rounded-3xl mb-8">
+                    <!-- HP Label -->
+                    <label class="w-[310px] ml-3 text-center text-2xl font-bold bg-yellow-600/90 py-1 rounded">
+                    HP
                     </label>
 
-                    <!-- AC Container -->
-                    <div class="flex flex-col bg-yellow-500 p-2 rounded mt-2 mb-2">
+                    <!-- HP Container -->
+                    <div class="flex flex-row bg-yellow-500/90 rounded-lg p-1 mt-2 mb-2 ml-3">
 
-                        <!-- Input Row -->
-                        <div class="flex items-center gap-2">
+                        <!-- MAX HP -->
+                        <div class="flex flex-col justify-center items-center p-1 mr-[-10px]">
+                            <label class="w-[100px] text-center text-xl font-bold mb-1">MAX HP</label>
+                            <input type="text" id="max-hp" 
+                                class="w-[55px] h-[45px] text-center text-xl p-1 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] bg-white border" readonly>
+                        </div>
 
-                            <!-- TOTAL -->
-                            <div class="flex flex-col items-center text-center">
-                                <label class="text-center text-xl font-bold mb-1">TOTAL</label>
-                                <input type="text" id="ac-total" 
-                                    class="w-[55px] h-[45px] text-center text-xl p-1 rounded shadow-lg bg-white">
-                            </div>
+                        <!-- CUR HP -->
+                        <div class="flex flex-col justify-center items-center p-1 mr-[-10px]">
+                            <label class="w-[100px] text-center text-xl font-bold mb-1">CUR HP</label>
+                            <input type="text" id="cur-hp" 
+                                class="w-[55px] h-[45px] text-center text-xl p-1 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] bg-white border" readonly>
+                        </div>
 
-                            <!-- "=10+" Text -->
-                            <span class="text-2xl text-black">=10+</span>
+                        <!-- TEMP HP -->
+                        <div class="flex flex-col justify-center items-center p-1">
+                            <label class="w-[100px] text-center text-xl font-bold mb-1">TEMP</label>
+                            <input type="text" id="temp-hp" 
+                                class="w-[55px] h-[45px] text-center text-xl p-1 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] bg-white border" readonly>
+                        </div>
+                    </div>
+                </div>
 
-                            <!-- DEX -->
-                            <div class="flex flex-col items-center text-center">
-                                <label class="text-xl font-bold mb-1">DEX</label>
-                                <input type="text" id="ac-dex" 
-                                    class="w-[55px] h-[45px] text-center text-xl p-1 rounded shadow-lg bg-white">
-                            </div>
 
-                            <!-- ARMOR -->
-                            <div class="flex flex-col items-center text-center">
-                                <label class="text-xl font-bold mb-1">ARMOR</label>
-                                <input type="text" id="ac-armor" 
-                                    class="w-[55px] h-[45px] text-center text-xl p-1 rounded shadow-lg bg-white">
-                            </div>
+                <div class="flex flex-col p-5 rounded-3xl mb-8 ml-5">
+                    <div class="flex flex-col mx-2">
 
-                            <!-- SHIELD -->
-                            <div class="flex flex-col items-center text-center">
-                                <label class="text-xl font-bold mb-1">SHIELD</label>
-                                <input type="text" id="ac-shield" 
-                                    class="w-[55px] h-[45px] text-center text-xl p-1 rounded shadow-lg bg-white">
-                            </div>
+                        <!-- AC Label -->
+                        <label class="text-center text-2xl font-bold bg-yellow-600 py-1 rounded">
+                            AC
+                        </label>
 
-                            <!-- ITEM -->
-                            <div class="flex flex-col items-center text-center">
-                                <label class="text-xl font-bold mb-1">ITEM</label>
-                                <input type="text" id="ac-item" 
-                                    class="w-[55px] h-[45px] text-center text-xl p-1 rounded shadow-lg bg-white">
-                            </div>
+                        <!-- AC Container -->
+                        <div class="flex flex-col bg-yellow-500 p-2 rounded mt-2 mb-2">
 
-                            <!-- OTHER -->
-                            <div class="flex flex-col items-center text-center">
-                                <label class="text-xl font-bold mb-1">OTHER</label>
-                                <input type="text" id="ac-other" 
-                                    class="w-[55px] h-[45px] text-center text-xl p-1 rounded shadow-lg bg-white">
+                            <!-- Input Row -->
+                            <div class="flex items-center gap-2">
+
+                                <!-- TOTAL -->
+                                <div class="flex flex-col items-center text-center">
+                                    <label class="text-center text-xl font-bold mb-1">TOTAL</label>
+                                    <input type="text" id="ac-total" 
+                                        class="w-[55px] h-[45px] text-center text-xl p-1 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] bg-white border" readonly>
+                                </div>
+
+                                <!-- "=10+" Text -->
+                                <span class="text-2xl text-black">=10+</span>
+
+                                <!-- DEX -->
+                                <div class="flex flex-col items-center text-center">
+                                    <label class="text-xl font-bold mb-1">DEX</label>
+                                    <input type="text" id="ac-dex" 
+                                        class="w-[55px] h-[45px] text-center text-xl p-1 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] bg-white border" readonly>
+                                </div>
+
+                                <!-- ARMOR -->
+                                <div class="flex flex-col items-center text-center">
+                                    <label class="text-xl font-bold mb-1">ARMOR</label>
+                                    <input type="text" id="ac-armor" 
+                                        class="w-[55px] h-[45px] text-center text-xl p-1 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] bg-white border" readonly>
+                                </div>
+
+                                <!-- SHIELD -->
+                                <div class="flex flex-col items-center text-center">
+                                    <label class="text-xl font-bold mb-1">SHIELD</label>
+                                    <input type="text" id="ac-shield" 
+                                        class="w-[55px] h-[45px] text-center text-xl p-1 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] bg-white border" readonly>
+                                </div>
+
+                                <!-- ITEM -->
+                                <div class="flex flex-col items-center text-center">
+                                    <label class="text-xl font-bold mb-1">ITEM</label>
+                                    <input type="text" id="ac-item" 
+                                        class="w-[55px] h-[45px] text-center text-xl p-1 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] bg-white border" readonly>
+                                </div>
+
+                                <!-- OTHER -->
+                                <div class="flex flex-col items-center text-center">
+                                    <label class="text-xl font-bold mb-1">OTHER</label>
+                                    <input type="text" id="ac-other" 
+                                        class="w-[55px] h-[45px] text-center text-xl p-1 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] bg-white border" readonly>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
+
+            <!-- ROW: containing 3 big columns (Abilities, Other specs, Skills) -->
+            <div class="flex flex-row mx-2">
+
+                <!-- Abilities -->
+                <div class="flex flex-col">
+                    <!-- Ability Input: Strength -->
+                    <div class="relative flex flex-col items-center gap-2.5 mb-7">
+                        <label for="strength" class="text-2xl font-bold text-center -mb-2.5">STR</label>
+                        <input type="text" id="strength-modifier" readonly
+                                class="w-17 h-19 bg-white text-2xl text-center border border-gray-300 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] caret-transparent cursor-pointer hover:bg-gray-200 focus:bg-gray-200">
+                        <input type="text" class="absolute bottom-[-15px] w-11 h-8 p-1.5 text-lg text-center border border-gray-300 rounded-full bg-gray-50 shadow-[0_5px_5px_rgba(0,0,0,0.8)] nested-input" id="strength">
+                    </div>
+
+                    <!-- Ability Input: Dexterity -->
+                    <div class="relative flex flex-col items-center gap-2.5 mb-7">
+                        <label for="dexterity" class="text-2xl font-bold text-center -mb-2.5">DEX</label>
+                        <input type="text" id="dexterity-modifier" readonly
+                                class="w-17 h-19 bg-white text-2xl text-center border border-gray-300 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] caret-transparent cursor-pointer hover:bg-gray-200 focus:bg-gray-200">
+                        <input type="text" class="absolute bottom-[-15px] w-11 h-8 p-1.5 text-lg text-center border border-gray-300 rounded-full bg-gray-50 shadow-[0_5px_5px_rgba(0,0,0,0.8)] nested-input" id="dexterity">
+                    </div>
+
+                    <!-- Ability Input: COnstitution -->
+                    <div class="relative flex flex-col items-center gap-2.5 mb-7">
+                        <label for="constiturion" class="text-2xl font-bold text-center -mb-2.5">CON</label>
+                        <input type="text" id="constiturion-modifier" readonly
+                                class="w-17 h-19 bg-white text-2xl text-center border border-gray-300 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] caret-transparent cursor-pointer hover:bg-gray-200 focus:bg-gray-200">
+                        <input type="text" class="absolute bottom-[-15px] w-11 h-8 p-1.5 text-lg text-center border border-gray-300 rounded-full bg-gray-50 shadow-[0_5px_5px_rgba(0,0,0,0.8)] nested-input" id="constiturion">
+                    </div>
+
+                    <!-- Ability Input: Intelligence -->
+                    <div class="relative flex flex-col items-center gap-2.5 mb-7">
+                        <label for="intelligence" class="text-2xl font-bold text-center -mb-2.5">INT</label>
+                        <input type="text" id="intelligence-modifier" readonly
+                                class="w-17 h-19 bg-white text-2xl text-center border border-gray-300 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] caret-transparent cursor-pointer hover:bg-gray-200 focus:bg-gray-200">
+                        <input type="text" class="absolute bottom-[-15px] w-11 h-8 p-1.5 text-lg text-center border border-gray-300 rounded-full bg-gray-50 shadow-[0_5px_5px_rgba(0,0,0,0.8)] nested-input" id="intelligence">
+                    </div>
+
+                    <!-- Ability Input: Wisdom -->
+                    <div class="relative flex flex-col items-center gap-2.5 mb-7">
+                        <label for="wisdom" class="text-2xl font-bold text-center -mb-2.5">WIS</label>
+                        <input type="text" id="wisdom-modifier" readonly
+                                class="w-17 h-19 bg-white text-2xl text-center border border-gray-300 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] caret-transparent cursor-pointer hover:bg-gray-200 focus:bg-gray-200">
+                        <input type="text" class="absolute bottom-[-15px] w-11 h-8 p-1.5 text-lg text-center border border-gray-300 rounded-full bg-gray-50 shadow-[0_5px_5px_rgba(0,0,0,0.8)] nested-input" id="wisdom">
+                    </div>
+
+                    <!-- Ability Input: Charisma -->
+                    <div class="relative flex flex-col items-center gap-2.5 mb-7">
+                        <label for="charisma" class="text-2xl font-bold text-center -mb-2.5">CHA</label>
+                        <input type="text" id="charisma-modifier" readonly
+                                class="w-17 h-19 bg-white text-2xl text-center border border-gray-300 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] caret-transparent cursor-pointer hover:bg-gray-200 focus:bg-gray-200">
+                        <input type="text" class="absolute bottom-[-15px] w-11 h-8 p-1.5 text-lg text-center border border-gray-300 rounded-full bg-gray-50 shadow-[0_5px_5px_rgba(0,0,0,0.8)] nested-input" id="charisma">
+                    </div>
+                </div>
+
+                <!-- Prof, Init, Speed, Attack, Spell Attack,Spell Save, Saving Throws -->
+                <div class="flex flex-col">
+
+                    <div class="flex flex-row bg-yellow-400 rounded-lg p-1 m-[3px] ml-7 mr-4 mb-1">
+                        <!-- PROF Container -->
+                        <div class="flex flex-row bg-yellow-500 rounded-lg p-1 m-[3px] ml-4 mr-4 mb-1">
+                            <div class="flex flex-col items-center justify-center p-1.5">
+                            <label for="profbonus" class="w-30 text-center font-bold text-xl mb-1">PROF</label>
+                            <input type="text" id="profbonus" class="w-14 h-11 bg-white text-center text-xl rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)]">
+                            </div>
+                        </div>
+                        <!-- INITIATIVE Container -->
+                        <div class="flex flex-row bg-yellow-500 rounded-lg p-1 m-[3px] mx-4 mb-1">
+                            <div class="flex flex-col items-center justify-center p-1.5">
+                            <label for="initiative" class="text-center text-xl font-bold mb-1">INITIATIVE</label>
+                            <input type="text" id="initiative" class="w-14 h-11 bg-white text-center text-xl rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)]">
+                            </div>
+                        </div>
+                        <!-- SPEED Container -->
+                        <div class="flex flex-row bg-yellow-500 rounded-lg p-1 m-[3px] mx-4 mb-1">
+                            <div class="flex flex-col items-center justify-center p-1.5">
+                            <label for="speed" class="w-24 text-center text-xl font-bold mb-1">SPEED</label>
+                            <input type="text" id="speed" class="w-14 h-11 bg-white text-center text-xl rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)]">
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
         </div>
     </div>
 

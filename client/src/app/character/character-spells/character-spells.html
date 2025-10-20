@@ -1,6 +1,6 @@
 <div id="spells" class="flex flex-row bg-yellow-200/50 text-3xl rounded-3xl p-3 m-5 space-x-1">
         <div class="flex flex-col">
-        <label class="text-center text-2xl font-bold bg-yellow-600 py-2 rounded">SPELLS</label>
+        <label class="text-center text-2xl font-bold bg-yellow-600 py-1 rounded">SPELLS</label>
         
         @for (level of getSpellLevels(); track level) {
             <div class="p-4 rounded-2xl space-y-3">
@@ -12,12 +12,18 @@
             <!-- Spell Slots -->
             @if (level > 0) {
                 <div class="flex items-center space-x-2">
-                <span class="font-bold mr-2 text-xl">Slots:</span>
-                <input type="text" readonly class="w-8 h-8 text-center rounded border bg-white border-yellow-700" value="">
-                <input type="text" readonly class="w-8 h-8 text-center rounded border bg-white border-yellow-700" value="">
-                <input type="text" readonly class="w-8 h-8 text-center rounded border bg-white border-yellow-700" value="">
-                <input type="text" readonly class="w-8 h-8 text-center rounded border bg-white border-yellow-700" value="">
-                <button class="bg-amber-700 text-base text-white px-1 py-1 rounded hover:bg-orange-800">FREE</button>
+                    <span class="font-bold mr-2 text-xl">Slots:</span>
+
+                    @for(item of maxSlots[level]; track item; let idx = $index){
+                        <input type="text" readonly class="w-[42px] text-center align-middle rounded border bg-white border-yellow-700" [value] = "idx + 1 <= usedSlots[level] ? '◽' : ''" >
+                    }
+                    
+                    <!-- <input type="text" readonly class="w-8 h-8 text-center rounded border bg-white border-yellow-700" value="">
+                    <input type="text" readonly class="w-8 h-8 text-center rounded border bg-white border-yellow-700" value="">
+                    <input type="text" readonly class="w-8 h-8 text-center rounded border bg-white border-yellow-700" value="">
+                    <input type="text" readonly class="w-8 h-8 text-center rounded border bg-white border-yellow-700" value=""> -->
+
+                    <button class="bg-amber-700 text-base text-white px-1 py-1 rounded hover:bg-orange-800">FREE</button>
                 </div>
             }
                 

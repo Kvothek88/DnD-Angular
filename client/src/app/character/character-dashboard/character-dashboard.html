@@ -1,15 +1,5 @@
-@if (isLoading) {
-  <div class="flex flex-col justify-center items-center h-screen">
-    <div class="animate-spin rounded-full h-16 w-16 border-b-4 border-yellow-600"></div>
-    <p class="mt-4 text-xl text-gray-700">Loading character...</p>
-  </div>
-}
-@else if (!character) {
-  <div class="bg-yellow-200/50 p-4 m-5 rounded">
-    <p class="text-yellow-800">{{error}}</p>
-  </div>
-}
-@else if (character) {
+  
+@if (character) {
   <!-- Main Row -->
   <div class="flex flex-row bg-yellow-200/50 rounded-3xl p-3 m-5 space-x-1">
 
@@ -23,19 +13,19 @@
     <div class="flex flex-col mx-1 mt-6 space-y-2">
       <div>
         <label for="character-name" class="block text-2xl font-bold mb-1">Character Name</label>
-        <input type="text" id="character-name" [(ngModel)]="character.name" placeholder="Character Name" class="w-[200px] text-xl p-2 bg-white rounded shadow-lg border">
+        <input type="text" id="character-name" [(ngModel)]="character.name" placeholder="Character Name" class="w-[200px] text-xl p-2 bg-white rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] border" readonly>
       </div>
       <div>
         <label for="race" class="block text-2xl font-bold mb-1">Race</label>
-        <input type="text" id="race" [(ngModel)]="character.race" placeholder="Race" class="w-[200px] text-xl p-2 rounded bg-white shadow-lg border">
+        <input type="text" id="race" [(ngModel)]="character.race" placeholder="Race" class="w-[200px] text-xl p-2 rounded bg-white shadow-[0_5px_5px_rgba(0,0,0,0.8)] border" readonly>
       </div>
       <div>
         <label for="background" class="block text-2xl font-bold mb-1">Background</label>
-        <input type="text" id="background" [(ngModel)]="character.background" placeholder="Background" class="w-[200px] text-xl p-2 rounded bg-white shadow-lg border">
+        <input type="text" id="background" [(ngModel)]="character.background" placeholder="Background" class="w-[200px] text-xl p-2 rounded bg-white shadow-[0_5px_5px_rgba(0,0,0,0.8)] border" readonly>
       </div>
       <div>
         <label for="religion" class="block text-2xl font-bold mb-1">Religion</label>
-        <input type="text" id="religion" [(ngModel)]="character.religion" placeholder="Religion" class="w-[200px] text-xl p-2 rounded bg-white shadow-lg border">
+        <input type="text" id="religion" [(ngModel)]="character.religion" placeholder="Religion" class="w-[200px] text-xl p-2 rounded bg-white shadow-[0_5px_5px_rgba(0,0,0,0.8)] border" readonly>
       </div>
     </div>
 
@@ -43,19 +33,19 @@
     <div class="flex flex-col mx-2 mt-6 space-y-2">
       <div>
         <label for="dndclass" class="block text-2xl font-bold mb-1">Class</label>
-        <input type="text" id="dndclass" [(ngModel)]="character.class" placeholder="Class" class="w-[200px] text-xl p-2 rounded bg-white shadow-lg border">
+        <input type="text" id="dndclass" [(ngModel)]="character.class" placeholder="Class" class="w-[200px] text-xl p-2 rounded bg-white shadow-[0_5px_5px_rgba(0,0,0,0.8)] border" readonly>
       </div>
       <div>
         <label for="domain" class="block text-2xl font-bold mb-1">Domain</label>
-        <input type="text" id="domain" [(ngModel)]="character.domain" placeholder="Domain" class="w-[200px] text-xl p-2 rounded bg-white shadow-lg border">
+        <input type="text" id="domain" [(ngModel)]="character.domain" placeholder="Domain" class="w-[200px] text-xl p-2 rounded bg-white shadow-[0_5px_5px_rgba(0,0,0,0.8)] border" readonly>
       </div>
       <div>
         <label for="size" class="block text-2xl font-bold mb-1">Size</label>
-        <input type="text" id="size" [(ngModel)]="character.size" placeholder="Size" class="w-[200px] text-xl p-2 rounded bg-white shadow-lg border">
+        <input type="text" id="size" [(ngModel)]="character.size" placeholder="Size" class="w-[200px] text-xl p-2 rounded bg-white shadow-[0_5px_5px_rgba(0,0,0,0.8)] border" readonly>
       </div>
       <div>
         <label for="alignment" class="block text-2xl font-bold mb-1">Alignment</label>
-        <input type="text" id="alignment" [(ngModel)]="character.alignment" placeholder="Alignment" class="w-[200px] text-xl p-2 rounded bg-white shadow-lg border">
+        <input type="text" id="alignment" [(ngModel)]="character.alignment" placeholder="Alignment" class="w-[200px] text-xl p-2 rounded bg-white shadow-[0_5px_5px_rgba(0,0,0,0.8)] border" readonly>
       </div>
     </div>
 
@@ -63,7 +53,7 @@
     <div class="flex flex-col mx-2 mt-6 space-y-2">
       <div>
         <label for="level" class="block text-2xl font-bold mb-1">Level</label>
-        <input type="text" id="level" [(ngModel)]="character.level" class="w-[50px] text-xl text-center p-2 rounded bg-white ml-1 shadow-lg border">
+        <input type="text" id="level" [(ngModel)]="character.level" class="w-[50px] text-xl text-center p-2 rounded bg-white ml-1 shadow-[0_5px_5px_rgba(0,0,0,0.8)] border" readonly>
       </div>
     </div>
 
@@ -86,11 +76,11 @@
 
     <div class="flex flex-col space-y-1 mx-4 mt-7">
       <button class="w-[50px] h-[37px] bg-yellow-600 text-white rounded hover:bg-yellow-700">ADV</button>
-      <input type="text" id="alignment" class="w-[50px] h-[37px] text-xl p-2 mb-4 rounded bg-white shadow-lg border">
+      <input type="text" id="alignment" class="w-[50px] h-[37px] text-xl p-2 mb-4 rounded bg-white shadow-[0_5px_5px_rgba(0,0,0,0.8)] border" readonly>
       <button class="w-[50px] h-[37px] bg-yellow-600 text-white rounded hover:bg-yellow-700">DIS</button>
-      <input type="text" id="alignment" class="w-[50px] h-[37px] text-xl p-2 mb-4 rounded bg-white shadow-lg border">
+      <input type="text" id="alignment" class="w-[50px] h-[37px] text-xl p-2 mb-4 rounded bg-white shadow-[0_5px_5px_rgba(0,0,0,0.8)] border" readonly>
       <button class="w-[50px] h-[37px] bg-yellow-600 text-white rounded hover:bg-yellow-700">CRIT</button>
-      <input type="text" id="alignment" class="w-[50px] h-[37px] text-xl p-2 rounded bg-white shadow-lg border">
+      <input type="text" id="alignment" class="w-[50px] h-[37px] text-xl p-2 rounded bg-white shadow-[0_5px_5px_rgba(0,0,0,0.8)] border" readonly>
     </div>
     
 
@@ -110,11 +100,4 @@
       </div>
     </div>
   </div>
-
-  <app-character-stats [character]="character"></app-character-stats>
 }
-
-  
-
-
-

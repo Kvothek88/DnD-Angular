@@ -1,9 +1,11 @@
 import { Component, signal } from '@angular/core';
-import { CharacterDashboard } from "./character/character-dashboard/character-dashboard";
+import { CharacterMain } from './character/character-main/character-main';
+
+
 
 @Component({
   selector: 'app-root',
-  imports: [CharacterDashboard],
+  imports: [CharacterMain],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

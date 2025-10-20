@@ -14,11 +14,51 @@ export class CharacterSpells {
   @Input() character: Character | null = null;
 
   spellsByLevel: { [key: number]: any[] } = {};
+  maxSlots: number[][] = [];
+  usedSlots: { [key: number]: number } = {};
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['character'] && this.character?.spells) {
       this.spellsByLevel = groupBy(this.character.spells, 'level');
+      this.maxSlots = this.getMaxSlots();
+      this.usedSlots = this.getUsedSlots();
+      console.log(this.maxSlots)
+      console.log(this.usedSlots)
     }
+  }
+
+  getMaxSlots(): number[][] {
+    let result: number[][] = Array.from({ length: 10 }, () => []);
+
+    if (!this.character?.characterSpellSlots) {
+      return result;
+    }
+
+    for (let level = 1; level <= 9; level++) {
+      const max = (this.character.characterSpellSlots as any)[`maxLevel${level}`];
+      
+
+      for (let i = 0; i < max; i++){
+        result[level].push(i);
+      }
+    }
+    
+    return result;
+  }
+
+  getUsedSlots(): { [key: number]: number } {
+    let result: { [key: number]: number } = {};
+
+    if (!this.character?.characterSpellSlots) {
+      return result;
+    }
+
+    for (let level = 1; level <= 9; level++) {
+      const used = (this.character.characterSpellSlots as any)[`usedLevel${level}`];
+      result[level] = used;
+    }
+
+    return result;
   }
 
   // Helper to get sorted spell levels

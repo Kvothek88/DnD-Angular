@@ -1,0 +1,19 @@
+@if (isLoading) {
+  <div class="flex flex-col justify-center items-center h-screen">
+    <div class="animate-spin rounded-full h-16 w-16 border-b-4 border-yellow-600"></div>
+    <p class="mt-4 text-xl text-gray-700">Loading character...</p>
+  </div>
+}
+@else if (!character) {
+  <div class="bg-yellow-200/50 p-4 m-5 rounded">
+    <p class="text-yellow-800">{{error}}</p>
+  </div>
+}
+@else if (character) {
+  
+  <app-character-dashboard [character]="character"></app-character-dashboard>
+
+  <app-character-stats [character]="character"></app-character-stats>
+}
+
+  
