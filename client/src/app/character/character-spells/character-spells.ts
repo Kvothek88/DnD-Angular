@@ -18,8 +18,8 @@ export class CharacterSpells {
   usedSlots: { [key: number]: number } = {};
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['character'] && this.character?.spells) {
-      this.spellsByLevel = groupBy(this.character.spells, 'level');
+    if (changes['character'] && this.character?.characterSpells) {
+      this.spellsByLevel = groupBy(this.character.characterSpells, 'level');
       this.maxSlots = this.getMaxSlots();
       this.usedSlots = this.getUsedSlots();
       console.log(this.maxSlots)

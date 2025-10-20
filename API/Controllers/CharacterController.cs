@@ -19,10 +19,10 @@ public class CharactersController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<Character>> GetCharacterInfo(int id)
     {
-        var characterInfo = await _characterService.GetCharacterInfoAsync(id);
+        var character = await _characterService.GetCharacterInfoAsync(id);
 
-        if (characterInfo == null) return NotFound();
+        if (character == null) return NotFound();
 
-        return Ok(characterInfo);
+        return Ok(character);
     }
 }

@@ -19,7 +19,24 @@ public class Character : BaseEntity
     public string Alignment { get; set; } = string.Empty;
     public int Level { get; set; }
 
-    public CharacterStats Stats { get; set; } = null!;
+    public CharacterAbilities CharacterAbilities { get; set; } = null!;
     public CharacterSpellSlots CharacterSpellSlots { get; set; } = null!;
-    public List<Spell>? Spells { get; set; }
+    public List<Spell>? CharacterSpells { get; set; }
+
+
+    public int HitDice { get; set; }
+    public int MaxHp => HitDice + ((Level - 1) * (HitDice / 2 + 1)) + (CharacterAbilities.ConstitutionModifier * Level) + Level;
+    public int CurrentHp {  get; set; }
+
+    public int ProficiencyBonus => (int)Math.Ceiling(Level / 4.0) + 1;
+    public int Initiative => CharacterAbilities.DexterityModifier;
+    public int Speed {  get; set; }
+
+    // Saves Proficiency Bonus
+    public bool StrengthSaveApplyProf {  get; set; }
+    public bool DexteritySaveApplyProf { get; set; }
+    public bool ConstitutionSaveApplyProf { get; set; }
+    public bool IntelligenceSaveApplyProf { get; set; }
+    public bool WisdomSaveApplyProf { get; set; }
+    public bool CharismaSaveApplyProf { get; set; }
 }

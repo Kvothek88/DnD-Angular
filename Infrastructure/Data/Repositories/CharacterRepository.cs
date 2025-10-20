@@ -15,11 +15,12 @@ public class CharacterRepository : ICharacterRepository
 
     public async Task<Character?> GetByIdAsync(int id)
     {
-        var characterInfo = await _context.Characters
+        var character = await _context.Characters
+            .Include(c => c.CharacterAbilities)
             .Include(c => c.CharacterSpellSlots)
-            .Include(c => c.Spells)
+            .Include(c => c.CharacterSpells)
             .FirstOrDefaultAsync(c => c.Id == id);
 
-        return characterInfo;
+        return character;
     }
 }

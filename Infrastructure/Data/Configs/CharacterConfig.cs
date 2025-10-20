@@ -22,9 +22,9 @@ public class CharacterConfig : IEntityTypeConfiguration<Character>
         builder.Property(c => c.Level).IsRequired();
 
         // One-to-one with CharacterStats
-        builder.HasOne(c => c.Stats)
+        builder.HasOne(c => c.CharacterAbilities)
                .WithOne()
-               .HasForeignKey<CharacterStats>(s => s.CharacterId)
+               .HasForeignKey<CharacterAbilities>(s => s.CharacterId)
                .OnDelete(DeleteBehavior.Cascade);
 
         // One-to-one with CharacterSpellSlots
@@ -33,9 +33,25 @@ public class CharacterConfig : IEntityTypeConfiguration<Character>
                .HasForeignKey<CharacterSpellSlots>(s => s.CharacterId)
                .OnDelete(DeleteBehavior.Cascade);
 
-        // Many-to-many with Spell
-        builder.HasMany(c => c.Spells)
+        builder.HasMany(c => c.CharacterSpells)
                .WithMany()
-               .UsingEntity(j => j.ToTable("CharacterSpells"));
+               .UsingEntity<Dictionary<string, object>>(
+                   "CharacterSpells",
+                   j => j.HasOne<Spell>()
+                         .WithMany()
+                         .HasForeignKey("SpellId")
+                         .HasConstraintName("FK_CharacterSpells_Spell")
+                         .OnDelete(DeleteBehavior.Cascade),
+                   j => j.HasOne<Character>()
+                         .WithMany()
+                         .HasForeignKey("CharacterId")
+                         .HasConstraintName("FK_CharacterSpells_Character")
+                         .OnDelete(DeleteBehavior.Cascade),
+                   j =>
+                   {
+                       j.HasKey("CharacterId", "SpellId");
+                       j.ToTable("CharacterSpells");
+                   });
+
     }
 }

@@ -19,8 +19,8 @@ public class CharacterService : ICharacterService
 
     public async Task<Character> GetCharacterInfoAsync(int id)
     {
-        var characterInfo = await _characterInforepository.GetByIdAsync(id);
+        var character = await _characterInforepository.GetByIdAsync(id);
 
-        return characterInfo;
+        return character;
     }
 }

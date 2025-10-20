@@ -1,3 +1,4 @@
+import { CharacterAbilities } from "./character-abilities";
 import { CharacterSpellSlots } from "./character-spell-slots";
 import { Spell } from "./spell";
 
@@ -12,7 +13,24 @@ export interface Character {
     size: string;
     alignment: string;
     level: number;
-    stats: any;
+
+    characterAbilities: CharacterAbilities;
     characterSpellSlots: CharacterSpellSlots;
-    spells: Spell[];
+    characterSpells: Spell[];
+
+    hitDice: number;
+    maxHp: number;
+    currentHp: number;
+
+    speed: number;
+    proficiencyBonus: number;
+    initiative: number;
+
+    // Saving Throw Proficiencies
+    strengthSaveApplyProf: boolean;
+    dexteritySaveApplyProf: boolean;
+    constitutionSaveApplyProf: boolean;
+    intelligenceSaveApplyProf: boolean;
+    wisdomSaveApplyProf: boolean;
+    charismaSaveApplyProf: boolean;
 }

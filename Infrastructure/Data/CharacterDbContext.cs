@@ -16,7 +16,7 @@ public class CharacterDbContext : DbContext
     }
 
     public DbSet<Character> Characters { get; set; }
-    public DbSet<CharacterStats> CharacterStats { get; set; }
+    public DbSet<CharacterAbilities> CharacterAbilities { get; set; }
     public DbSet<Spell> Spells { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

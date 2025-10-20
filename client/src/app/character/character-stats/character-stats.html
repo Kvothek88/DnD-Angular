@@ -3,7 +3,7 @@
 
         <div class="flex flex-col">
 
-            <div class="flex flex-row mx-2">
+            <div class="flex flex-row mx-1">
                 <div class="flex flex-col p-5 rounded-3xl mb-8">
                     <!-- HP Label -->
                     <label class="w-[310px] ml-3 text-center text-2xl font-bold bg-yellow-600/90 py-1 rounded">
@@ -16,22 +16,22 @@
                         <!-- MAX HP -->
                         <div class="flex flex-col justify-center items-center p-1 mr-[-10px]">
                             <label class="w-[100px] text-center text-xl font-bold mb-1">MAX HP</label>
-                            <input type="text" id="max-hp" 
-                                class="w-[55px] h-[45px] text-center text-xl p-1 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] bg-white border" readonly>
+                            <input type="text" id="max-hp" [value]="character?.maxHp"
+                                class="w-[55px] h-[45px] text-center text-2xl p-1 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] bg-white border" readonly>
                         </div>
 
                         <!-- CUR HP -->
                         <div class="flex flex-col justify-center items-center p-1 mr-[-10px]">
                             <label class="w-[100px] text-center text-xl font-bold mb-1">CUR HP</label>
-                            <input type="text" id="cur-hp" 
-                                class="w-[55px] h-[45px] text-center text-xl p-1 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] bg-white border" readonly>
+                            <input type="text" id="cur-hp" [value]="character?.currentHp"
+                                class="w-[55px] h-[45px] text-center text-2xl p-1 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] bg-white border" readonly>
                         </div>
 
                         <!-- TEMP HP -->
                         <div class="flex flex-col justify-center items-center p-1">
                             <label class="w-[100px] text-center text-xl font-bold mb-1">TEMP</label>
                             <input type="text" id="temp-hp" 
-                                class="w-[55px] h-[45px] text-center text-xl p-1 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] bg-white border" readonly>
+                                class="w-[55px] h-[45px] text-center text-2xl p-1 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] bg-white border" readonly>
                         </div>
                     </div>
                 </div>
@@ -54,46 +54,46 @@
                                 <!-- TOTAL -->
                                 <div class="flex flex-col items-center text-center">
                                     <label class="text-center text-xl font-bold mb-1">TOTAL</label>
-                                    <input type="text" id="ac-total" 
-                                        class="w-[55px] h-[45px] text-center text-xl p-1 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] bg-white border" readonly>
+                                    <input type="text" id="ac-total" [value]="acTotal"
+                                        class="w-[55px] h-[45px] text-center text-2xl p-1 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] bg-white border" readonly>
                                 </div>
 
                                 <!-- "=10+" Text -->
-                                <span class="text-2xl text-black">=10+</span>
+                                <span class="text-2xl mt-9 text-black">=10 +</span>
 
                                 <!-- DEX -->
                                 <div class="flex flex-col items-center text-center">
                                     <label class="text-xl font-bold mb-1">DEX</label>
-                                    <input type="text" id="ac-dex" 
-                                        class="w-[55px] h-[45px] text-center text-xl p-1 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] bg-white border" readonly>
+                                    <input type="text" id="ac-dex" [value]="character?.characterAbilities?.dexterityModifier"
+                                        class="w-[55px] h-[45px] text-center text-2xl p-1 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] bg-white border" readonly>
                                 </div>
 
                                 <!-- ARMOR -->
                                 <div class="flex flex-col items-center text-center">
                                     <label class="text-xl font-bold mb-1">ARMOR</label>
-                                    <input type="text" id="ac-armor" 
-                                        class="w-[55px] h-[45px] text-center text-xl p-1 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] bg-white border" readonly>
+                                    <input type="text" id="ac-armor" [value]="armor"
+                                        class="w-[55px] h-[45px] text-center text-2xl p-1 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] bg-white border" readonly>
                                 </div>
 
                                 <!-- SHIELD -->
                                 <div class="flex flex-col items-center text-center">
                                     <label class="text-xl font-bold mb-1">SHIELD</label>
-                                    <input type="text" id="ac-shield" 
-                                        class="w-[55px] h-[45px] text-center text-xl p-1 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] bg-white border" readonly>
+                                    <input type="text" id="ac-shield" [value]="shield"
+                                        class="w-[55px] h-[45px] text-center text-2xl p-1 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] bg-white border" readonly>
                                 </div>
 
                                 <!-- ITEM -->
                                 <div class="flex flex-col items-center text-center">
                                     <label class="text-xl font-bold mb-1">ITEM</label>
                                     <input type="text" id="ac-item" 
-                                        class="w-[55px] h-[45px] text-center text-xl p-1 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] bg-white border" readonly>
+                                        class="w-[55px] h-[45px] text-center text-2xl p-1 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] bg-white border" readonly>
                                 </div>
 
                                 <!-- OTHER -->
                                 <div class="flex flex-col items-center text-center">
                                     <label class="text-xl font-bold mb-1">OTHER</label>
                                     <input type="text" id="ac-other" 
-                                        class="w-[55px] h-[45px] text-center text-xl p-1 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] bg-white border" readonly>
+                                        class="w-[55px] h-[45px] text-center text-2xl p-1 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] bg-white border" readonly>
                                 </div>
                             </div>
                         </div>
@@ -103,92 +103,209 @@
             </div>
 
             <!-- ROW: containing 3 big columns (Abilities, Other specs, Skills) -->
-            <div class="flex flex-row mx-2">
-
+            <div class="flex flex-row mx-2 -mt-5">
                 <!-- Abilities -->
                 <div class="flex flex-col">
                     <!-- Ability Input: Strength -->
-                    <div class="relative flex flex-col items-center gap-2.5 mb-7">
-                        <label for="strength" class="text-2xl font-bold text-center -mb-2.5">STR</label>
-                        <input type="text" id="strength-modifier" readonly
-                                class="w-17 h-19 bg-white text-2xl text-center border border-gray-300 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] caret-transparent cursor-pointer hover:bg-gray-200 focus:bg-gray-200">
-                        <input type="text" class="absolute bottom-[-15px] w-11 h-8 p-1.5 text-lg text-center border border-gray-300 rounded-full bg-gray-50 shadow-[0_5px_5px_rgba(0,0,0,0.8)] nested-input" id="strength">
-                    </div>
+                     @if (character){
+                        <div class="relative flex flex-col items-center gap-2.5 mb-7">
+                            <label for="strength" class="text-2xl font-bold text-center -mb-2.5">STR</label>
+                            <input type="text" [value]="character.characterAbilities.strength" id="strength-modifier" readonly (click)="abilitySave('Strength', strengthModifier.value)"
+                                    class="w-17 h-19 bg-white text-3xl text-center border border-gray-300 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] caret-transparent cursor-pointer hover:bg-gray-200 focus:bg-gray-200">
+                            <input #strengthModifier type="text" [value]="character.characterAbilities.strengthModifier | modifier" class="absolute bottom-[-15px] w-11 h-8 p-1.5 text-lg text-center border border-gray-300 rounded-full bg-gray-50 shadow-[0_5px_5px_rgba(0,0,0,0.8)] nested-input" id="strength" readonly>
+                        </div>
 
-                    <!-- Ability Input: Dexterity -->
-                    <div class="relative flex flex-col items-center gap-2.5 mb-7">
-                        <label for="dexterity" class="text-2xl font-bold text-center -mb-2.5">DEX</label>
-                        <input type="text" id="dexterity-modifier" readonly
-                                class="w-17 h-19 bg-white text-2xl text-center border border-gray-300 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] caret-transparent cursor-pointer hover:bg-gray-200 focus:bg-gray-200">
-                        <input type="text" class="absolute bottom-[-15px] w-11 h-8 p-1.5 text-lg text-center border border-gray-300 rounded-full bg-gray-50 shadow-[0_5px_5px_rgba(0,0,0,0.8)] nested-input" id="dexterity">
-                    </div>
+                        <!-- Ability Input: Dexterity -->
+                        <div class="relative flex flex-col items-center gap-2.5 mb-7">
+                            <label for="dexterity" class="text-2xl font-bold text-center -mb-2.5">DEX</label>
+                            <input type="text" [value]="character.characterAbilities.dexterity" id="dexterity-modifier" readonly (click)="abilitySave('Dexterity', dexterityModifier.value)"
+                                    class="w-17 h-19 bg-white text-3xl text-center border border-gray-300 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] caret-transparent cursor-pointer hover:bg-gray-200 focus:bg-gray-200">
+                            <input #dexterityModifier type="text" [value]="character.characterAbilities.dexterityModifier | modifier" class="absolute bottom-[-15px] w-11 h-8 p-1.5 text-lg text-center border border-gray-300 rounded-full bg-gray-50 shadow-[0_5px_5px_rgba(0,0,0,0.8)] nested-input" id="dexterity" readonly>
+                        </div>
 
-                    <!-- Ability Input: COnstitution -->
-                    <div class="relative flex flex-col items-center gap-2.5 mb-7">
-                        <label for="constiturion" class="text-2xl font-bold text-center -mb-2.5">CON</label>
-                        <input type="text" id="constiturion-modifier" readonly
-                                class="w-17 h-19 bg-white text-2xl text-center border border-gray-300 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] caret-transparent cursor-pointer hover:bg-gray-200 focus:bg-gray-200">
-                        <input type="text" class="absolute bottom-[-15px] w-11 h-8 p-1.5 text-lg text-center border border-gray-300 rounded-full bg-gray-50 shadow-[0_5px_5px_rgba(0,0,0,0.8)] nested-input" id="constiturion">
-                    </div>
+                        <!-- Ability Input: Constitution -->
+                        <div class="relative flex flex-col items-center gap-2.5 mb-7">
+                            <label for="constiturion" class="text-2xl font-bold text-center -mb-2.5">CON</label>
+                            <input type="text" [value]="character.characterAbilities.constitution" id="constiturion-modifier" readonly (click)="abilitySave('Constitution', constitutionModifier.value)"
+                                    class="w-17 h-19 bg-white text-3xl text-center border border-gray-300 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] caret-transparent cursor-pointer hover:bg-gray-200 focus:bg-gray-200">
+                            <input #constitutionModifier type="text" [value]="character.characterAbilities.constitutionModifier | modifier" class="absolute bottom-[-15px] w-11 h-8 p-1.5 text-lg text-center border border-gray-300 rounded-full bg-gray-50 shadow-[0_5px_5px_rgba(0,0,0,0.8)] nested-input" id="constiturion" readonly>
+                        </div>
 
-                    <!-- Ability Input: Intelligence -->
-                    <div class="relative flex flex-col items-center gap-2.5 mb-7">
-                        <label for="intelligence" class="text-2xl font-bold text-center -mb-2.5">INT</label>
-                        <input type="text" id="intelligence-modifier" readonly
-                                class="w-17 h-19 bg-white text-2xl text-center border border-gray-300 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] caret-transparent cursor-pointer hover:bg-gray-200 focus:bg-gray-200">
-                        <input type="text" class="absolute bottom-[-15px] w-11 h-8 p-1.5 text-lg text-center border border-gray-300 rounded-full bg-gray-50 shadow-[0_5px_5px_rgba(0,0,0,0.8)] nested-input" id="intelligence">
-                    </div>
+                        <!-- Ability Input: Intelligence -->
+                        <div class="relative flex flex-col items-center gap-2.5 mb-7">
+                            <label for="intelligence" class="text-2xl font-bold text-center -mb-2.5">INT</label>
+                            <input type="text" [value]="character.characterAbilities.intelligence" id="intelligence-modifier" readonly (click)="abilitySave('Intelligence', intelligenceModifier.value)"
+                                    class="w-17 h-19 bg-white text-3xl text-center border border-gray-300 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] caret-transparent cursor-pointer hover:bg-gray-200 focus:bg-gray-200">
+                            <input #intelligenceModifier type="text" [value]="character.characterAbilities.intelligenceModifier | modifier" class="absolute bottom-[-15px] w-11 h-8 p-1.5 text-lg text-center border border-gray-300 rounded-full bg-gray-50 shadow-[0_5px_5px_rgba(0,0,0,0.8)] nested-input" id="intelligence" readonly>
+                        </div>
 
-                    <!-- Ability Input: Wisdom -->
-                    <div class="relative flex flex-col items-center gap-2.5 mb-7">
-                        <label for="wisdom" class="text-2xl font-bold text-center -mb-2.5">WIS</label>
-                        <input type="text" id="wisdom-modifier" readonly
-                                class="w-17 h-19 bg-white text-2xl text-center border border-gray-300 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] caret-transparent cursor-pointer hover:bg-gray-200 focus:bg-gray-200">
-                        <input type="text" class="absolute bottom-[-15px] w-11 h-8 p-1.5 text-lg text-center border border-gray-300 rounded-full bg-gray-50 shadow-[0_5px_5px_rgba(0,0,0,0.8)] nested-input" id="wisdom">
-                    </div>
+                        <!-- Ability Input: Wisdom -->
+                        <div class="relative flex flex-col items-center gap-2.5 mb-7">
+                            <label for="wisdom" class="text-2xl font-bold text-center -mb-2.5">WIS</label>
+                            <input type="text" [value]="character.characterAbilities.wisdom" id="wisdom-modifier" readonly (click)="abilitySave('Wisdom', wisdomModifier.value)"
+                                    class="w-17 h-19 bg-white text-3xl text-center border border-gray-300 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] caret-transparent cursor-pointer hover:bg-gray-200 focus:bg-gray-200">
+                            <input #wisdomModifier type="text" [value]="character.characterAbilities.wisdomModifier | modifier" class="absolute bottom-[-15px] w-11 h-8 p-1.5 text-lg text-center border border-gray-300 rounded-full bg-gray-50 shadow-[0_5px_5px_rgba(0,0,0,0.8)] nested-input" id="wisdom" readonly>
+                        </div>
 
-                    <!-- Ability Input: Charisma -->
-                    <div class="relative flex flex-col items-center gap-2.5 mb-7">
-                        <label for="charisma" class="text-2xl font-bold text-center -mb-2.5">CHA</label>
-                        <input type="text" id="charisma-modifier" readonly
-                                class="w-17 h-19 bg-white text-2xl text-center border border-gray-300 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] caret-transparent cursor-pointer hover:bg-gray-200 focus:bg-gray-200">
-                        <input type="text" class="absolute bottom-[-15px] w-11 h-8 p-1.5 text-lg text-center border border-gray-300 rounded-full bg-gray-50 shadow-[0_5px_5px_rgba(0,0,0,0.8)] nested-input" id="charisma">
-                    </div>
+                        <!-- Ability Input: Charisma -->
+                        <div class="relative flex flex-col items-center gap-2.5 mb-7">
+                            <label for="charisma" class="text-2xl font-bold text-center -mb-2.5">CHA</label>
+                            <input type="text" [value]="character.characterAbilities.charisma" id="charisma-modifier" readonly (click)="abilitySave('Charisma', charismaModifier.value)"
+                                    class="w-17 h-19 bg-white text-3xl text-center border border-gray-300 rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] caret-transparent cursor-pointer hover:bg-gray-200 focus:bg-gray-200">
+                            <input #charismaModifier type="text" [value]="character.characterAbilities.charismaModifier | modifier" class="absolute bottom-[-15px] w-11 h-8 p-1.5 text-lg text-center border border-gray-300 rounded-full bg-gray-50 shadow-[0_5px_5px_rgba(0,0,0,0.8)] nested-input" id="charisma" readonly>
+                        </div>
+                     }
                 </div>
 
                 <!-- Prof, Init, Speed, Attack, Spell Attack,Spell Save, Saving Throws -->
                 <div class="flex flex-col">
 
-                    <div class="flex flex-row bg-yellow-400 rounded-lg p-1 m-[3px] ml-7 mr-4 mb-1">
+
+                    <div class="flex flex-row bg-yellow-400 rounded-3xl p-3 m-[3px] ml-9 mr-4 mb-1">
                         <!-- PROF Container -->
                         <div class="flex flex-row bg-yellow-500 rounded-lg p-1 m-[3px] ml-4 mr-4 mb-1">
                             <div class="flex flex-col items-center justify-center p-1.5">
-                            <label for="profbonus" class="w-30 text-center font-bold text-xl mb-1">PROF</label>
-                            <input type="text" id="profbonus" class="w-14 h-11 bg-white text-center text-xl rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)]">
+                            <label for="profbonus" class="w-24 text-center font-bold text-2xl mb-1">PROF</label>
+                            <input type="text" [value]="character?.proficiencyBonus | modifier" id="profbonus" class="w-14 h-11 bg-white border text-center text-xl rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)]" readonly>
                             </div>
                         </div>
                         <!-- INITIATIVE Container -->
-                        <div class="flex flex-row bg-yellow-500 rounded-lg p-1 m-[3px] mx-4 mb-1">
+                        <div class="flex flex-row bg-yellow-500 rounded-lg p-1 m-[3px] ml-4 mr-4 mb-1">
                             <div class="flex flex-col items-center justify-center p-1.5">
-                            <label for="initiative" class="text-center text-xl font-bold mb-1">INITIATIVE</label>
-                            <input type="text" id="initiative" class="w-14 h-11 bg-white text-center text-xl rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)]">
+                            <label for="initiative" class="text-center text-2xl font-bold mb-1">INITIATIVE</label>
+                            <input type="text" [value]="character?.initiative | modifier" id="initiative" class="w-14 h-11 bg-white border text-center text-xl rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] caret-transparent cursor-pointer hover:bg-gray-200 focus:bg-gray-200" readonly>
                             </div>
                         </div>
                         <!-- SPEED Container -->
-                        <div class="flex flex-row bg-yellow-500 rounded-lg p-1 m-[3px] mx-4 mb-1">
+                        <div class="flex flex-row bg-yellow-500 rounded-lg p-1 m-[3px] ml-4 mr-4 mb-1">
                             <div class="flex flex-col items-center justify-center p-1.5">
-                            <label for="speed" class="w-24 text-center text-xl font-bold mb-1">SPEED</label>
-                            <input type="text" id="speed" class="w-14 h-11 bg-white text-center text-xl rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)]">
+                            <label for="speed" class="w-24 text-center text-2xl font-bold mb-1">SPEED</label>
+                            <input type="text" [value]="character?.speed" id="speed" class="w-14 h-11 bg-white border text-center text-xl rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)]" readonly>
                             </div>
                         </div>
                     </div>
 
 
+                    <!-- ATTACK -->
+                    <div class="flex flex-col items-center bg-yellow-400 p-3 rounded-3xl ml-9 mr-4 mb-1 mt-5">
+                        <label for="attack" class="text-2xl w-[435px] text-center bg-yellow-600 font-bold py-1 rounded-lg">
+                            ATTACK
+                        </label>
+
+                        <div class="flex items-center bg-yellow-500 gap-2.5 w-[435px] h-[100px] mt-1 rounded-lg">
+                            
+                            <!-- TOTAL -->
+                            <div class="flex flex-col items-center text-center">
+                                <label for="total" class="font-bold text-xl mb-1 ml-2">TOTAL</label>
+                                <input type="text" [value]="attackTotal" id="attacktotal" class="w-12 h-11 text-center text-2xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2 caret-transparent cursor-pointer hover:bg-gray-200 focus:bg-gray-200" readonly>
+                            </div>
+
+                            <!-- KEY -->
+                            <div class="flex flex-col items-center text-center">
+                                <label for="key" class="text-center font-bold text-xl mb-1 ml-2">KEY</label>
+                                <input type="text" [value]="character?.characterAbilities?.strengthModifier" id="attackability" class="w-10 h-9 text-center text-xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2">
+                            </div>
+
+                            <!-- PROF -->
+                            <div class="flex flex-col items-center text-center">
+                                <label for="prof" class="text-center font-bold text-xl mb-1 ml-2">PROF</label>
+                                <input type="text" [value]="character?.proficiencyBonus" id="attackprof" class="w-10 h-9 text-center text-xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2">
+                            </div>
+
+                            <!-- ITEM -->
+                            <div class="flex flex-col items-center text-center">
+                                <label for="item" class="text-center font-bold text-xl mb-1 ml-2">ITEM</label>
+                                <input type="text" id="attackitem" class="w-10 h-9 text-center text-xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2">
+                            </div>
+
+                            <!-- DAMAGE -->
+                            <div class="flex flex-col items-center text-center">
+                                <label for="damage" class="text-center font-bold text-xl mb-1 ml-1">DAMAGE</label>
+                                <input type="text" id="damage" class="w-[120px] h-10 text-center text-2xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-1 caret-transparent cursor-pointer hover:bg-gray-200 focus:bg-gray-200" readonly>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <!-- SPELL ATTACK -->
+                    <div class="flex flex-col items-center bg-yellow-400 w-[430px] p-3 rounded-3xl ml-12 mr-4 mb-1 mt-5">
+                        <label for="spellattack" class="text-2xl w-[280px] text-center bg-yellow-600 font-bold py-1 rounded-lg">
+                            SPELL ATTACK
+                        </label>
+
+                        <div class="flex items-center bg-yellow-500 gap-2.5 w-[280px] h-[100px] mt-1 rounded-lg">
+                            
+                            <!-- TOTAL -->
+                            <div class="flex flex-col items-center text-center">
+                                <label for="total" class="font-bold text-xl mb-1 ml-2">TOTAL</label>
+                                <input type="text" [value]="spellAttackTotal" id="attacktotal" class="w-12 h-11 text-center text-2xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2 caret-transparent cursor-pointer hover:bg-gray-200 focus:bg-gray-200" readonly>
+                            </div>
+
+                            <!-- KEY -->
+                            <div class="flex flex-col items-center text-center">
+                                <label for="key" class="text-center font-bold text-xl mb-1 ml-2">KEY</label>
+                                <input type="text" [value]="character?.characterAbilities?.wisdomModifier" id="attackability" class="w-10 h-9 text-center text-xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2">
+                            </div>
+
+                            <!-- PROF -->
+                            <div class="flex flex-col items-center text-center">
+                                <label for="prof" class="text-center font-bold text-xl mb-1 ml-2">PROF</label>
+                                <input type="text" [value]="character?.proficiencyBonus" id="attackprof" class="w-10 h-9 text-center text-xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2">
+                            </div>
+
+                            <!-- ITEM -->
+                            <div class="flex flex-col items-center text-center">
+                                <label for="item" class="text-center font-bold text-xl mb-1 ml-2">ITEM</label>
+                                <input type="text" id="attackitem" class="w-10 h-9 text-center text-xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- SPELL SAVE -->
+                    <div class="flex flex-col items-center bg-yellow-400 w-[430px] p-3 rounded-3xl ml-11 mr-4 mb-1 mt-5">
+                        <label for="classdc" class="text-2xl w-[350px] text-center bg-yellow-600 font-bold py-1 rounded-lg">
+                            SPELL SAVE DC
+                        </label>
+
+                        <div class="flex items-center bg-yellow-500 gap-2.5 w-[350px] h-[100px] mt-1 rounded-lg">
+                            
+                            <!-- TOTAL -->
+                            <div class="flex flex-col items-center text-center">
+                                <label for="total" class="font-bold text-xl mb-1 ml-5">TOTAL</label>
+                                <input type="text" [value]="spellSaveDC" id="attacktotal" class="w-12 h-11 text-center text-2xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-5">
+                            </div>
+
+                            <span class="text-2xl mt-9 text-black">=8 +</span>
+
+                            <!-- KEY -->
+                            <div class="flex flex-col items-center text-center">
+                                <label for="key" class="text-center font-bold text-xl mb-1">KEY</label>
+                                <input type="text" [value]="character?.characterAbilities?.wisdomModifier" id="attackability" class="w-10 h-9 text-center text-xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)]">
+                            </div>
+
+                            <!-- PROF -->
+                            <div class="flex flex-col items-center text-center">
+                                <label for="prof" class="text-center font-bold text-xl mb-1 ml-2">PROF</label>
+                                <input type="text" [value]="character?.proficiencyBonus" id="attackprof" class="w-10 h-9 text-center text-xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2">
+                            </div>
+
+                            <!-- ITEM -->
+                            <div class="flex flex-col items-center text-center">
+                                <label for="item" class="text-center font-bold text-xl mb-1 ml-2">ITEM</label>
+                                <input type="text" id="attackitem" class="w-10 h-9 text-center text-xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2">
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <!-- SAVING THROWS -->
+                    <app-character-saves [character]="character"></app-character-saves>
+
                 </div>
-
-
             </div>
-
         </div>
     </div>
 

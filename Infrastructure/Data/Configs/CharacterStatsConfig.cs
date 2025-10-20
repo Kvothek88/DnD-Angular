@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Data.Configs;
 
-public class CharacterStatsConfig : IEntityTypeConfiguration<CharacterStats>
+public class CharacterStatsConfig : IEntityTypeConfiguration<CharacterAbilities>
 {
-    public void Configure(EntityTypeBuilder<CharacterStats> builder)
+    public void Configure(EntityTypeBuilder<CharacterAbilities> builder)
     {
         builder.HasKey(s => s.Id);
 

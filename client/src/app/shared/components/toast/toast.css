@@ -1,0 +1,69 @@
+.toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.toast {
+  background: white;
+  font-size: 20px;
+  border-radius: 4px;
+  padding: 16px;
+  margin-bottom: 10px;
+  min-width: 250px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  white-space: normal;
+
+  /* Optional slide-in animation */
+  animation: slideIn 0.3s ease-in-out;
+}
+
+.toast.success {
+  border-left: 4px solid #4caf50;
+}
+.toast.error {
+  border-left: 4px solid #f44336;
+}
+.toast.info {
+  border-left: 4px solid #2196f3;
+}
+.toast.tactics {
+  border-left: 4px solid #a14d08;
+}
+.toast.gear {
+  border-left: 4px solid #17d8e6;
+}
+.toast.magic {
+  border-left: 4px solid #d348d3;
+}
+.toast.twilight {
+  border-left: 4px solid #687ab5;
+}
+.toast.dice {
+  border-left: 4px solid #da9b15;
+}
+
+.toast-close {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #666;
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
