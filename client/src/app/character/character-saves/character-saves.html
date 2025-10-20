@@ -1,4 +1,4 @@
-<div class="flex flex-col items-center bg-yellow-400 w-[430px] p-3 rounded-3xl ml-11 mr-4 mb-1 mt-5">
+<div class="flex flex-col items-center bg-yellow-400 w-[460px] p-3 rounded-3xl ml-9 mr-4 mb-1 mt-5">
 
     <label for="savingthrows" class="text-2xl w-[280px] text-center bg-yellow-600 font-bold py-1 rounded-lg">
         SAVING THROWS
@@ -22,19 +22,19 @@
                 <!-- KEY -->
                 <div class="flex flex-col items-center text-center">
                     <label class="font-bold text-xl mb-1 ml-2">STR</label>
-                    <input type="text" [value]="character?.characterAbilities?.strengthModifier" id="strengthsavekey" class="w-10 h-9 text-center bg-white text-xl rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2">
+                    <input type="text" [value]="character?.characterAbilities?.strengthModifier" id="strengthsavekey" class="w-10 h-9 text-center bg-white text-xl rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2" readonly>
                 </div>
 
                 <!-- PROF -->
                 <div class="flex flex-col items-center text-center">
                     <label class="font-bold text-xl mb-1 ml-2">PROF</label>
-                    <input type="text" [value]="character?.strengthSaveApplyProf ? character?.proficiencyBonus : 0" id="strengthsaveprof" class="w-10 h-9 text-center bg-white text-xl rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2">
+                    <input type="text" [value]="character?.strengthSaveApplyProf ? character?.proficiencyBonus : 0" id="strengthsaveprof" class="w-10 h-9 text-center bg-white text-xl rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2" readonly>
                 </div>
 
                 <!-- ITEM -->
                 <div class="flex flex-col items-center text-center">
                     <label class="font-bold text-xl mb-1 ml-2">ITEM</label>
-                    <input type="text" id="strengthsaveitem" class="w-10 h-9 text-center bg-white text-xl rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2">
+                    <input type="text" id="strengthsaveitem" class="w-10 h-9 text-center bg-white text-xl rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2" readonly>
                 </div>
 
             </div>
@@ -56,19 +56,19 @@
                 <!-- KEY -->
                 <div class="flex flex-col items-center text-center">
                     <label class="font-bold text-xl mb-1 ml-2">DEX</label>
-                    <input type="text" [value]="character?.characterAbilities?.dexterityModifier" id="strengthsavekey" class="w-10 h-9 text-center bg-white text-xl rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2">
+                    <input type="text" [value]="character?.characterAbilities?.dexterityModifier" id="strengthsavekey" class="w-10 h-9 text-center bg-white text-xl rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2" readonly>
                 </div>
 
                 <!-- PROF -->
                 <div class="flex flex-col items-center text-center">
                     <label class="font-bold text-xl mb-1 ml-2">PROF</label>
-                    <input type="text" [value]="character?.dexteritySaveApplyProf ? character?.proficiencyBonus : 0" id="strengthsaveprof" class="w-10 h-9 text-center bg-white text-xl rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2">
+                    <input type="text" [value]="character?.dexteritySaveApplyProf ? character?.proficiencyBonus : 0" id="strengthsaveprof" class="w-10 h-9 text-center bg-white text-xl rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2" readonly>
                 </div>
 
                 <!-- ITEM -->
                 <div class="flex flex-col items-center text-center">
                     <label class="font-bold text-xl mb-1 ml-2">ITEM</label>
-                    <input type="text" id="strengthsaveitem" class="w-10 h-9 text-center bg-white text-xl rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2">
+                    <input type="text" id="strengthsaveitem" class="w-10 h-9 text-center bg-white text-xl rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2" readonly>
                 </div>
 
             </div>
@@ -90,19 +90,19 @@
                 <!-- KEY -->
                 <div class="flex flex-col items-center text-center">
                     <label class="font-bold text-xl mb-1 ml-2">CON</label>
-                    <input type="text" [value]="character?.characterAbilities?.constitutionModifier" id="strengthsavekey" class="w-10 h-9 text-center bg-white text-xl rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2">
+                    <input type="text" [value]="character?.characterAbilities?.constitutionModifier" id="strengthsavekey" class="w-10 h-9 text-center bg-white text-xl rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2" readonly>
                 </div>
 
                 <!-- PROF -->
                 <div class="flex flex-col items-center text-center">
                     <label class="font-bold text-xl mb-1 ml-2">PROF</label>
-                    <input type="text" [value]="character?.constitutionSaveApplyProf ? character?.proficiencyBonus : 0" id="strengthsaveprof" class="w-10 h-9 text-center bg-white text-xl rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2">
+                    <input type="text" [value]="character?.constitutionSaveApplyProf ? character?.proficiencyBonus : 0" id="strengthsaveprof" class="w-10 h-9 text-center bg-white text-xl rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2" readonly>
                 </div>
 
                 <!-- ITEM -->
                 <div class="flex flex-col items-center text-center">
                     <label class="font-bold text-xl mb-1 ml-2">ITEM</label>
-                    <input type="text" id="strengthsaveitem" class="w-10 h-9 text-center bg-white text-xl rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2">
+                    <input type="text" id="strengthsaveitem" class="w-10 h-9 text-center bg-white text-xl rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2" readonly>
                 </div>
 
             </div>
@@ -124,19 +124,19 @@
                 <!-- KEY -->
                 <div class="flex flex-col items-center text-center">
                     <label class="font-bold text-xl mb-1 ml-2">INT</label>
-                    <input type="text" [value]="character?.characterAbilities?.intelligenceModifier" id="strengthsavekey" class="w-10 h-9 text-center bg-white text-xl rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2">
+                    <input type="text" [value]="character?.characterAbilities?.intelligenceModifier" id="strengthsavekey" class="w-10 h-9 text-center bg-white text-xl rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2" readonly>
                 </div>
 
                 <!-- PROF -->
                 <div class="flex flex-col items-center text-center">
                     <label class="font-bold text-xl mb-1 ml-2">PROF</label>
-                    <input type="text" [value]="character?.intelligenceSaveApplyProf ? character?.proficiencyBonus : 0" id="strengthsaveprof" class="w-10 h-9 text-center bg-white text-xl rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2">
+                    <input type="text" [value]="character?.intelligenceSaveApplyProf ? character?.proficiencyBonus : 0" id="strengthsaveprof" class="w-10 h-9 text-center bg-white text-xl rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2" readonly>
                 </div>
 
                 <!-- ITEM -->
                 <div class="flex flex-col items-center text-center">
                     <label class="font-bold text-xl mb-1 ml-2">ITEM</label>
-                    <input type="text" id="strengthsaveitem" class="w-10 h-9 text-center bg-white text-xl rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2">
+                    <input type="text" id="strengthsaveitem" class="w-10 h-9 text-center bg-white text-xl rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2" readonly>
                 </div>
 
             </div>
@@ -158,19 +158,19 @@
                 <!-- KEY -->
                 <div class="flex flex-col items-center text-center">
                     <label class="font-bold text-xl mb-1 ml-2">WIS</label>
-                    <input type="text" [value]="character?.characterAbilities?.wisdomModifier" id="strengthsavekey" class="w-10 h-9 text-center bg-white text-xl rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2">
+                    <input type="text" [value]="character?.characterAbilities?.wisdomModifier" id="strengthsavekey" class="w-10 h-9 text-center bg-white text-xl rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2" readonly>
                 </div>
 
                 <!-- PROF -->
                 <div class="flex flex-col items-center text-center">
                     <label class="font-bold text-xl mb-1 ml-2">PROF</label>
-                    <input type="text" [value]="character?.wisdomSaveApplyProf ? character?.proficiencyBonus : 0" id="strengthsaveprof" class="w-10 h-9 text-center bg-white text-xl rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2">
+                    <input type="text" [value]="character?.wisdomSaveApplyProf ? character?.proficiencyBonus : 0" id="strengthsaveprof" class="w-10 h-9 text-center bg-white text-xl rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2" readonly>
                 </div>
 
                 <!-- ITEM -->
                 <div class="flex flex-col items-center text-center">
                     <label class="font-bold text-xl mb-1 ml-2">ITEM</label>
-                    <input type="text" id="strengthsaveitem" class="w-10 h-9 text-center bg-white text-xl rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2">
+                    <input type="text" id="strengthsaveitem" class="w-10 h-9 text-center bg-white text-xl rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2" readonly>
                 </div>
 
             </div>
@@ -192,19 +192,19 @@
                 <!-- KEY -->
                 <div class="flex flex-col items-center text-center">
                     <label class="font-bold text-xl mb-1 ml-2">CHA</label>
-                    <input type="text" [value]="character?.characterAbilities?.charismaModifier" id="strengthsavekey" class="w-10 h-9 text-center bg-white text-xl rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2">
+                    <input type="text" [value]="character?.characterAbilities?.charismaModifier" id="strengthsavekey" class="w-10 h-9 text-center bg-white text-xl rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2" readonly>
                 </div>
 
                 <!-- PROF -->
                 <div class="flex flex-col items-center text-center">
                     <label class="font-bold text-xl mb-1 ml-2">PROF</label>
-                    <input type="text" [value]="character?.charismaSaveApplyProf ? character?.proficiencyBonus : 0" id="strengthsaveprof" class="w-10 h-9 text-center bg-white text-xl rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2">
+                    <input type="text" [value]="character?.charismaSaveApplyProf ? character?.proficiencyBonus : 0" id="strengthsaveprof" class="w-10 h-9 text-center bg-white text-xl rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2" readonly>
                 </div>
 
                 <!-- ITEM -->
                 <div class="flex flex-col items-center text-center">
                     <label class="font-bold text-xl mb-1 ml-2">ITEM</label>
-                    <input type="text" id="strengthsaveitem" class="w-10 h-9 text-center bg-white text-xl rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2">
+                    <input type="text" id="strengthsaveitem" class="w-10 h-9 text-center bg-white text-xl rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2" readonly>
                 </div>
 
             </div>

@@ -163,21 +163,21 @@
 
                     <div class="flex flex-row bg-yellow-400 rounded-3xl p-3 m-[3px] ml-9 mr-4 mb-1">
                         <!-- PROF Container -->
-                        <div class="flex flex-row bg-yellow-500 rounded-lg p-1 m-[3px] ml-4 mr-4 mb-1">
+                        <div class="flex flex-row bg-yellow-500 rounded-lg p-1 m-[3px] ml-2 mr-2 mb-1">
                             <div class="flex flex-col items-center justify-center p-1.5">
                             <label for="profbonus" class="w-24 text-center font-bold text-2xl mb-1">PROF</label>
                             <input type="text" [value]="character?.proficiencyBonus | modifier" id="profbonus" class="w-14 h-11 bg-white border text-center text-xl rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)]" readonly>
                             </div>
                         </div>
                         <!-- INITIATIVE Container -->
-                        <div class="flex flex-row bg-yellow-500 rounded-lg p-1 m-[3px] ml-4 mr-4 mb-1">
+                        <div class="flex flex-row bg-yellow-500 rounded-lg p-1 m-[3px] ml-3 mr-3 mb-1">
                             <div class="flex flex-col items-center justify-center p-1.5">
                             <label for="initiative" class="text-center text-2xl font-bold mb-1">INITIATIVE</label>
                             <input type="text" [value]="character?.initiative | modifier" id="initiative" class="w-14 h-11 bg-white border text-center text-xl rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] caret-transparent cursor-pointer hover:bg-gray-200 focus:bg-gray-200" readonly>
                             </div>
                         </div>
                         <!-- SPEED Container -->
-                        <div class="flex flex-row bg-yellow-500 rounded-lg p-1 m-[3px] ml-4 mr-4 mb-1">
+                        <div class="flex flex-row bg-yellow-500 rounded-lg p-1 m-[3px] ml-2 mr-3 mb-1">
                             <div class="flex flex-col items-center justify-center p-1.5">
                             <label for="speed" class="w-24 text-center text-2xl font-bold mb-1">SPEED</label>
                             <input type="text" [value]="character?.speed" id="speed" class="w-14 h-11 bg-white border text-center text-xl rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)]" readonly>
@@ -188,11 +188,11 @@
 
                     <!-- ATTACK -->
                     <div class="flex flex-col items-center bg-yellow-400 p-3 rounded-3xl ml-9 mr-4 mb-1 mt-5">
-                        <label for="attack" class="text-2xl w-[435px] text-center bg-yellow-600 font-bold py-1 rounded-lg">
+                        <label for="attack" class="text-2xl w-[425px] text-center bg-yellow-600 font-bold py-1 rounded-lg">
                             ATTACK
                         </label>
 
-                        <div class="flex items-center bg-yellow-500 gap-2.5 w-[435px] h-[100px] mt-1 rounded-lg">
+                        <div class="flex items-center bg-yellow-500 gap-2.5 w-[425px] h-[100px] mt-1 rounded-lg">
                             
                             <!-- TOTAL -->
                             <div class="flex flex-col items-center text-center">
@@ -203,25 +203,25 @@
                             <!-- KEY -->
                             <div class="flex flex-col items-center text-center">
                                 <label for="key" class="text-center font-bold text-xl mb-1 ml-2">KEY</label>
-                                <input type="text" [value]="character?.characterAbilities?.strengthModifier" id="attackability" class="w-10 h-9 text-center text-xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2">
+                                <input type="text" [value]="character?.characterAbilities?.strengthModifier" id="attackability" class="w-10 h-9 text-center text-xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2" readonly>
                             </div>
 
                             <!-- PROF -->
                             <div class="flex flex-col items-center text-center">
                                 <label for="prof" class="text-center font-bold text-xl mb-1 ml-2">PROF</label>
-                                <input type="text" [value]="character?.proficiencyBonus" id="attackprof" class="w-10 h-9 text-center text-xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2">
+                                <input type="text" [value]="character?.proficiencyBonus" id="attackprof" class="w-10 h-9 text-center text-xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2" readonly>
                             </div>
 
                             <!-- ITEM -->
                             <div class="flex flex-col items-center text-center">
                                 <label for="item" class="text-center font-bold text-xl mb-1 ml-2">ITEM</label>
-                                <input type="text" id="attackitem" class="w-10 h-9 text-center text-xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2">
+                                <input type="text" id="attackitem" class="w-10 h-9 text-center text-xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2" readonly>
                             </div>
 
                             <!-- DAMAGE -->
                             <div class="flex flex-col items-center text-center">
                                 <label for="damage" class="text-center font-bold text-xl mb-1 ml-1">DAMAGE</label>
-                                <input type="text" id="damage" class="w-[120px] h-10 text-center text-2xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-1 caret-transparent cursor-pointer hover:bg-gray-200 focus:bg-gray-200" readonly>
+                                <input type="text" id="damage" class="w-[105px] h-10 text-center text-xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-1 caret-transparent cursor-pointer hover:bg-gray-200 focus:bg-gray-200" readonly>
                             </div>
 
                         </div>
@@ -229,7 +229,7 @@
 
 
                     <!-- SPELL ATTACK -->
-                    <div class="flex flex-col items-center bg-yellow-400 w-[430px] p-3 rounded-3xl ml-12 mr-4 mb-1 mt-5">
+                    <div class="flex flex-col items-center bg-yellow-400 w-[460px] p-3 rounded-3xl ml-9 mr-4 mb-1 mt-5">
                         <label for="spellattack" class="text-2xl w-[280px] text-center bg-yellow-600 font-bold py-1 rounded-lg">
                             SPELL ATTACK
                         </label>
@@ -245,26 +245,26 @@
                             <!-- KEY -->
                             <div class="flex flex-col items-center text-center">
                                 <label for="key" class="text-center font-bold text-xl mb-1 ml-2">KEY</label>
-                                <input type="text" [value]="character?.characterAbilities?.wisdomModifier" id="attackability" class="w-10 h-9 text-center text-xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2">
+                                <input type="text" [value]="character?.characterAbilities?.wisdomModifier" id="attackability" class="w-10 h-9 text-center text-xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2" readonly>
                             </div>
 
                             <!-- PROF -->
                             <div class="flex flex-col items-center text-center">
                                 <label for="prof" class="text-center font-bold text-xl mb-1 ml-2">PROF</label>
-                                <input type="text" [value]="character?.proficiencyBonus" id="attackprof" class="w-10 h-9 text-center text-xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2">
+                                <input type="text" [value]="character?.proficiencyBonus" id="attackprof" class="w-10 h-9 text-center text-xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2" readonly>
                             </div>
 
                             <!-- ITEM -->
                             <div class="flex flex-col items-center text-center">
                                 <label for="item" class="text-center font-bold text-xl mb-1 ml-2">ITEM</label>
-                                <input type="text" id="attackitem" class="w-10 h-9 text-center text-xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2">
+                                <input type="text" id="attackitem" class="w-10 h-9 text-center text-xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2" readonly>
                             </div>
                         </div>
                     </div>
 
 
                     <!-- SPELL SAVE -->
-                    <div class="flex flex-col items-center bg-yellow-400 w-[430px] p-3 rounded-3xl ml-11 mr-4 mb-1 mt-5">
+                    <div class="flex flex-col items-center bg-yellow-400 w-[460px] p-3 rounded-3xl ml-9 mr-4 mb-1 mt-5">
                         <label for="classdc" class="text-2xl w-[350px] text-center bg-yellow-600 font-bold py-1 rounded-lg">
                             SPELL SAVE DC
                         </label>
@@ -274,7 +274,7 @@
                             <!-- TOTAL -->
                             <div class="flex flex-col items-center text-center">
                                 <label for="total" class="font-bold text-xl mb-1 ml-5">TOTAL</label>
-                                <input type="text" [value]="spellSaveDC" id="attacktotal" class="w-12 h-11 text-center text-2xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-5">
+                                <input type="text" [value]="spellSaveDC" id="attacktotal" class="w-12 h-11 text-center text-2xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-5" readonly>
                             </div>
 
                             <span class="text-2xl mt-9 text-black">=8 +</span>
@@ -282,19 +282,19 @@
                             <!-- KEY -->
                             <div class="flex flex-col items-center text-center">
                                 <label for="key" class="text-center font-bold text-xl mb-1">KEY</label>
-                                <input type="text" [value]="character?.characterAbilities?.wisdomModifier" id="attackability" class="w-10 h-9 text-center text-xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)]">
+                                <input type="text" [value]="character?.characterAbilities?.wisdomModifier" id="attackability" class="w-10 h-9 text-center text-xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)]" readonly>
                             </div>
 
                             <!-- PROF -->
                             <div class="flex flex-col items-center text-center">
                                 <label for="prof" class="text-center font-bold text-xl mb-1 ml-2">PROF</label>
-                                <input type="text" [value]="character?.proficiencyBonus" id="attackprof" class="w-10 h-9 text-center text-xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2">
+                                <input type="text" [value]="character?.proficiencyBonus" id="attackprof" class="w-10 h-9 text-center text-xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2" readonly>
                             </div>
 
                             <!-- ITEM -->
                             <div class="flex flex-col items-center text-center">
                                 <label for="item" class="text-center font-bold text-xl mb-1 ml-2">ITEM</label>
-                                <input type="text" id="attackitem" class="w-10 h-9 text-center text-xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2">
+                                <input type="text" id="attackitem" class="w-10 h-9 text-center text-xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2" readonly>
                             </div>
 
                         </div>
