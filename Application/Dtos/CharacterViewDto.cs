@@ -1,14 +1,15 @@
-﻿using System;
+﻿using Core.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Entities;
+namespace Application.Dtos;
 
-public class Character : BaseEntity
+public class CharacterViewDto
 {
-    // Character Info
+    public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public string Race { get; set; } = string.Empty;
     public string Background { get; set; } = string.Empty;
@@ -19,21 +20,19 @@ public class Character : BaseEntity
     public string Alignment { get; set; } = string.Empty;
     public int Level { get; set; }
 
-    public CharacterAbilities CharacterAbilities { get; set; } = null!;
-    public CharacterSpellSlots CharacterSpellSlots { get; set; } = null!;
-    public List<CharacterSpell>? CharacterSpells { get; set; }
-
+    public CharacterAbilitiesViewDto CharacterAbilities { get; set; } = null!;
+    public CharacterSpellSlotsViewDto CharacterSpellSlots { get; set; } = null!;
+    public List<SpellViewDto>? CharacterSpells { get; set; }
 
     public int HitDice { get; set; }
-    public int MaxHp => HitDice + ((Level - 1) * (HitDice / 2 + 1)) + (CharacterAbilities.ConstitutionModifier * Level) + Level;
-    public int CurrentHp {  get; set; }
+    public int MaxHp { get; set; }
+    public int CurrentHp { get; set; }
 
-    public int ProficiencyBonus => (int)Math.Ceiling(Level / 4.0) + 1;
-    public int Initiative => CharacterAbilities.DexterityModifier;
-    public int Speed {  get; set; }
+    public int ProficiencyBonus { get; set; }
+    public int Initiative { get; set; }
+    public int Speed { get; set; }
 
-    // Saves Proficiency Bonus
-    public bool StrengthSaveApplyProf {  get; set; }
+    public bool StrengthSaveApplyProf { get; set; }
     public bool DexteritySaveApplyProf { get; set; }
     public bool ConstitutionSaveApplyProf { get; set; }
     public bool IntelligenceSaveApplyProf { get; set; }

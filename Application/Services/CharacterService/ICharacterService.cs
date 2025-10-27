@@ -1,13 +1,10 @@
-﻿using Core.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Application.Dtos;
+using Core.Entities;
 
 namespace Application.Services.CharacterService;
 
 public interface ICharacterService
 {
-    Task<Character> GetCharacterInfoAsync(int id);
+    Task<CharacterViewDto> GetCharacterAsync(int id);
+    Task<List<Spell>> GetCharacterKnownSpellsAsync(int id);
 }

@@ -1,10 +1,7 @@
-﻿using Application.Services.CharacterService;
+﻿using Application.Dtos;
+using Application.Services.CharacterService;
+using Core.Entities;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application;
 
@@ -15,4 +12,28 @@ public static class ServicesRegistration
         services.AddScoped<ICharacterService, CharacterService>();
         return services;
     }
+
+    public static IServiceCollection AddAutoMapperFromAssembly(this IServiceCollection services)
+    {
+        services.AddAutoMapper(cfg =>
+        {
+            cfg.CreateMap<CharacterAbilities, CharacterAbilitiesViewDto>();
+            cfg.CreateMap<CharacterSpellSlots, CharacterSpellSlotsViewDto>();
+            cfg.CreateMap<Spell, SpellViewDto>();
+            cfg.CreateMap<Character, CharacterViewDto>()
+                .ForMember(
+                    dest => dest.CharacterSpells,
+                    opt => opt.MapFrom(src => src.CharacterSpells
+                        .Where(cs => cs.IsPrepared)
+                        .Select(cs => cs.Spell)
+                    )
+                )
+                .ForMember(dest => dest.MaxHp, opt => opt.MapFrom(src => src.MaxHp))
+                .ForMember(dest => dest.ProficiencyBonus, opt => opt.MapFrom(src => src.ProficiencyBonus))
+                .ForMember(dest => dest.Initiative, opt => opt.MapFrom(src => src.Initiative));
+        });
+
+        return services;
+    }
+
 }

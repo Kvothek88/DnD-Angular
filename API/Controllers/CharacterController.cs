@@ -1,3 +1,4 @@
+using Application.Dtos;
 using Application.Services.CharacterService;
 using Core.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -17,12 +18,20 @@ public class CharactersController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Character>> GetCharacterInfo(int id)
+    public async Task<ActionResult<CharacterViewDto>> GetCharacterInfo(int id)
     {
-        var character = await _characterService.GetCharacterInfoAsync(id);
+        var character = await _characterService.GetCharacterAsync(id);
 
         if (character == null) return NotFound();
 
         return Ok(character);
+    }
+
+    [HttpGet("known-spells/{id}")]
+    public async Task<ActionResult<List<Spell>>> GetCharacterKnownSpells(int id)
+    {
+        var spells = await _characterService.GetCharacterKnownSpellsAsync(id);
+
+        return Ok(spells);
     }
 }

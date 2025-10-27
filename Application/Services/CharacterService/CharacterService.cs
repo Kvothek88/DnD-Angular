@@ -1,26 +1,29 @@
-﻿using Core.Entities;
-using Core.Interfaces.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Application.Dtos;
+using Application.Interfaces.Repositories;
+using Core.Entities;
 
 namespace Application.Services.CharacterService;
 
 public class CharacterService : ICharacterService
 {
-    private readonly ICharacterRepository _characterInforepository; 
+    private readonly ICharacterRepository _characterrepository; 
     
     public CharacterService(ICharacterRepository characterInfoRepository)
     {
-        _characterInforepository = characterInfoRepository;
+        _characterrepository = characterInfoRepository;
     }
 
-    public async Task<Character> GetCharacterInfoAsync(int id)
+    public async Task<CharacterViewDto> GetCharacterAsync(int id)
     {
-        var character = await _characterInforepository.GetByIdAsync(id);
+        var character = await _characterrepository.GetByIdAsync(id);
 
         return character;
+    }
+
+    public async Task<List<Spell>> GetCharacterKnownSpellsAsync(int id)
+    {
+        var spells = await _characterrepository.GetCharacterKnownSpellsAsync(id);
+
+        return spells;
     }
 }

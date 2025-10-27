@@ -1,0 +1,43 @@
+<div class="flex flex-col items-center bg-yellow-400 w-[290] p-3 rounded-3xl ml-9 mr-4 mb-1">
+
+  <label for="attack" class="text-2xl w-[290px] text-center bg-yellow-600 font-bold py-1 rounded-lg">
+    SKILLS
+  </label>
+
+  @for (skill of skills; track skill) {
+
+    <div class="flex flex-col items-center text-center">
+        <label for="total" class="font-bold text-xl mb-1 ml-2">{{ skill.name.toUpperCase() }} ({{ skill.label }})</label>
+    </div>
+
+    <div class="flex items-center bg-yellow-500 gap-2 w-[270px] h-[100px]  rounded-lg">
+        
+        <!-- TOTAL -->
+        <div class="flex flex-col items-center text-center">
+            <label for="key" class="text-center font-bold text-xl mb-1 ml-2">TOTAL</label>
+            <input type="text" [value]="skill.modifier + skill.proficiency" id="skilltotal" class="w-10 h-9 text-center text-xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2" readonly>
+        </div> 
+
+        <!-- KEY -->
+        <div class="flex flex-col items-center text-center">
+            <label for="key" class="text-center font-bold text-xl mb-1 ml-1">KEY</label>
+            <input type="text" [value]="skill.modifier | modifier" id="skillmodifier" class="w-10 h-9 text-center text-xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-1" readonly>
+        </div>
+
+        <!-- PROF -->
+        <div class="flex flex-col items-center text-center">
+            <label for="prof" class="text-center font-bold text-xl mb-1 ml-1">PROF</label>
+            <input type="text" [value]="skill.proficiency" id="skillprof" class="w-10 h-9 text-center text-xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-1" readonly>
+        </div>
+
+        <!-- ITEM -->
+        <div class="flex flex-col items-center text-center">
+            <label for="item" class="text-center font-bold text-xl mb-1 ml-1">ITEM</label>
+            <input type="text" id="skillitem" class="w-10 h-9 text-center text-xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-1" readonly>
+        </div>
+
+    </div>
+  }
+</div>
+
+

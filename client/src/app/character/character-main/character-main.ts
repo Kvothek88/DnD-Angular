@@ -34,6 +34,7 @@ export class CharacterMain implements OnInit {
       .subscribe({
         next: character => {
           this.character = character;
+          console.log(character)
         },
         error: err => {
           console.error(err);

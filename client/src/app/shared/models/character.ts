@@ -33,4 +33,24 @@ export interface Character {
     intelligenceSaveApplyProf: boolean;
     wisdomSaveApplyProf: boolean;
     charismaSaveApplyProf: boolean;
+
+    // Skills Proficiencies
+    acrobaticsApplyProf: boolean;
+    animalHandlingApplyProf: boolean;
+    arcanaApplyProf: boolean;
+    athleticsApplyProf: boolean;
+    deceptionApplyProf: boolean;
+    historyApplyProf: boolean;
+    insightApplyProf: boolean;
+    intimidationApplyProf: boolean;
+    investigationApplyProf: boolean;
+    medicineApplyProf: boolean;
+    natureApplyProf: boolean;
+    perceptionApplyProf: boolean;
+    performanceApplyProf: boolean;
+    persuasionApplyProf: boolean;
+    religionApplyProf: boolean;
+    sleightOfHandApplyProf: boolean;
+    stealthApplyProf: boolean;
+    survivalApplyProf: boolean;  
 }

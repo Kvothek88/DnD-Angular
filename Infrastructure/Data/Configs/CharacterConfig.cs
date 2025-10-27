@@ -34,24 +34,9 @@ public class CharacterConfig : IEntityTypeConfiguration<Character>
                .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(c => c.CharacterSpells)
-               .WithMany()
-               .UsingEntity<Dictionary<string, object>>(
-                   "CharacterSpells",
-                   j => j.HasOne<Spell>()
-                         .WithMany()
-                         .HasForeignKey("SpellId")
-                         .HasConstraintName("FK_CharacterSpells_Spell")
-                         .OnDelete(DeleteBehavior.Cascade),
-                   j => j.HasOne<Character>()
-                         .WithMany()
-                         .HasForeignKey("CharacterId")
-                         .HasConstraintName("FK_CharacterSpells_Character")
-                         .OnDelete(DeleteBehavior.Cascade),
-                   j =>
-                   {
-                       j.HasKey("CharacterId", "SpellId");
-                       j.ToTable("CharacterSpells");
-                   });
+               .WithOne()
+               .HasForeignKey(cs => cs.CharacterId)
+               .OnDelete(DeleteBehavior.Cascade);
 
     }
 }

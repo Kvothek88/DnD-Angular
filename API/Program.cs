@@ -1,6 +1,5 @@
 using Application;
 using Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,8 +18,10 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddControllers();
 
+builder.Services.AddAutoMapperFromAssembly();
 builder.Services.AddInfrastructure(config);
 builder.Services.AddServices();
+
 
 builder.Services.AddOpenApi();
 

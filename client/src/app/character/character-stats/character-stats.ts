@@ -6,10 +6,11 @@ import { CharacterSpells } from "../character-spells/character-spells";
 import { CharacterSaves } from "../character-saves/character-saves";
 import { ModifierPipe } from "../../shared/pipes/modifier-pipe";
 import { ToastService } from '../../shared/services/toast.service';
+import { CharacterSkills } from "../character-skills/character-skills";
 
 @Component({
   selector: 'app-character-stats',
-  imports: [CommonModule, FormsModule, CharacterSpells, CharacterSaves, ModifierPipe],
+  imports: [CommonModule, FormsModule, CharacterSpells, CharacterSaves, ModifierPipe, CharacterSkills],
   templateUrl: './character-stats.html',
   styleUrl: './character-stats.css'
 })
