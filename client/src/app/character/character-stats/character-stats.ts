@@ -10,6 +10,7 @@ import { CharacterSkills } from "../character-skills/character-skills";
 
 @Component({
   selector: 'app-character-stats',
+  standalone: true,
   imports: [CommonModule, FormsModule, CharacterSpells, CharacterSaves, ModifierPipe, CharacterSkills],
   templateUrl: './character-stats.html',
   styleUrl: './character-stats.css'
