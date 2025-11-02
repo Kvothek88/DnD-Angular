@@ -15,12 +15,11 @@ public class CharacterRepository : ICharacterRepository
 
     public CharacterRepository(
         CharacterDbContext context, 
-        IMapper mapper,
-        IConfigurationProvider mapperConfig)
+        IMapper mapper)
     {
         _context = context;
         _mapper = mapper;
-        _mapperConfig = mapperConfig;
+        _mapperConfig = _mapper.ConfigurationProvider;
     }
 
     public async Task<CharacterViewDto?> GetByIdAsync(int id)

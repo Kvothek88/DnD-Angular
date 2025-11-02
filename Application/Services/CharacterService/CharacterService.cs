@@ -20,7 +20,7 @@ public class CharacterService : ICharacterService
         return character;
     }
 
-    public async Task<List<ReferenceViewDto>> GetCharacters()
+    public async Task<List<ReferenceViewDto>> GetCharactersAsync()
     {
         return await _characterrepository.GetAllAsync();
     }

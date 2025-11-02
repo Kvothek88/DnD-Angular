@@ -3,6 +3,7 @@ using Application.Services.CharacterService;
 using Core.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Client;
+using System.Net;
 
 namespace API.Controllers;
 
@@ -28,9 +29,9 @@ public class CharactersController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<CharacterViewDto>> GetCharacters(int id)
+    public async Task<ActionResult<List<ReferenceViewDto>?>> GetCharacters()
     {
-        var characters = await _characterService.GetCharacters();
+        var characters = await _characterService.GetCharactersAsync();
 
         if (characters is null) return NotFound();
 

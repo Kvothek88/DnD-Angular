@@ -13,12 +13,13 @@ public static class ServicesRegistration
         return services;
     }
 
-    public static IServiceCollection AddAutoMapperFromAssembly(this IServiceCollection services)
+    public static IServiceCollection AddAutoMapperProfiles(this IServiceCollection services)
     {
         services.AddAutoMapper(cfg =>
         {
             cfg.CreateMap<CharacterAbilities, CharacterAbilitiesViewDto>();
             cfg.CreateMap<CharacterSpellSlots, CharacterSpellSlotsViewDto>();
+            cfg.CreateMap<Character, ReferenceViewDto>();
             cfg.CreateMap<Spell, SpellViewDto>();
             cfg.CreateMap<Character, CharacterViewDto>()
                 .ForMember(

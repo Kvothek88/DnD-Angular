@@ -18,7 +18,7 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddControllers();
 
-builder.Services.AddAutoMapperFromAssembly();
+builder.Services.AddAutoMapperProfiles();
 builder.Services.AddInfrastructure(config);
 builder.Services.AddServices();
 

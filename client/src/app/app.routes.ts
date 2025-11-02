@@ -4,6 +4,6 @@ import { CharacterMain } from './character/character-main/character-main';
 
 export const routes: Routes = [
     {path:'', component: Home},
-    {path:'character/:id', component: CharacterMain},
+    {path:'characters/:id', component: CharacterMain},
     { path: '**', redirectTo: '' }
 ];
