@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { savesConfig, SavesInfo } from '../../shared/models/character.constants';
 import { ModifierPipe } from "../../shared/pipes/modifier-pipe";
+import { ToastService } from '../../shared/services/toast.service';
 
 @Component({
   selector: 'app-character-saves',
@@ -14,6 +15,8 @@ import { ModifierPipe } from "../../shared/pipes/modifier-pipe";
 export class CharacterSaves {
   @Input() character: Character | null = null;
 
+  constructor(private toastService: ToastService){}
+
   saves: SavesInfo[] = [];
 
 
@@ -21,6 +24,16 @@ export class CharacterSaves {
     if (changes['character'] && this.character) {
       this.updateSavingThrows();
     }
+  }
+
+  savingThrow(ability: string, modifier: number){
+
+    const numericModifier = Number(modifier);
+    const roll = Math.floor(Math.random() * 20) + 1;
+    const result = roll + numericModifier;
+    ability = ability.charAt(0).toUpperCase() + ability.substring(1);
+
+    this.toastService.show(`${ability} Saving Throw: 1d20+${numericModifier} = ${roll} + ${numericModifier} = ${result}`, 'success')
   }
 
   updateSavingThrows(): void {
