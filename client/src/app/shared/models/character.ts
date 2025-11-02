@@ -9,10 +9,11 @@ export interface Character {
     background: string;
     religion: string;
     class: string;
-    domain: string;
+    subclass: string;
     size: string;
     alignment: string;
     level: number;
+    imageFrame: string;
 
     characterAbilities: CharacterAbilities;
     characterSpellSlots: CharacterSpellSlots;

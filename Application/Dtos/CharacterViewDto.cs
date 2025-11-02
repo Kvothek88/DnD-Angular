@@ -15,10 +15,11 @@ public class CharacterViewDto
     public string Background { get; set; } = string.Empty;
     public string Religion { get; set; } = string.Empty;
     public string Class { get; set; } = string.Empty;
-    public string Domain { get; set; } = string.Empty;
+    public string Subclass { get; set; } = string.Empty;
     public string Size { get; set; } = string.Empty;
     public string Alignment { get; set; } = string.Empty;
     public int Level { get; set; }
+    public string? ImageFrame { get; set; }
 
     public CharacterAbilitiesViewDto CharacterAbilities { get; set; } = null!;
     public CharacterSpellSlotsViewDto CharacterSpellSlots { get; set; } = null!;

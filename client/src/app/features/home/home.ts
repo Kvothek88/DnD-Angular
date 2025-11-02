@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CharacterService } from '../../shared/services/character.service';
-import { ReferenceViewDto } from '../../shared/models/reference-view-dto';
+import { CharacterCardViewDto } from '../../shared/models/character-card-view-dto';
 
 @Component({
   selector: 'app-home',
@@ -16,7 +16,7 @@ export class Home implements OnInit {
   private characterService = inject(CharacterService);
   private cdr = inject(ChangeDetectorRef);
 
-  characters: ReferenceViewDto[] = [];
+  characters: CharacterCardViewDto[] = [];
   isLoading = true;
   error: string | null = null;
 
@@ -26,6 +26,7 @@ export class Home implements OnInit {
         this.isLoading = false;
         this.characters = characters;
         this.cdr.detectChanges();
+        console.log(characters)
       },
       error: err => {
         console.error(err);

@@ -29,7 +29,7 @@ public class CharactersController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<List<ReferenceViewDto>?>> GetCharacters()
+    public async Task<ActionResult<List<CharacterCardViewDto>?>> GetCharacters()
     {
         var characters = await _characterService.GetCharactersAsync();
 

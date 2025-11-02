@@ -33,10 +33,10 @@ public class CharacterRepository : ICharacterRepository
         return _mapper.Map<CharacterViewDto>(character);
     }
 
-    public async Task<List<ReferenceViewDto>> GetAllAsync()
+    public async Task<List<CharacterCardViewDto>> GetAllAsync()
     {
         return await _context.Characters
-            .ProjectTo<ReferenceViewDto>(_mapperConfig)
+            .ProjectTo<CharacterCardViewDto>(_mapperConfig)
             .ToListAsync();
     }
 

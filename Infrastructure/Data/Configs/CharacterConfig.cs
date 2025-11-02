@@ -15,7 +15,7 @@ public class CharacterConfig : IEntityTypeConfiguration<Character>
         builder.Property(c => c.Background).HasMaxLength(255);
         builder.Property(c => c.Religion).HasMaxLength(255);
         builder.Property(c => c.Class).HasMaxLength(255);
-        builder.Property(c => c.Domain).HasMaxLength(255);
+        builder.Property(c => c.Subclass).HasMaxLength(255);
         builder.Property(c => c.Size).HasMaxLength(255);
         builder.Property(c => c.Alignment).HasMaxLength(255);
 

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Character } from '../models/character';
-import { ReferenceViewDto } from '../models/reference-view-dto';
+import { CharacterCardViewDto } from '../models/character-card-view-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +15,6 @@ export class CharacterService {
   }
 
   getCharacters(){
-    return this.http.get<ReferenceViewDto[]>(this.baseUrl + 'characters')
+    return this.http.get<CharacterCardViewDto[]>(this.baseUrl + 'characters')
   }
 }

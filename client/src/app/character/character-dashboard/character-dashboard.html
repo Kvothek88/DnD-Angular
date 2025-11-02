@@ -1,12 +1,12 @@
   
 @if (character) {
   <!-- Main Row -->
-  <div class="flex flex-row bg-yellow-200/50 rounded-3xl p-3 m-5 space-x-1">
+  <div class="relative flex flex-row bg-yellow-200/50 rounded-3xl p-3 m-5 space-x-1">
 
     <!-- Images -->
     <div class="relative w-[370px] h-[300px] p-6 mt-11 ml-5 flex-shrink-0">
-      <img src="assets/images/radni.jpg" alt="Character Image" class="w-[260px] h-[260px] rounded-[60%]">
-      <img src="assets/images/portrait.png" alt="Portrait" class="absolute -top-7 -left-7 w-[380px] h-[380px]">
+      <img [src]="'assets/images/p' + character.id + '.jpg'" alt="Character Image" class="w-[260px] h-[260px] rounded-[60%]">
+      <img [src]="'assets/images/f' + character.imageFrame + '.png'" alt="Portrait" class="absolute -top-7 -left-7 w-[380px] h-[380px]">
     </div>
 
     <!-- Column 1 -->
@@ -37,7 +37,7 @@
       </div>
       <div>
         <label for="domain" class="block text-2xl font-bold mb-1">Domain</label>
-        <input type="text" id="domain" [(ngModel)]="character.domain" placeholder="Domain" class="w-[200px] text-xl p-2 rounded bg-white shadow-[0_5px_5px_rgba(0,0,0,0.8)] border" readonly>
+        <input type="text" id="domain" [(ngModel)]="character.subclass" placeholder="Domain" class="w-[200px] text-xl p-2 rounded bg-white shadow-[0_5px_5px_rgba(0,0,0,0.8)] border" readonly>
       </div>
       <div>
         <label for="size" class="block text-2xl font-bold mb-1">Size</label>
@@ -77,19 +77,11 @@
     </div>
     
 
-    <!-- Next Page Links -->
-    <div class="flex flex-col space-y-3">
+    <!-- Home Link -->
+    <div class="absolute top-4 right-4 flex flex-col space-y-3">
       <div class="relative w-[165px] h-[136px]">
         <img src="assets/images/next.png" alt="Next" class="w-full h-full object-cover rounded">
-        <a href="spells.html" class="absolute inset-0 flex items-center justify-center text-white text-lg font-bold">Spells</a>
-      </div>
-      <div class="relative w-[165px] h-[136px]">
-        <img src="assets/images/next.png" alt="Next" class="w-full h-full object-cover rounded">
-        <a href="gear.html" class="absolute inset-0 flex items-center justify-center text-white text-lg font-bold">Gear</a>
-      </div>
-      <div class="relative w-[165px] h-[136px]">
-        <img src="assets/images/next.png" alt="Next" class="w-full h-full object-cover rounded">
-        <a href="features.html" class="absolute inset-0 flex items-center justify-center text-white text-lg font-bold">Features</a>
+        <a [routerLink]="['']" class="absolute inset-0 flex items-center justify-center text-white text-lg font-bold">Characters</a>
       </div>
     </div>
   </div>

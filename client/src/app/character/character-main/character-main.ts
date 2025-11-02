@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { finalize } from 'rxjs';
 import { CharacterStats } from "../character-stats/character-stats";
 import { CharacterDashboard } from "../character-dashboard/character-dashboard";
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-character-main',
@@ -18,6 +19,8 @@ export class CharacterMain implements OnInit {
 
   private characterService = inject(CharacterService);
   private cdr = inject(ChangeDetectorRef);
+  private route = inject(ActivatedRoute);
+
   
   isLoading = true;
   error: string | null = null;
@@ -26,7 +29,16 @@ export class CharacterMain implements OnInit {
   
 
   ngOnInit(): void {
-    this.characterService.getCharacter(1)
+
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+
+    if (!id) {
+      this.error = 'Invalid character ID';
+      this.isLoading = false;
+      return;
+    }
+
+    this.characterService.getCharacter(id)
       .pipe(finalize(() => {
         this.isLoading = false;
         this.cdr.detectChanges();
