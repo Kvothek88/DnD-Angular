@@ -27,6 +27,16 @@ public class CharactersController : ControllerBase
         return Ok(character);
     }
 
+    [HttpGet]
+    public async Task<ActionResult<CharacterViewDto>> GetCharacters(int id)
+    {
+        var characters = await _characterService.GetCharacters();
+
+        if (characters is null) return NotFound();
+
+        return Ok(characters);
+    }
+
     [HttpGet("known-spells/{id}")]
     public async Task<ActionResult<List<Spell>>> GetCharacterKnownSpells(int id)
     {

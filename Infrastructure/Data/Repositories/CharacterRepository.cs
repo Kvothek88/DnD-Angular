@@ -3,6 +3,7 @@ using AutoMapper;
 using Core.Entities;
 using Application.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper.QueryableExtensions;
 
 namespace Infrastructure.Data.Repositories;
 
@@ -10,11 +11,16 @@ public class CharacterRepository : ICharacterRepository
 {
     private readonly CharacterDbContext _context;
     private readonly IMapper _mapper;
+    private readonly IConfigurationProvider _mapperConfig;
 
-    public CharacterRepository(CharacterDbContext context, IMapper mapper)
+    public CharacterRepository(
+        CharacterDbContext context, 
+        IMapper mapper,
+        IConfigurationProvider mapperConfig)
     {
         _context = context;
         _mapper = mapper;
+        _mapperConfig = mapperConfig;
     }
 
     public async Task<CharacterViewDto?> GetByIdAsync(int id)
@@ -26,6 +32,13 @@ public class CharacterRepository : ICharacterRepository
             .FirstOrDefaultAsync(c => c.Id == id);
 
         return _mapper.Map<CharacterViewDto>(character);
+    }
+
+    public async Task<List<ReferenceViewDto>> GetAllAsync()
+    {
+        return await _context.Characters
+            .ProjectTo<ReferenceViewDto>(_mapperConfig)
+            .ToListAsync();
     }
 
     public async Task<List<Spell>> GetCharacterKnownSpellsAsync(int id)

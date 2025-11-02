@@ -173,7 +173,8 @@
                         <div class="flex flex-row bg-yellow-500 rounded-lg p-1 m-[3px] ml-3 mr-3 mb-1">
                             <div class="flex flex-col items-center justify-center p-1.5">
                             <label for="initiative" class="text-center text-2xl font-bold mb-1">INITIATIVE</label>
-                            <input type="text" [value]="character?.initiative | modifier" id="initiative" class="w-14 h-11 bg-white border text-center text-xl rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] caret-transparent cursor-pointer hover:bg-gray-200 focus:bg-gray-200" readonly>
+                            <input type="text" [value]="character?.initiative | modifier" id="initiative" (click)="initiativeDice(character!.characterAbilities!.dexterityModifier)"
+                                class="w-14 h-11 bg-white border text-center text-xl rounded shadow-[0_5px_5px_rgba(0,0,0,0.8)] caret-transparent cursor-pointer hover:bg-gray-200 focus:bg-gray-200" readonly>
                             </div>
                         </div>
                         <!-- SPEED Container -->
@@ -197,7 +198,8 @@
                             <!-- TOTAL -->
                             <div class="flex flex-col items-center text-center">
                                 <label for="total" class="font-bold text-xl mb-1 ml-2">TOTAL</label>
-                                <input type="text" [value]="attackTotal" id="attacktotal" class="w-12 h-11 text-center text-2xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2 caret-transparent cursor-pointer hover:bg-gray-200 focus:bg-gray-200" readonly>
+                                <input type="text" [value]="attackTotal" id="attacktotal" class="w-12 h-11 text-center text-2xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2 
+                                    caret-transparent cursor-pointer hover:bg-gray-200 focus:bg-gray-200" readonly (click)="attackDice(character!.characterAbilities!.strengthModifier)">
                             </div>
 
                             <!-- KEY -->
@@ -239,7 +241,8 @@
                             <!-- TOTAL -->
                             <div class="flex flex-col items-center text-center">
                                 <label for="total" class="font-bold text-xl mb-1 ml-2">TOTAL</label>
-                                <input type="text" [value]="spellAttackTotal" id="attacktotal" class="w-12 h-11 text-center text-2xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2 caret-transparent cursor-pointer hover:bg-gray-200 focus:bg-gray-200" readonly>
+                                <input type="text" [value]="spellAttackTotal" id="attacktotal" (click)="spellAttackDice(character!.characterAbilities!.wisdomModifier)"
+                                    class="w-12 h-11 text-center text-2xl bg-white rounded-lg border shadow-[0_5px_5px_rgba(0,0,0,0.8)] ml-2 caret-transparent cursor-pointer hover:bg-gray-200 focus:bg-gray-200" readonly>
                             </div>
 
                             <!-- KEY -->

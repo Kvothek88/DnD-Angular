@@ -29,6 +29,8 @@ public class CharacterProfile : Profile
             .ForMember(dest => dest.MaxHp, opt => opt.MapFrom(src => src.MaxHp))
             .ForMember(dest => dest.ProficiencyBonus, opt => opt.MapFrom(src => src.ProficiencyBonus))
             .ForMember(dest => dest.Initiative, opt => opt.MapFrom(src => src.Initiative));
+
+        CreateMap<Character, ReferenceViewDto>();
     }
 }
 

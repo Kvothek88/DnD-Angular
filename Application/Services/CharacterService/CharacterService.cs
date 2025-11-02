@@ -20,6 +20,11 @@ public class CharacterService : ICharacterService
         return character;
     }
 
+    public async Task<List<ReferenceViewDto>> GetCharacters()
+    {
+        return await _characterrepository.GetAllAsync();
+    }
+
     public async Task<List<Spell>> GetCharacterKnownSpellsAsync(int id)
     {
         var spells = await _characterrepository.GetCharacterKnownSpellsAsync(id);

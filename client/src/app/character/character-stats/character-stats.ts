@@ -44,7 +44,36 @@ export class CharacterStats {
     const roll = Math.floor(Math.random() * 20) + 1;
     const result = roll + numericModifier;
 
-    this.toastService.show(`${ability} Ability Save: 1d20 + ${numericModifier} = ${result}`, 'success')
+    this.toastService.show(`${ability} Ability Save: 1d20+${numericModifier} = ${roll} + ${numericModifier} = ${result}`, 'success')
+  }
+
+  attackDice(strModifier: number){
+    const roll = Math.floor(Math.random() * 20) + 1;
+    const result = roll + strModifier + this.character!.proficiencyBonus;
+
+    this.toastService.show(`Attack: 1d20+${strModifier + this.character!.proficiencyBonus} = ${roll} + ${strModifier + this.character!.proficiencyBonus} = ${result}` , 'success')
+
+    if (result == 20)
+      this.toastService.show('Critical Hit!', 'success')
+  }
+
+  spellAttackDice(wisModifier: number){
+    const roll = Math.floor(Math.random() * 20) + 1;
+    const result = roll + wisModifier + this.character!.proficiencyBonus;
+
+    this.toastService.show(`Spell Attack: 1d20+${wisModifier + this.character!.proficiencyBonus} = ${roll} + ${wisModifier + this.character!.proficiencyBonus} = ${result}` , 'success')
+
+    if (result == 20)
+      this.toastService.show('Critical Hit!', 'success')
+  }
+
+  initiativeDice(dexModifier: number){
+    const roll1 = Math.floor(Math.random() * 20) + 1;
+    const roll2 = Math.floor(Math.random() * 20) + 1;
+    const roll = Math.max(roll1, roll2)
+    const result = roll + dexModifier; 
+
+    this.toastService.show(`Initiative: 1d20 + ${dexModifier} = ${result}`, 'twilight')
   }
 
   calculateAttackTotal() : number {
