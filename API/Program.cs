@@ -22,7 +22,6 @@ builder.Services.AddAutoMapperProfiles();
 builder.Services.AddInfrastructure(config);
 builder.Services.AddServices();
 
-
 builder.Services.AddOpenApi();
 
 var app = builder.Build();

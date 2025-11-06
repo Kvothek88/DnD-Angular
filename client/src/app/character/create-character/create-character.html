@@ -1,0 +1,96 @@
+<form (ngSubmit)="submitForm()" class="flex flex-col space-y-4 p-5 bg-yellow-200/50 rounded-3xl m-5">
+
+  <!-- Name -->
+  <div>
+    <label class="block text-2xl font-bold mb-1">Name</label>
+    <input type="text" [(ngModel)]="formData.name" name="name" placeholder="Character Name" 
+    class="w-[300px] text-xl p-2 bg-white rounded shadow border placeholder:text-gray-400 placeholder:italic" required>
+  </div>
+
+  <!-- Race -->
+  <div>
+    <label class="block text-2xl font-bold mb-1">Race</label>
+    <select [(ngModel)]="formData.race" name="race" class="w-[300px] text-xl p-2 rounded bg-white shadow border" required>
+      <option value="" disabled selected>Select Race</option>
+       @for(race of races; track race){
+        <option [value]="race">{{ race }}</option>
+       }
+    </select>
+  </div>
+
+  <!-- Background -->
+  <div>
+    <label class="block text-2xl font-bold mb-1">Background</label>
+    <input type="text" [(ngModel)]="formData.background" name="background" placeholder="Background" 
+    class="w-[300px] text-xl p-2 bg-white rounded shadow border placeholder:text-gray-400 placeholder:italic">
+  </div>
+
+  <!-- Religion -->
+  <div>
+    <label class="block text-2xl font-bold mb-1">Religion</label>
+    <input type="text" [(ngModel)]="formData.religion" name="religion" placeholder="Religion" 
+    class="w-[300px] text-xl p-2 bg-white rounded shadow border placeholder:text-gray-400 placeholder:italic">
+  </div>
+
+  <!-- Class -->
+  <div>
+    <label class="block text-2xl font-bold mb-1">Class</label>
+    <select [(ngModel)]="formData.class" name="class" (change)="onClassChange($event)" class="w-[300px] text-xl p-2 rounded bg-white shadow border" required>
+      <option value="" disabled selected>Select Class</option>
+      @for(cls of classes; track cls){
+        <option [value]="cls">{{ cls }}</option>
+       }
+    </select>
+  </div>
+
+  <!-- Subclass -->
+  <div>
+    <label class="block text-2xl font-bold mb-1">Subclass</label>
+    <select [(ngModel)]="formData.subclass" name="subclass" class="w-[300px] text-xl p-2 rounded bg-white shadow border" [disabled]="availableSubclasses.length === 0">
+      <option value="" disabled selected>Select Subclass</option>
+      @for(sub of availableSubclasses; track sub){
+        <option [value]="sub">{{ sub }}</option>
+       }
+    </select>
+  </div>
+
+  <!-- Size -->
+  <div>
+    <label class="block text-2xl font-bold mb-1">Size</label>
+    <select [(ngModel)]="formData.size" name="size" class="w-[300px] text-xl p-2 rounded bg-white shadow border">
+      <option value="" disabled selected>Select Size</option>
+      @for(size of sizes; track size){
+        <option [value]="size">{{ size }}</option>
+       }
+    </select>
+  </div>
+
+  <!-- Alignment -->
+  <div>
+    <label class="block text-2xl font-bold mb-1">Alignment</label>
+    <select [(ngModel)]="formData.alignment" name="alignment" class="w-[300px] text-xl p-2 rounded bg-white shadow border">
+      <option value="" disabled selected>Select Alignment</option>
+      @for(alignment of alignments; track alignment){
+        <option [value]="alignment">{{ alignment }}</option>
+       }
+    </select>
+  </div>
+
+  <!-- Level -->
+  <div>
+    <label class="block text-2xl font-bold mb-1">Level</label>
+    <select [(ngModel)]="formData.level" name="level" class="w-[100px] text-xl p-2 rounded bg-white shadow border">
+      <option value="" disabled selected>Level</option>
+      @for(level of levels; track level){
+        <option [value]="level">{{ level }}</option>
+       }
+    </select>
+  </div>
+
+  <!-- Submit -->
+  <button type="submit" class="bg-amber-700 hover:bg-amber-800 text-white font-semibold py-2 px-4 rounded text-center transition-colors duration-200 mt-3 w-[150px]">
+    Create Character
+  </button>
+
+</form>
+

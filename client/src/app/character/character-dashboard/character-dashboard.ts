@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { DiceRoller } from "../../features/dice-roller/dice-roller";
+import { ToastService } from '../../shared/services/toast.service';
 
 @Component({
   selector: 'app-character-dashboard',
@@ -13,4 +14,23 @@ import { DiceRoller } from "../../features/dice-roller/dice-roller";
 })
 export class CharacterDashboard {
   @Input() character: Character | null = null;
+
+  constructor(private toastService: ToastService) {}
+
+  wildShapeForm : number = 0;
+
+  wildShape() {
+    if (this.wildShapeForm === 0) {
+      const choice = parseInt(prompt("Choose your Wild Shape:\n1 - Dire Wolf\n2 - Dire Bear\n3 - Hawk") || "0", 10);
+      if ([1, 2, 3].includes(choice)) {
+        this.wildShapeForm = choice;
+      } else {
+        this.toastService.show("Invalid choice", 'error')
+      }
+    } else {
+      this.wildShapeForm = 0;
+    }
+  }
+
 }
+

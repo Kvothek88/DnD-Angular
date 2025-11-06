@@ -5,8 +5,19 @@
 
     <!-- Images -->
     <div class="relative w-[370px] h-[300px] p-6 mt-11 ml-5 flex-shrink-0">
-      <img [src]="'assets/images/p' + character.id + '.jpg'" alt="Character Image" class="w-[260px] h-[260px] rounded-[60%]">
-      <img [src]="'assets/images/f' + character.imageFrame + '.png'" alt="Portrait" class="absolute -top-7 -left-7 w-[380px] h-[380px]">
+      @if (character.class == 'Druid'){
+        @if (wildShapeForm>0){
+          <img [src]="'assets/images/ws' + wildShapeForm + '.jpg'" alt="Character Image" class="w-[260px] h-[260px] rounded-[60%]">
+        }
+        @else () {
+          <img [src]="'assets/images/p' + character.id + '.jpg'" alt="Character Image" class="w-[260px] h-[260px] rounded-[60%]">
+        }
+        <img [src]="'assets/images/f' + character.imageFrame + '.png'" alt="Portrait" class="absolute -top-7 -left-7 w-[380px] h-[380px]">
+      }
+      @else {
+        <img [src]="'assets/images/p' + character.id + '.jpg'" alt="Character Image" class="w-[260px] h-[260px] rounded-[60%]">
+        <img [src]="'assets/images/f' + character.imageFrame + '.png'" alt="Portrait" class="absolute -top-7 -left-7 w-[380px] h-[380px]">
+      }
     </div>
 
     <!-- Column 1 -->
@@ -59,7 +70,8 @@
 
     <!-- Buttons Container -->
 
-    <div class="flex flex-col space-y-4 mx-4 mt-7">
+    <div class="flex flex-col space-y-4 mx-2 mt-7">
+      <button class="w-[120px] h-[60px] bg-yellow-600 text-white rounded hover:bg-yellow-700">HEAL</button>
       <button class="w-[120px] h-[60px] bg-yellow-600 text-white rounded hover:bg-yellow-700">HARM</button>
       <button class="w-[120px] h-[60px] bg-yellow-600 text-white rounded hover:bg-yellow-700">LONG REST</button>
       <button class="w-[120px] h-[60px] bg-yellow-600 text-white rounded hover:bg-yellow-700">SHORT REST</button>
@@ -67,8 +79,11 @@
         <button class="w-[120px] h-[60px] bg-yellow-600 text-white rounded hover:bg-yellow-700">DIVINE STRIKE</button>
       }
       @else if (character.class == 'Druid'){
-        <button class="w-[120px] h-[60px] bg-yellow-600 text-white rounded hover:bg-yellow-700">WILD SHAPE</button>
+        <button class="w-[120px] h-[60px] bg-yellow-600 text-white rounded hover:bg-yellow-700" (click)="wildShape()">WILD SHAPE</button>
       }
+    </div>
+
+    <div class="flex flex-col space-y-4 mx-2 mt-7">
       @if (character.subclass == 'Twilight'){
         <button class="w-[120px] h-[60px] bg-yellow-600 text-white rounded hover:bg-yellow-700">TWILIGHT SANCTUARY</button>
       }
@@ -83,7 +98,6 @@
       <input type="text" id="alignment" class="w-[50px] h-[37px] text-xl p-2 rounded bg-white shadow-[0_5px_5px_rgba(0,0,0,0.8)] border" readonly>
     </div>
 
-
     <!-- Dice canvas -->
      <div class="flex flex-col space-y-4 mx-4 mt-4 mb-4">
       <app-dice-roller></app-dice-roller>
@@ -92,7 +106,7 @@
 
     <!-- Home Link -->
     <div class="absolute top-4 right-22 flex flex-col space-y-3">
-      <div class="relative w-[137px] h-[136px]">
+      <div class="relative w-[127px] h-[116px]">
         <img src="assets/images/next.png" alt="Next" class="w-full h-full object-cover rounded">
         <a [routerLink]="['']" class="absolute inset-0 flex items-center justify-center text-white text-lg font-bold">Characters</a>
       </div>
