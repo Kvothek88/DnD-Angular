@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core.Constants;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,7 +28,7 @@ public class Character : BaseEntity
 
     public int HitDice { get; set; }
     public int MaxHp => HitDice + ((Level - 1) * (HitDice / 2 + 1)) + (CharacterAbilities.ConstitutionModifier * Level) + Level;
-    public int CurrentHp {  get; set; }
+    public int CurrentHp { get; set; }
 
     public int ProficiencyBonus => (int)Math.Ceiling(Level / 4.0) + 1;
     public int Initiative => CharacterAbilities.DexterityModifier;
@@ -60,4 +61,22 @@ public class Character : BaseEntity
     public bool SleightOfHandApplyProf { get; set; }   // Dex
     public bool StealthApplyProf { get; set; }         // Dex
     public bool SurvivalApplyProf { get; set; }        // Wis
+
+    public void InitializeDerivedValues()
+    {
+        // Populate HitDice based on Class
+        if (CharacterDefaults.ClassHitDice.TryGetValue(Class, out var hitDice))
+            HitDice = hitDice;
+        else
+            HitDice = 8; // default if class not found
+
+        // Populate Speed based on Race
+        if (CharacterDefaults.RaceSpeed.TryGetValue(Race, out var speed))
+            Speed = speed;
+        else
+            Speed = 30; // default if race not found
+
+        // Initialize CurrentHp
+        CurrentHp = MaxHp;
+    }
 }

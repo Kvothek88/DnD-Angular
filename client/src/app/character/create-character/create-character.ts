@@ -54,7 +54,7 @@ export class CreateCharacter {
     this.formData.subclass = '';
   }
 
-  portraits: string[] = ['1', '2', '3', '4', '5', '6', '7'];
+  portraits: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
   isPortraitDropdownOpen = false;
 

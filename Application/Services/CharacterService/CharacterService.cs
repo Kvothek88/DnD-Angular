@@ -38,6 +38,9 @@ public class CharacterService : ICharacterService
     public async Task<CharacterViewDto> CreateCharacterAsync(CreateCharacterDto characterDto)
     {
         var character = _mapper.Map<Character>(characterDto);
+
+        character.InitializeDerivedValues();
+
         return await _characterrepository.AddCharacterAsync(character);
     }
 
