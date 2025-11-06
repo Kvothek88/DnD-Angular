@@ -21,6 +21,8 @@ public static class ServicesRegistration
             cfg.CreateMap<CharacterSpellSlots, CharacterSpellSlotsViewDto>();
             cfg.CreateMap<Character, CharacterCardViewDto>();
             cfg.CreateMap<Spell, SpellViewDto>();
+            cfg.CreateMap<CreateCharacterDto, Character>();
+            cfg.CreateMap<CreateCharacterAbilitiesDto, CharacterAbilities>();
             cfg.CreateMap<Character, CharacterViewDto>()
                 .ForMember(
                     dest => dest.CharacterSpells,

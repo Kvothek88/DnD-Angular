@@ -50,4 +50,11 @@ public class CharacterRepository : ICharacterRepository
 
         return spells;
     }
+
+    public async Task<CharacterViewDto> AddCharacterAsync(Character character)
+    {
+        await _context.Characters.AddAsync(character);
+        await _context.SaveChangesAsync();
+        return _mapper.Map<CharacterViewDto>(character);
+    }
 }

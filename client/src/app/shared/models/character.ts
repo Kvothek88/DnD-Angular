@@ -16,8 +16,8 @@ export interface Character {
     imageFrame: string;
 
     characterAbilities: CharacterAbilities;
-    characterSpellSlots: CharacterSpellSlots;
-    characterSpells: Spell[];
+    characterSpellSlots?: CharacterSpellSlots;
+    characterSpells?: Spell[];
 
     hitDice: number;
     maxHp: number;

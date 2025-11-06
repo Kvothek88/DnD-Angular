@@ -9,4 +9,5 @@ public interface ICharacterRepository
     Task<CharacterViewDto> GetByIdAsync(int id);
     Task<List<CharacterCardViewDto>> GetAllAsync();
     Task<List<Spell>> GetCharacterKnownSpellsAsync(int id);
+    Task<CharacterViewDto> AddCharacterAsync(Character character);
 }

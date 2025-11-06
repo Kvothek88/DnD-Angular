@@ -1,16 +1,19 @@
 ﻿using Application.Dtos;
 using Application.Interfaces.Repositories;
+using AutoMapper;
 using Core.Entities;
 
 namespace Application.Services.CharacterService;
 
 public class CharacterService : ICharacterService
 {
-    private readonly ICharacterRepository _characterrepository; 
-    
-    public CharacterService(ICharacterRepository characterInfoRepository)
+    private readonly ICharacterRepository _characterrepository;
+    private readonly IMapper _mapper;
+
+    public CharacterService(ICharacterRepository characterInfoRepository, IMapper mapper)
     {
         _characterrepository = characterInfoRepository;
+        _mapper = mapper;
     }
 
     public async Task<CharacterViewDto> GetCharacterAsync(int id)
@@ -31,4 +34,11 @@ public class CharacterService : ICharacterService
 
         return spells;
     }
+
+    public async Task<CharacterViewDto> CreateCharacterAsync(CreateCharacterDto characterDto)
+    {
+        var character = _mapper.Map<Character>(characterDto);
+        return await _characterrepository.AddCharacterAsync(character);
+    }
+
 }

@@ -1,96 +1,251 @@
-<form (ngSubmit)="submitForm()" class="flex flex-col space-y-4 p-5 bg-yellow-200/50 rounded-3xl m-5">
+<form (ngSubmit)="submitForm()" class="p-5 bg-yellow-200/50 rounded-3xl m-5">
 
-  <!-- Name -->
-  <div>
-    <label class="block text-2xl font-bold mb-1">Name</label>
-    <input type="text" [(ngModel)]="formData.name" name="name" placeholder="Character Name" 
-    class="w-[300px] text-xl p-2 bg-white rounded shadow border placeholder:text-gray-400 placeholder:italic" required>
+  <h1 class="text-3xl font-bold text-center mb-5 bg-amber-600 rounded-lg">Create New Character</h1>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+    <!-- Left Column: Basic Info & Avatar -->
+    <div class="flex flex-col space-y-4">
+
+      <!-- Name -->
+      <div>
+        <label class="block text-2xl font-bold mb-1">Name</label>
+        <input type="text" [(ngModel)]="formData.name" name="name" placeholder="Character Name" 
+               class="w-full text-xl p-2 bg-white rounded shadow border placeholder:text-gray-400 placeholder:italic" required>
+      </div>
+
+      <!-- Race -->
+      <div>
+        <label class="block text-2xl font-bold mb-1">Race</label>
+        <select [(ngModel)]="formData.race" name="race" class="w-full text-xl p-2 rounded bg-white shadow border" required>
+          <option value="" disabled selected>Select Race</option>
+          @for(race of races; track race){
+            <option [value]="race">{{ race }}</option>
+          }
+        </select>
+      </div>
+
+      <!-- Background -->
+      <div>
+        <label class="block text-2xl font-bold mb-1">Background</label>
+        <input type="text" [(ngModel)]="formData.background" name="background" placeholder="Background" 
+               class="w-full text-xl p-2 bg-white rounded shadow border placeholder:text-gray-400 placeholder:italic">
+      </div>
+
+      <!-- Religion -->
+      <div>
+        <label class="block text-2xl font-bold mb-1">Religion</label>
+        <input type="text" [(ngModel)]="formData.religion" name="religion" placeholder="Religion" 
+               class="w-full text-xl p-2 bg-white rounded shadow border placeholder:text-gray-400 placeholder:italic">
+      </div>
+
+      <!-- Class -->
+      <div>
+        <label class="block text-2xl font-bold mb-1">Class</label>
+        <select [(ngModel)]="formData.class" name="class" (change)="onClassChange($event)" 
+                class="w-full text-xl p-2 rounded bg-white shadow border" required>
+          <option value="" disabled selected>Select Class</option>
+          @for(cls of classes; track cls){
+            <option [value]="cls">{{ cls }}</option>
+          }
+        </select>
+      </div>
+
+      <!-- Subclass -->
+      <div>
+        <label class="block text-2xl font-bold mb-1">Subclass</label>
+        <select [(ngModel)]="formData.subclass" name="subclass" class="w-full text-xl p-2 rounded bg-white shadow border" [disabled]="availableSubclasses.length === 0">
+          <option value="" disabled selected>Select Subclass</option>
+          @for(sub of availableSubclasses; track sub){
+            <option [value]="sub">{{ sub }}</option>
+          }
+        </select>
+      </div>
+
+      <!-- Size -->
+      <div>
+        <label class="block text-2xl font-bold mb-1">Size</label>
+        <select [(ngModel)]="formData.size" name="size" class="w-full text-xl p-2 rounded bg-white shadow border">
+          <option value="" disabled selected>Select Size</option>
+          @for(size of sizes; track size){
+            <option [value]="size">{{ size }}</option>
+          }
+        </select>
+      </div>
+
+      <!-- Alignment -->
+      <div>
+        <label class="block text-2xl font-bold mb-1">Alignment</label>
+        <select [(ngModel)]="formData.alignment" name="alignment" class="w-full text-xl p-2 rounded bg-white shadow border">
+          <option value="" disabled selected>Select Alignment</option>
+          @for(alignment of alignments; track alignment){
+            <option [value]="alignment">{{ alignment }}</option>
+          }
+        </select>
+      </div>
+
+      <!-- Level -->
+      <div>
+        <label class="block text-2xl font-bold mb-1">Level</label>
+        <select [(ngModel)]="formData.level" name="level" class="w-[100px] text-xl p-2 rounded bg-white shadow border">
+          <option value="" disabled selected>Level</option>
+          @for(level of levels; track level){
+            <option [value]="level">{{ level }}</option>
+          }
+        </select>
+      </div>
+
+      <!-- Avatar Frame -->
+      <div>
+        <label class="block text-2xl font-bold mb-1">Avatar Frame</label>
+        <div class="relative w-[177px]">
+          <select [(ngModel)]="formData.imageFrame" name="portrait" class="hidden">
+            <option value="">Select Portrait</option>
+            @for(portrait of portraits; track portrait){
+              <option [value]="portrait">{{ portrait }}</option>
+            }
+          </select>
+
+          <button type="button" (click)="togglePortraitDropdown()" class="w-full text-xl p-2 bg-white rounded shadow border flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+              @if(formData.imageFrame){
+                <img [src]="'assets/images/f' + formData.imageFrame + '.png'" class="w-12 h-12 rounded object-cover border-2 border-gray-300">
+                <span>{{ formData.imageFrame }}</span>
+              } @else {
+                <span class="text-gray-400 italic">Select Portrait</span>
+              }
+            </div>
+            <svg class="w-5 h-5 transition-transform" [class.rotate-180]="isPortraitDropdownOpen" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+
+          @if(isPortraitDropdownOpen){
+            <div class="absolute z-10 w-full mt-1 bg-white border rounded shadow-lg max-h-80 overflow-y-auto">
+              @for(portrait of portraits; track portrait){
+                <button type="button" (click)="selectPortrait(portrait)" class="w-full p-2 hover:bg-gray-100 flex items-center space-x-3 transition-colors">
+                  <img [src]="'assets/images/f' + portrait + '.png'" class="w-12 h-12 rounded object-cover border-2 border-gray-300">
+                  <span class="text-lg">{{ portrait }}</span>
+                </button>
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Character Avatar (file upload) -->
+      <div>
+        <label class="block text-2xl font-bold mb-1">Character Avatar</label>
+        <div class="w-full">
+
+          <input type="file" #fileInput (change)="onFileSelected($event)" accept="image/*" class="hidden">
+
+          <div class="flex flex-col space-y-2">
+            <button type="button" (click)="fileInput.click()" class="w-full text-xl p-2 bg-white rounded shadow border hover:bg-gray-50 transition-colors">
+              @if(selectedFile){
+                <span class="text-green-600">✓ {{ selectedFile.name }}</span>
+              } @else {
+                <span class="text-gray-400 italic">Upload Character Avatar</span>
+              }
+            </button>
+
+            @if(imagePreview){
+              <div class="relative w-32 h-32 mx-auto">
+                <img [src]="imagePreview" class="w-full h-full object-cover rounded border-2 border-gray-300">
+                <button type="button" (click)="clearFile()" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600">
+                  ×
+                </button>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+
+    </div> <!-- End Left Column -->
+
+    <!-- Right Column: FormData fields for abilities, saves, skills, etc. -->
+    <div class="flex flex-col space-y-4">
+
+      <!-- Saving Throws -->
+      <div>
+        <h3 class="text-2xl font-bold mb-2">Saving Throws Proficiency</h3>
+        <div class="grid grid-cols-2 gap-2">
+          <label class="flex items-center gap-2"><input type="checkbox" [(ngModel)]="formData.strengthSaveApplyProf" name="strengthSaveApplyProf"> Strength</label>
+          <label class="flex items-center gap-2"><input type="checkbox" [(ngModel)]="formData.dexteritySaveApplyProf" name="dexteritySaveApplyProf"> Dexterity</label>
+          <label class="flex items-center gap-2"><input type="checkbox" [(ngModel)]="formData.constitutionSaveApplyProf" name="constitutionSaveApplyProf"> Constitution</label>
+          <label class="flex items-center gap-2"><input type="checkbox" [(ngModel)]="formData.intelligenceSaveApplyProf" name="intelligenceSaveApplyProf"> Intelligence</label>
+          <label class="flex items-center gap-2"><input type="checkbox" [(ngModel)]="formData.wisdomSaveApplyProf" name="wisdomSaveApplyProf"> Wisdom</label>
+          <label class="flex items-center gap-2"><input type="checkbox" [(ngModel)]="formData.charismaSaveApplyProf" name="charismaSaveApplyProf"> Charisma</label>
+        </div>
+      </div>
+
+      <!-- Skills -->
+      <div>
+        <h3 class="text-2xl font-bold mb-2">Skills Proficiency</h3>
+        <div class="grid grid-cols-2 gap-2">
+          @for(skill of skillsConfig; track skill.key){
+            <label class="flex items-center gap-2">
+              <input 
+                type="checkbox" 
+                [ngModel]="getSkillValue(skill.key)" 
+                (ngModelChange)="setSkillValue(skill.key, $event)" 
+                name="{{skill.key + 'ApplyProf'}}">
+              {{ skill.name }}
+            </label>
+          }
+        </div>
+      </div>
+
+
+      <!-- w-full text-xl p-2 bg-white rounded shadow border placeholder:text-gray-400 placeholder:italic -->
+
+      <!-- Character Abilities -->
+      <div>
+        <h3 class="text-2xl font-bold mb-4">Abilities</h3>
+        <div class="grid grid-cols-2 gap-x-6 gap-y-4">
+
+          <!-- First Column -->
+          <div class="flex flex-col">
+            <label class="font-semibold mb-1 text-lg">Strength</label>
+            <input type="number" [(ngModel)]="formData.characterAbilities.strength" name="strength" class="w-full p-1 bg-white rounded border text-center">
+          </div>
+          <div class="flex flex-col">
+            <label class="font-semibold mb-1 text-lg">Dexterity</label>
+            <input type="number" [(ngModel)]="formData.characterAbilities.dexterity" name="dexterity" class="w-full p-1 bg-white rounded border text-center">
+          </div>
+
+          <!-- Second Row -->
+          <div class="flex flex-col">
+            <label class="font-semibold mb-1 text-lg">Constitution</label>
+            <input type="number" [(ngModel)]="formData.characterAbilities.constitution" name="constitution" class="w-full p-1 bg-white rounded border text-center">
+          </div>
+          <div class="flex flex-col">
+            <label class="font-semibold mb-1 text-lg">Intelligence</label>
+            <input type="number" [(ngModel)]="formData.characterAbilities.intelligence" name="intelligence" class="w-full p-1 bg-white rounded border text-center">
+          </div>
+
+          <!-- Third Row -->
+          <div class="flex flex-col">
+            <label class="font-semibold mb-1 text-lg">Wisdom</label>
+            <input type="number" [(ngModel)]="formData.characterAbilities.wisdom" name="wisdom" class="w-full p-1 bg-white rounded border text-center">
+          </div>
+          <div class="flex flex-col">
+            <label class="font-semibold mb-1 text-lg">Charisma</label>
+            <input type="number" [(ngModel)]="formData.characterAbilities.charisma" name="charisma" class="w-full p-1 bg-white rounded border text-center">
+          </div>
+
+        </div>
+      </div>
+
+    </div> <!-- End Right Column -->
+
+  </div> <!-- End Grid -->
+
+  <!-- Submit Button -->
+  <div class="mt-6 flex justify-center">
+    <button type="submit" class="bg-amber-700 hover:bg-amber-800 text-white font-semibold py-2 px-4 rounded text-center transition-colors duration-200 w-[200px]">
+      Create Character
+    </button>
   </div>
-
-  <!-- Race -->
-  <div>
-    <label class="block text-2xl font-bold mb-1">Race</label>
-    <select [(ngModel)]="formData.race" name="race" class="w-[300px] text-xl p-2 rounded bg-white shadow border" required>
-      <option value="" disabled selected>Select Race</option>
-       @for(race of races; track race){
-        <option [value]="race">{{ race }}</option>
-       }
-    </select>
-  </div>
-
-  <!-- Background -->
-  <div>
-    <label class="block text-2xl font-bold mb-1">Background</label>
-    <input type="text" [(ngModel)]="formData.background" name="background" placeholder="Background" 
-    class="w-[300px] text-xl p-2 bg-white rounded shadow border placeholder:text-gray-400 placeholder:italic">
-  </div>
-
-  <!-- Religion -->
-  <div>
-    <label class="block text-2xl font-bold mb-1">Religion</label>
-    <input type="text" [(ngModel)]="formData.religion" name="religion" placeholder="Religion" 
-    class="w-[300px] text-xl p-2 bg-white rounded shadow border placeholder:text-gray-400 placeholder:italic">
-  </div>
-
-  <!-- Class -->
-  <div>
-    <label class="block text-2xl font-bold mb-1">Class</label>
-    <select [(ngModel)]="formData.class" name="class" (change)="onClassChange($event)" class="w-[300px] text-xl p-2 rounded bg-white shadow border" required>
-      <option value="" disabled selected>Select Class</option>
-      @for(cls of classes; track cls){
-        <option [value]="cls">{{ cls }}</option>
-       }
-    </select>
-  </div>
-
-  <!-- Subclass -->
-  <div>
-    <label class="block text-2xl font-bold mb-1">Subclass</label>
-    <select [(ngModel)]="formData.subclass" name="subclass" class="w-[300px] text-xl p-2 rounded bg-white shadow border" [disabled]="availableSubclasses.length === 0">
-      <option value="" disabled selected>Select Subclass</option>
-      @for(sub of availableSubclasses; track sub){
-        <option [value]="sub">{{ sub }}</option>
-       }
-    </select>
-  </div>
-
-  <!-- Size -->
-  <div>
-    <label class="block text-2xl font-bold mb-1">Size</label>
-    <select [(ngModel)]="formData.size" name="size" class="w-[300px] text-xl p-2 rounded bg-white shadow border">
-      <option value="" disabled selected>Select Size</option>
-      @for(size of sizes; track size){
-        <option [value]="size">{{ size }}</option>
-       }
-    </select>
-  </div>
-
-  <!-- Alignment -->
-  <div>
-    <label class="block text-2xl font-bold mb-1">Alignment</label>
-    <select [(ngModel)]="formData.alignment" name="alignment" class="w-[300px] text-xl p-2 rounded bg-white shadow border">
-      <option value="" disabled selected>Select Alignment</option>
-      @for(alignment of alignments; track alignment){
-        <option [value]="alignment">{{ alignment }}</option>
-       }
-    </select>
-  </div>
-
-  <!-- Level -->
-  <div>
-    <label class="block text-2xl font-bold mb-1">Level</label>
-    <select [(ngModel)]="formData.level" name="level" class="w-[100px] text-xl p-2 rounded bg-white shadow border">
-      <option value="" disabled selected>Level</option>
-      @for(level of levels; track level){
-        <option [value]="level">{{ level }}</option>
-       }
-    </select>
-  </div>
-
-  <!-- Submit -->
-  <button type="submit" class="bg-amber-700 hover:bg-amber-800 text-white font-semibold py-2 px-4 rounded text-center transition-colors duration-200 mt-3 w-[150px]">
-    Create Character
-  </button>
 
 </form>
-

@@ -45,4 +45,54 @@ public class CharactersController : ControllerBase
 
         return Ok(spells);
     }
+
+    [HttpPost]
+    public async Task<ActionResult<CharacterViewDto>> CreateCharacter(CreateCharacterDto input)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var createdCharacter = await _characterService.CreateCharacterAsync(input);
+
+        return CreatedAtAction(
+            nameof(GetCharacterInfo),
+            new { id = createdCharacter.Id },
+            createdCharacter
+        );
+    }
+
+    [HttpPost("upload-avatar")]
+    public async Task<IActionResult> UploadAvatar([FromForm] IFormFile avatar, [FromForm] int characterId)
+    {
+        if (avatar == null || avatar.Length == 0)
+            return BadRequest("No file uploaded");
+
+        var extension = Path.GetExtension(avatar.FileName);
+        var fileName = $"p{characterId}{extension}";
+
+
+        var angularAssetsPath = Path.Combine(
+            Directory.GetCurrentDirectory(),
+            "..",
+            "client",
+            "src",
+            "assets",
+            "images",
+            fileName
+        );
+
+        // Ensure directory exists
+        var directory = Path.GetDirectoryName(angularAssetsPath);
+        if (!Directory.Exists(directory))
+        {
+            Directory.CreateDirectory(directory);
+        }
+
+        using (var stream = new FileStream(angularAssetsPath, FileMode.Create))
+        {
+            await avatar.CopyToAsync(stream);
+        }
+
+        return Ok(new { fileName, characterId });
+    }
 }

@@ -8,4 +8,5 @@ public interface ICharacterService
     Task<CharacterViewDto> GetCharacterAsync(int id);
     Task<List<CharacterCardViewDto>> GetCharactersAsync();
     Task<List<Spell>> GetCharacterKnownSpellsAsync(int id);
+    Task<CharacterViewDto> CreateCharacterAsync(CreateCharacterDto characterDto);
 }
