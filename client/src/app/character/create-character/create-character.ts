@@ -1,10 +1,12 @@
-import { Component, HostListener } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, HostListener, inject, NgZone } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CharacterService } from '../../shared/services/character.service';
-import { firstValueFrom } from 'rxjs';
-import { Character } from '../../shared/models/character';
+import { finalize, firstValueFrom } from 'rxjs';
 import { CreateCharacterDto } from '../../shared/models/create-character-dto';
 import { skillsConfig } from '../../shared/models/character.constants';
+import { Spell } from '../../shared/models/spell';
+import { ToastService } from '../../shared/services/toast.service';
+import { groupBy } from 'lodash';
 
 @Component({
   selector: 'app-create-character',
@@ -14,9 +16,25 @@ import { skillsConfig } from '../../shared/models/character.constants';
 })
 export class CreateCharacter {
 
-  constructor(private characterService: CharacterService) {
+  constructor(private characterService: CharacterService, private toastService: ToastService) {
     this.formData = this.getDefaultFormData();
   }
+
+  private zone = inject(NgZone);
+  private cdr = inject(ChangeDetectorRef);
+
+  portraits: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
+  isPortraitDropdownOpen = false;
+
+  skillsConfig = skillsConfig;
+
+  formData: CreateCharacterDto;
+
+  knownSpells: Spell[] = [];
+  spellsByLevel: { [key: number]: any[] } = {}; 
+  preparedSpells: Spell[] = [];
+  spellsLoading: boolean = false;
+  maxPreparedSpells: number = 0;
 
   // Static data for dropdowns
   races = ['Human', 'Elf', 'Drow Elf', 'Dwarf', 'Halfling', 'Dragonborn', 'Gnome', 'Half-Orc', 'Tiefling'];
@@ -48,19 +66,141 @@ export class CreateCharacter {
 
   availableSubclasses: string[] = [];
 
+  savingThrowProficiencies: Record<string, string[]> = {
+    Barbarian: ['Strength', 'Constitution'],
+    Bard: ['Dexterity', 'Charisma'],
+    Cleric: ['Wisdom', 'Charisma'],
+    Druid: ['Intelligence', 'Wisdom'],
+    Fighter: ['Strength', 'Constitution'],
+    Monk: ['Strength', 'Dexterity'],
+    Paladin: ['Wisdom', 'Charisma'],
+    Ranger: ['Strength', 'Dexterity'],
+    Rogue: ['Dexterity', 'Intelligence'],
+    Sorcerer: ['Constitution', 'Charisma'],
+    Warlock: ['Wisdom', 'Charisma'],
+    Wizard: ['Intelligence', 'Wisdom'],
+    Artificer: ['Constitution', 'Intelligence']
+  };
+
+  skillProficiencies: Record<string, string[]> = {
+    Barbarian: ['Animal Handling', 'Athletics', 'Intimidation', 'Nature', 'Perception', 'Survival'],
+    Bard: [
+      'Acrobatics', 'Animal Handling', 'Arcana', 'Athletics', 'Deception', 'History',
+      'Insight', 'Intimidation', 'Investigation', 'Medicine', 'Nature', 'Perception',
+      'Performance', 'Persuasion', 'Religion', 'Sleight Of Hand', 'Stealth', 'Survival'
+    ],
+    Cleric: ['History', 'Insight', 'Medicine', 'Persuasion', 'Religion'],
+    Druid: ['Animal Handling', 'Insight', 'Medicine', 'Nature', 'Perception', 'Religion', 'Survival'],
+    Fighter: ['Acrobatics', 'Animal Handling', 'Athletics', 'History', 'Insight', 'Intimidation', 'Perception', 'Survival'],
+    Monk: ['Acrobatics', 'Athletics', 'History', 'Insight', 'Religion', 'Stealth'],
+    Paladin: ['Athletics', 'Insight', 'Intimidation', 'Medicine', 'Persuasion', 'Religion'],
+    Ranger: ['Animal Handling', 'Athletics', 'Insight', 'Investigation', 'Nature', 'Perception', 'Stealth', 'Survival'],
+    Rogue: ['Acrobatics', 'Athletics', 'Deception', 'Insight', 'Intimidation', 'Investigation', 'Perception', 'Performance', 'Persuasion', 'Sleight Of Hand', 'Stealth'],
+    Sorcerer: ['Arcana', 'Deception', 'Insight', 'Intimidation', 'Persuasion', 'Religion'],
+    Warlock: ['Arcana', 'Deception', 'History', 'Intimidation', 'Investigation', 'Nature', 'Religion'],
+    Wizard: ['Arcana', 'History', 'Insight', 'Investigation', 'Medicine', 'Religion'],
+    Artificer: ['Arcana', 'History', 'Investigation', 'Medicine', 'Nature', 'Perception', 'Sleight Of Hand'],
+  };
+
+
   onClassChange(event: Event) {
-    const selectedClass = (event.target as HTMLSelectElement).value;
+    this.spellsLoading = true;
+    console.log(this.formData)
+    const selectedClass = this.formData.class;
+    const spellLevel = Math.floor(Number(this.formData.level)/2) + 1;
+    console.log('SpellLevel:' + spellLevel)
     this.availableSubclasses = this.subclasses[selectedClass] || [];
     this.formData.subclass = '';
+
+    Object.keys(this.formData).forEach(key => {
+      if (key.endsWith('ApplyProf')) {
+        (this.formData as any)[key] = false;
+      }
+    });
+
+    this.knownSpells = [];
+    this.preparedSpells = [];
+
+    this.calculateMaxPreparedSpells(this.formData);
+
+    this.characterService.getKnownSpells(selectedClass, spellLevel)
+      .pipe(finalize(() => {
+        this.spellsLoading = false;
+        this.cdr.detectChanges();
+      }))
+      .subscribe({
+        next: response => {
+          this.knownSpells = response;
+          this.spellsByLevel = groupBy(this.knownSpells, 'level');
+          console.log(this.spellsByLevel);
+        },
+        error: err => console.log(err)
+      })
   }
 
-  portraits: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
+  isSaveDisabled(selectedClass: string, ability: string) {
+    return !this.savingThrowProficiencies[selectedClass].includes(ability);
+  }
 
-  isPortraitDropdownOpen = false;
+  isSkillDisabled(selectedClass: string, skill: { key: string, name: string }): boolean {
+    const isNotProficient = !this.skillProficiencies[selectedClass].includes(skill.name);
+    const disabledByLimit = this.isSkillDisabledFromLimit(skill.key);
+    return isNotProficient || disabledByLimit;
+  }
 
-  skillsConfig = skillsConfig;
+  getCheckedSkillsCount(): number {
+    const skillKeys = this.skillsConfig.map(skill => skill.key); // only skills
+    return skillKeys
+      .filter(key => (this.formData as any)[key + 'ApplyProf'])
+      .length;
+  }
 
-  formData: CreateCharacterDto;
+  isSkillDisabledFromLimit(skillKey: string): boolean {
+    const checkedCount = this.getCheckedSkillsCount();
+    const isChecked = (this.formData as any)[skillKey + 'ApplyProf'];
+    // Only disable unchecked skills if 3 are already checked
+    return checkedCount >= 3 && !isChecked;
+  }
+
+  prepareSpell(spell: Spell, event: Event){
+    const input = event.target as HTMLInputElement;
+    if (input.checked){
+      this.preparedSpells.push(spell);
+      this.preparedSpells.sort((a,b) => a.level - b.level);
+    }
+    else
+      this.preparedSpells = this.preparedSpells.filter(s => s.name != spell.name);
+
+    if (this.preparedSpells.length >= this.maxPreparedSpells)
+      this.toastService.show('Max prepared spells reached', 'info');
+  }
+
+  isDisabledFromMaxPreparedLimit(spell: Spell) {
+    const isSelected = this.preparedSpells.some(s => s.id === spell.id);
+    
+    return this.preparedSpells.length >= this.maxPreparedSpells && !isSelected
+  }
+
+  calculateMaxPreparedSpells(charData: CreateCharacterDto) {
+
+    let level = Number(charData.level);
+
+    if (charData.class == 'Cleric' || charData.class == 'Druid'){
+      let wisModifier = Math.floor((charData.characterAbilities.wisdom-10)/2);
+      this.maxPreparedSpells = level + wisModifier;
+      if (this.maxPreparedSpells < 1)
+        this.maxPreparedSpells = 1;
+    }
+    else {
+      this.maxPreparedSpells = 0;
+    }
+  }
+
+  getSpellLevels(): number[] {
+    return Object.keys(this.spellsByLevel)
+      .map(Number)
+      .sort((a, b) => a - b);
+  }
 
   togglePortraitDropdown() {
     this.isPortraitDropdownOpen = !this.isPortraitDropdownOpen;
@@ -114,6 +254,7 @@ export class CreateCharacter {
   async submitForm() {
     try {
       console.log('Form data:', this.formData);
+      this.formData.characterSpells = this.preparedSpells;
 
       // Step 1: Create character
       const createdCharacter = await firstValueFrom(
@@ -151,7 +292,7 @@ export class CreateCharacter {
     return (this.formData as any)[key + 'ApplyProf'];
   }
 
-  setSkillValue(key: string, value: boolean) {
+  setSkillValue(key: string, value: boolean, name: string) {
     (this.formData as any)[key + 'ApplyProf'] = value;
   }
 
@@ -216,7 +357,9 @@ export class CreateCharacter {
         intelligenceModifier: 0,
         wisdomModifier: 0,
         charismaModifier: 0
-      }
+      },
+
+      characterSpells: []
     };
   }
 }

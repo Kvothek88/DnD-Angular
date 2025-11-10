@@ -1,12 +1,13 @@
 <form (ngSubmit)="submitForm()" class="p-5 bg-yellow-200/50 rounded-3xl m-5">
 
-  <h1 class="text-3xl font-bold text-center mb-5 bg-amber-600 rounded-lg">Create New Character</h1>
+  <h1 class="text-4xl font-bold text-center mb-5 bg-amber-600 rounded-lg">Create New Character</h1>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 
-    <!-- Left Column: Basic Info & Avatar -->
-    <div class="flex flex-col space-y-4">
+    <!-- 1st Column: Basic Info & Avatar -->
+    <div class="flex flex-col space-y-4 bg-yellow-100 rounded-2xl p-4">
 
+      <h3 class="text-3xl font-bold text-center mb-6">Info</h3>
       <!-- Name -->
       <div>
         <label class="block text-2xl font-bold mb-1">Name</label>
@@ -43,7 +44,7 @@
       <div>
         <label class="block text-2xl font-bold mb-1">Class</label>
         <select [(ngModel)]="formData.class" name="class" (change)="onClassChange($event)" 
-                class="w-full text-xl p-2 rounded bg-white shadow border" required>
+                class="w-full text-xl p-2 rounded bg-white shadow border" #classSelect required>
           <option value="" disabled selected>Select Class</option>
           @for(cls of classes; track cls){
             <option [value]="cls">{{ cls }}</option>
@@ -87,7 +88,7 @@
       <!-- Level -->
       <div>
         <label class="block text-2xl font-bold mb-1">Level</label>
-        <select [(ngModel)]="formData.level" name="level" class="w-[100px] text-xl p-2 rounded bg-white shadow border">
+        <select [(ngModel)]="formData.level" name="level" (change)="onClassChange($event)" class="w-[100px] text-xl p-2 rounded bg-white shadow border">
           <option value="" disabled selected>Level</option>
           @for(level of levels; track level){
             <option [value]="level">{{ level }}</option>
@@ -161,39 +162,75 @@
         </div>
       </div>
 
-    </div> <!-- End Left Column -->
+    </div> <!-- End 1st Column -->
 
-    <!-- Right Column: FormData fields for abilities, saves, skills, etc. -->
-    <div class="flex flex-col space-y-4">
+    <!-- 2nd Column: FormData fields for abilities, saves, skills, etc. -->
+    <div class="flex flex-col space-y-4 bg-yellow-100 rounded-2xl p-4">
+
+      <h3 class="text-3xl font-bold text-center mb-6">Stats</h3>
 
       <!-- Saving Throws -->
       <div>
         <h3 class="text-2xl font-bold mb-2">Saving Throws Proficiency</h3>
         <div class="grid grid-cols-2 gap-2">
-          <label class="flex items-center gap-2"><input type="checkbox" [(ngModel)]="formData.strengthSaveApplyProf" name="strengthSaveApplyProf"> Strength</label>
-          <label class="flex items-center gap-2"><input type="checkbox" [(ngModel)]="formData.dexteritySaveApplyProf" name="dexteritySaveApplyProf"> Dexterity</label>
-          <label class="flex items-center gap-2"><input type="checkbox" [(ngModel)]="formData.constitutionSaveApplyProf" name="constitutionSaveApplyProf"> Constitution</label>
-          <label class="flex items-center gap-2"><input type="checkbox" [(ngModel)]="formData.intelligenceSaveApplyProf" name="intelligenceSaveApplyProf"> Intelligence</label>
-          <label class="flex items-center gap-2"><input type="checkbox" [(ngModel)]="formData.wisdomSaveApplyProf" name="wisdomSaveApplyProf"> Wisdom</label>
-          <label class="flex items-center gap-2"><input type="checkbox" [(ngModel)]="formData.charismaSaveApplyProf" name="charismaSaveApplyProf"> Charisma</label>
+          @if (classSelect.value){
+            <label class="flex items-center gap-2" [style.color]="isSaveDisabled(classSelect.value, 'Strength') ? '#99a1af' : 'black'">
+              <input type="checkbox" [(ngModel)]="formData.strengthSaveApplyProf" name="strengthSaveApplyProf" [disabled]="isSaveDisabled(classSelect.value, 'Strength')">Strength</label>
+            <label class="flex items-center gap-2" [style.color]="isSaveDisabled(classSelect.value, 'Dexterity') ? '#99a1af' : 'black'">
+              <input type="checkbox" [(ngModel)]="formData.dexteritySaveApplyProf" name="dexteritySaveApplyProf" [disabled]="isSaveDisabled(classSelect.value, 'Dexterity')">Dexterity</label>
+            <label class="flex items-center gap-2" [style.color]="isSaveDisabled(classSelect.value, 'Constitution') ? '#99a1af' : 'black'">
+              <input type="checkbox" [(ngModel)]="formData.constitutionSaveApplyProf" name="constitutionSaveApplyProf" [disabled]="isSaveDisabled(classSelect.value, 'Constitution')">Constitution</label>
+            <label class="flex items-center gap-2" [style.color]="isSaveDisabled(classSelect.value, 'Intelligence') ? '#99a1af' : 'black'">
+              <input type="checkbox" [(ngModel)]="formData.intelligenceSaveApplyProf" name="intelligenceSaveApplyProf" [disabled]="isSaveDisabled(classSelect.value, 'Intelligence')">Intelligence</label>
+            <label class="flex items-center gap-2" [style.color]="isSaveDisabled(classSelect.value, 'Wisdom') ? '#99a1af' : 'black'">
+              <input type="checkbox" [(ngModel)]="formData.wisdomSaveApplyProf" name="wisdomSaveApplyProf" [disabled]="isSaveDisabled(classSelect.value, 'Wisdom')">Wisdom</label>
+            <label class="flex items-center gap-2" [style.color]="isSaveDisabled(classSelect.value, 'Charisma') ? '#99a1af' : 'black'">
+              <input type="checkbox" [(ngModel)]="formData.charismaSaveApplyProf" name="charismaSaveApplyProf" [disabled]="isSaveDisabled(classSelect.value, 'Charisma')">Charisma</label>
+          }
+          @else {
+            <label class="flex items-center gap-2 text-gray-400"><input type="checkbox" [(ngModel)]="formData.strengthSaveApplyProf" name="strengthSaveApplyProf" disabled> Strength</label>
+            <label class="flex items-center gap-2 text-gray-400"><input type="checkbox" [(ngModel)]="formData.dexteritySaveApplyProf" name="dexteritySaveApplyProf" disabled> Dexterity</label>
+            <label class="flex items-center gap-2 text-gray-400"><input type="checkbox" [(ngModel)]="formData.constitutionSaveApplyProf" name="constitutionSaveApplyProf" disabled> Constitution</label>
+            <label class="flex items-center gap-2 text-gray-400"><input type="checkbox" [(ngModel)]="formData.intelligenceSaveApplyProf" name="intelligenceSaveApplyProf" disabled> Intelligence</label>
+            <label class="flex items-center gap-2 text-gray-400"><input type="checkbox" [(ngModel)]="formData.wisdomSaveApplyProf" name="wisdomSaveApplyProf" disabled> Wisdom</label>
+            <label class="flex items-center gap-2 text-gray-400"><input type="checkbox" [(ngModel)]="formData.charismaSaveApplyProf" name="charismaSaveApplyProf" disabled> Charisma</label>            
+          }
         </div>
       </div>
 
       <!-- Skills -->
       <div>
         <h3 class="text-2xl font-bold mb-2">Skills Proficiency</h3>
-        <div class="grid grid-cols-2 gap-2">
-          @for(skill of skillsConfig; track skill.key){
-            <label class="flex items-center gap-2">
-              <input 
-                type="checkbox" 
-                [ngModel]="getSkillValue(skill.key)" 
-                (ngModelChange)="setSkillValue(skill.key, $event)" 
-                name="{{skill.key + 'ApplyProf'}}">
-              {{ skill.name }}
-            </label>
-          }
-        </div>
+        @if (classSelect.value){
+          <div class="grid grid-cols-2 gap-2">
+            @for(skill of skillsConfig; track skill.key){
+              <label class="flex items-center gap-2"
+               [style.color]="isSkillDisabled(classSelect.value, skill) ? '#99a1af' : 'black'">
+                <input 
+                  type="checkbox" 
+                  [ngModel]="getSkillValue(skill.key)" 
+                  (ngModelChange)="setSkillValue(skill.key, $event, skill.name)" 
+                  [disabled]="isSkillDisabled(classSelect.value, skill)"
+                  name="{{skill.key + 'ApplyProf'}}">
+                {{ skill.name }}
+              </label>
+            }
+          </div>
+        }
+        @else {
+          <div class="grid grid-cols-2 gap-2">
+            @for(skill of skillsConfig; track skill.key){
+              <label class="flex items-center gap-2 text-gray-400">
+                <input 
+                  type="checkbox" 
+                  [ngModel]="getSkillValue(skill.key)" 
+                  (ngModelChange)="setSkillValue(skill.key, $event, skill.name)" 
+                  name="{{skill.key + 'ApplyProf'}}" disabled>
+                {{ skill.name }}
+              </label>
+            }
+          </div>
+        }
       </div>
 
 
@@ -207,37 +244,100 @@
           <!-- First Column -->
           <div class="flex flex-col">
             <label class="font-semibold mb-1 text-lg">Strength</label>
-            <input type="number" [(ngModel)]="formData.characterAbilities.strength" name="strength" class="w-full p-1 bg-white rounded border text-center">
+            <input type="number" (change)="calculateMaxPreparedSpells(formData)" [(ngModel)]="formData.characterAbilities.strength" name="strength" class="w-full p-1 bg-white rounded border text-center">
           </div>
           <div class="flex flex-col">
             <label class="font-semibold mb-1 text-lg">Dexterity</label>
-            <input type="number" [(ngModel)]="formData.characterAbilities.dexterity" name="dexterity" class="w-full p-1 bg-white rounded border text-center">
+            <input type="number" (change)="calculateMaxPreparedSpells(formData)" [(ngModel)]="formData.characterAbilities.dexterity" name="dexterity" class="w-full p-1 bg-white rounded border text-center">
           </div>
 
           <!-- Second Row -->
           <div class="flex flex-col">
             <label class="font-semibold mb-1 text-lg">Constitution</label>
-            <input type="number" [(ngModel)]="formData.characterAbilities.constitution" name="constitution" class="w-full p-1 bg-white rounded border text-center">
+            <input type="number" (change)="calculateMaxPreparedSpells(formData)" [(ngModel)]="formData.characterAbilities.constitution" name="constitution" class="w-full p-1 bg-white rounded border text-center">
           </div>
           <div class="flex flex-col">
             <label class="font-semibold mb-1 text-lg">Intelligence</label>
-            <input type="number" [(ngModel)]="formData.characterAbilities.intelligence" name="intelligence" class="w-full p-1 bg-white rounded border text-center">
+            <input type="number" (change)="calculateMaxPreparedSpells(formData)" [(ngModel)]="formData.characterAbilities.intelligence" name="intelligence" class="w-full p-1 bg-white rounded border text-center">
           </div>
 
           <!-- Third Row -->
           <div class="flex flex-col">
             <label class="font-semibold mb-1 text-lg">Wisdom</label>
-            <input type="number" [(ngModel)]="formData.characterAbilities.wisdom" name="wisdom" class="w-full p-1 bg-white rounded border text-center">
+            <input type="number" (change)="calculateMaxPreparedSpells(formData)" [(ngModel)]="formData.characterAbilities.wisdom" name="wisdom" class="w-full p-1 bg-white rounded border text-center">
           </div>
           <div class="flex flex-col">
             <label class="font-semibold mb-1 text-lg">Charisma</label>
-            <input type="number" [(ngModel)]="formData.characterAbilities.charisma" name="charisma" class="w-full p-1 bg-white rounded border text-center">
+            <input type="number" (change)="calculateMaxPreparedSpells(formData)" [(ngModel)]="formData.characterAbilities.charisma" name="charisma" class="w-full p-1 bg-white rounded border text-center">
           </div>
 
         </div>
       </div>
 
-    </div> <!-- End Right Column -->
+    </div> <!-- End 2nd Column -->
+
+
+
+    <div class="p-4 bg-yellow-100 rounded-2xl">
+      <!-- Title -->
+      <h3 class="text-3xl font-bold text-center mb-6">Spells</h3>
+
+      <!-- Main Content -->
+      @if (!spellsLoading && knownSpells.length > 0) {
+        <!-- Known + Prepared Columns -->
+        <div class="grid grid-cols-2 gap-x-6">
+
+          <div class="flex flex-col space-y-2">
+            <label class="block text-2xl font-bold mb-2">Known Spells</label>
+
+            @for (level of getSpellLevels(); track level) {
+              <label class="text-xl font-bold">Level {{level}}</label>
+
+              @for (spell of spellsByLevel[level]; track spell.id) {
+                <!-- Known Spells -->
+                
+                    <label class="flex items-center" [style.color]="isDisabledFromMaxPreparedLimit(spell) ? '#99a1af' : 'black'">
+                      <input type="checkbox" class="mr-2" (change)="prepareSpell(spell, $event)" [disabled]="isDisabledFromMaxPreparedLimit(spell)">
+                      {{ spell.name }}
+                    </label>
+
+              }
+            }
+          </div>
+
+          <div class="flex flex-col space-y-2">
+            <label class="block text-2xl font-bold mb-2">Prepared Spells ({{preparedSpells.length}}/{{maxPreparedSpells}})</label>
+              @for (spell of preparedSpells; track spell) {
+                <label class="flex items-center">
+                  {{ spell.name }}
+                </label>
+              }
+          </div>
+
+        </div>
+      }
+      @else if (!spellsLoading && knownSpells.length === 0 && classSelect.value != '') {
+        <!-- No spells -->
+        <div class="flex flex-col items-center justify-center py-10 text-gray-600 text-xl">
+          <p>The character cannot cast spells.</p>
+        </div>
+      }
+      @else if (!spellsLoading && knownSpells.length === 0 && classSelect.value == '') {
+        <div class="flex flex-col items-center justify-center py-10 text-gray-600 text-xl">
+          <p>Choose a class or subclass and level first</p>
+        </div>
+      }
+      @else {
+        <!-- Loading Animation -->
+        <div class="flex flex-col justify-center items-center py-10">
+          <div class="animate-spin rounded-full h-16 w-16 border-b-4 border-yellow-600 mb-4"></div>
+          <p class="text-xl text-gray-700">Loading Spells...</p>
+        </div>
+      }
+    </div>
+
+
+
 
   </div> <!-- End Grid -->
 

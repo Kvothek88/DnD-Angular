@@ -95,4 +95,14 @@ public class CharactersController : ControllerBase
 
         return Ok(new { fileName, characterId });
     }
+
+    [HttpGet("known-spells")]
+    public async Task<ActionResult<List<SpellViewDto>>> GetCharacterKnownSpells(
+        [FromQuery] string characterClass,
+        [FromQuery] int spellLevel)
+    {
+        var knownSpells = await _characterService.GetKnownSpellsAsync(characterClass, spellLevel);
+
+        return Ok(knownSpells);
+    }
 }

@@ -19,4 +19,5 @@ public class SpellViewDto
     public string Duration { get; set; }
     public int Range { get; set; }
     public string CastingTime { get; set; }
+    public string Classes { get; set; }
 }

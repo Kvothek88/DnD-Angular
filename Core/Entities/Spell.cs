@@ -18,4 +18,5 @@ public class Spell : BaseEntity
     public string Duration { get; set; } = string.Empty;
     public int Range { get; set; }
     public string CastingTime { get; set; } = string.Empty;
+    public string Classes {  get; set; } = string.Empty;
 }

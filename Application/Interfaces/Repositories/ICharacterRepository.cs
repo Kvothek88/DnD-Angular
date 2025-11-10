@@ -10,4 +10,5 @@ public interface ICharacterRepository
     Task<List<CharacterCardViewDto>> GetAllAsync();
     Task<List<Spell>> GetCharacterKnownSpellsAsync(int id);
     Task<CharacterViewDto> AddCharacterAsync(Character character);
+    Task<List<SpellViewDto>?> GetKnownSpells(string characterClass, int spellLevel);
 }

@@ -1,4 +1,5 @@
 import { CreateCharacterAbilitiesDto } from "./create-character-abilities-dto";
+import { Spell } from "./spell";
 
 export interface CreateCharacterDto {
   [key: string]: any; 
@@ -51,4 +52,5 @@ export interface CreateCharacterDto {
 
   // Abilities (required in backend)
   characterAbilities: CreateCharacterAbilitiesDto;
+  characterSpells: Spell[]
 }

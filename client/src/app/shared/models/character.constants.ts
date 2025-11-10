@@ -53,7 +53,7 @@ export const skillsConfig: SkillConfig[] = [
   { name: 'Performance', key: 'performance', ability: 'charismaModifier' },
   { name: 'Persuasion', key: 'persuasion', ability: 'charismaModifier' },
   { name: 'Religion', key: 'religion', ability: 'intelligenceModifier' },
-  { name: 'Sleight of Hand', key: 'sleightOfHand', ability: 'dexterityModifier' },
+  { name: 'Sleight Of Hand', key: 'sleightOfHand', ability: 'dexterityModifier' },
   { name: 'Stealth', key: 'stealth', ability: 'dexterityModifier' },
   { name: 'Survival', key: 'survival', ability: 'wisdomModifier' },
 ];

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,6 +22,8 @@ public class CreateCharacterDto
     public string? ImageFrame { get; set; }
 
     public CreateCharacterAbilitiesDto CharacterAbilities { get; set; } = null!;
+
+    public List<Spell> CharacterSpells { get; set; } = [];
 
     public int HitDice { get; set; }
     public int CurrentHp { get; set; }

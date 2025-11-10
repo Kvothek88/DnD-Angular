@@ -44,4 +44,8 @@ public class CharacterService : ICharacterService
         return await _characterrepository.AddCharacterAsync(character);
     }
 
+    public async Task<List<SpellViewDto>?> GetKnownSpellsAsync(string characterClass, int spellLevel)
+    {
+        return await _characterrepository.GetKnownSpells(characterClass, spellLevel);
+    }
 }

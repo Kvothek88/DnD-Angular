@@ -57,4 +57,12 @@ public class CharacterRepository : ICharacterRepository
         await _context.SaveChangesAsync();
         return _mapper.Map<CharacterViewDto>(character);
     }
+
+    public async Task<List<SpellViewDto>?> GetKnownSpells(string characterClass, int spellLevel)
+    {
+        return await _context.Spells
+            .ProjectTo<SpellViewDto>(_mapperConfig)
+            .Where(s => s.Classes.Contains(characterClass) && s.Level <= spellLevel)
+            .ToListAsync();
+    }
 }

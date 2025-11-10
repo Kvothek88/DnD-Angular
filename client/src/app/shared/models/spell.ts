@@ -10,4 +10,5 @@ export interface Spell {
   duration: string;
   range: number;
   castingTime: string;
+  classes: string;
 }
