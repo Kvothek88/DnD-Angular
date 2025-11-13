@@ -21,12 +21,16 @@ public static class ServicesRegistration
             cfg.CreateMap<CharacterSpellSlots, CharacterSpellSlotsViewDto>();
             cfg.CreateMap<Character, CharacterCardViewDto>();
             cfg.CreateMap<Spell, SpellViewDto>();
-            cfg.CreateMap<CreateCharacterDto, Character>();
+            cfg.CreateMap<CreateCharacterDto, Character>()
+                .ForMember(dest => dest.CharacterPreparedSpells,
+                           opt => opt.MapFrom(src => src.CharacterPreparedSpells
+                               .Select(spell => new CharacterPreparedSpell { SpellId = spell.Id, IsPrepared = true })
+                           ));
             cfg.CreateMap<CreateCharacterAbilitiesDto, CharacterAbilities>();
             cfg.CreateMap<Character, CharacterViewDto>()
                 .ForMember(
-                    dest => dest.CharacterSpells,
-                    opt => opt.MapFrom(src => src.CharacterSpells
+                    dest => dest.CharacterPreparedSpells,
+                    opt => opt.MapFrom(src => src.CharacterPreparedSpells
                         .Where(cs => cs.IsPrepared)
                         .Select(cs => cs.Spell)
                     )

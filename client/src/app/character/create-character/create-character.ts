@@ -1,12 +1,13 @@
-import { ChangeDetectorRef, Component, ElementRef, HostListener, inject, NgZone } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, inject, NgZone } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CharacterService } from '../../shared/services/character.service';
 import { finalize, firstValueFrom } from 'rxjs';
 import { CreateCharacterDto } from '../../shared/models/create-character-dto';
-import { skillsConfig } from '../../shared/models/character.constants';
+import { skillsConfig, portraits, races, classes, subclasses, sizes, alignments, levels, savingThrowProficiencies, skillProficiencies, classesCantripsKnown } from '../../shared/models/character.constants';
 import { Spell } from '../../shared/models/spell';
 import { ToastService } from '../../shared/services/toast.service';
 import { groupBy } from 'lodash';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-character',
@@ -16,99 +17,44 @@ import { groupBy } from 'lodash';
 })
 export class CreateCharacter {
 
-  constructor(private characterService: CharacterService, private toastService: ToastService) {
+  constructor(
+    private characterService: CharacterService, 
+    private toastService: ToastService,
+    private router: Router) {
     this.formData = this.getDefaultFormData();
   }
 
   private zone = inject(NgZone);
   private cdr = inject(ChangeDetectorRef);
 
-  portraits: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
   isPortraitDropdownOpen = false;
-
-  skillsConfig = skillsConfig;
-
   formData: CreateCharacterDto;
-
   knownSpells: Spell[] = [];
-  spellsByLevel: { [key: number]: any[] } = {}; 
+  spellsByLevel: { [key: number]: any[] } = {};
   preparedSpells: Spell[] = [];
+  cantripsKnown: Spell[] = [];
   spellsLoading: boolean = false;
   maxPreparedSpells: number = 0;
+  maxKnownCantrips: number = 0;
 
   // Static data for dropdowns
-  races = ['Human', 'Elf', 'Drow Elf', 'Dwarf', 'Halfling', 'Dragonborn', 'Gnome', 'Half-Orc', 'Tiefling'];
-
-  classes = ['Barbarian', 'Bard', 'Cleric', 'Druid', 'Fighter', 'Monk', 'Paladin', 'Ranger', 'Rogue', 'Sorcerer', 'Warlock', 'Wizard', 'Artificer'];
-
-  subclasses: { [key: string]: string[] } = {
-    Artificer: ['Alchemist', 'Armorer', 'Artillerist', 'Battle Smith'],
-    Barbarian: ['Path of the Berserker', 'Path of the Totem Warrior', 'Path of the Ancestral Guardian', 'Path of the Storm Herald', 'Path of the Zealot'],
-    Bard: ['College of Lore', 'College of Valor', 'College of Glamour', 'College of Swords', 'College of Whispers'],
-    Cleric: ['Life Domain', 'War Domain', 'Light Domain', 'Knowledge Domain', 'Nature Domain', 'Tempest Domain', 'Trickery Domain', 'Death Domain', 'Forge Domain', 'Grave Domain'],
-    Druid: ['Circle of the Land', 'Circle of the Moon', 'Circle of Dreams', 'Circle of the Shepherd', 'Circle of Spores'],
-    Fighter: ['Champion', 'Battle Master', 'Eldritch Knight', 'Arcane Archer', 'Cavalier', 'Samurai'],
-    Monk: ['Way of the Open Hand', 'Way of Shadow', 'Way of the Four Elements', 'Way of the Drunken Master', 'Way of the Kensei', 'Way of the Sun Soul'],
-    Paladin: ['Oath of Devotion', 'Oath of the Ancients', 'Oath of Vengeance', 'Oath of Conquest', 'Oath of Redemption', 'Oathbreaker'],
-    Ranger: ['Hunter', 'Beast Master', 'Gloom Stalker', 'Horizon Walker', 'Monster Slayer'],
-    Rogue: ['Thief', 'Assassin', 'Arcane Trickster', 'Inquisitive', 'Mastermind', 'Scout', 'Swashbuckler'],
-    Sorcerer: ['Draconic Bloodline', 'Wild Magic', 'Divine Soul', 'Shadow Magic', 'Storm Sorcery'],
-    Warlock: ['The Fiend', 'The Archfey', 'The Great Old One', 'The Celestial', 'The Hexblade'],
-    Wizard: ['Evocation', 'Necromancy', 'Illusion', 'Abjuration', 'Conjuration', 'Divination', 'Enchantment', 'Transmutation', 'War Magic']
-  };
-  sizes = ['Tiny', 'Small', 'Medium', 'Large', 'Huge', 'Gargantuan'];
-  alignments = [
-    'Lawful Good', 'Neutral Good', 'Chaotic Good',
-    'Lawful Neutral', 'True Neutral', 'Chaotic Neutral',
-    'Lawful Evil', 'Neutral Evil', 'Chaotic Evil'
-  ];
-  levels = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
-
+  races = races;
+  classes = classes;
+  subclasses = subclasses;
+  sizes = sizes;
+  alignments = alignments;
+  levels = levels;
   availableSubclasses: string[] = [];
-
-  savingThrowProficiencies: Record<string, string[]> = {
-    Barbarian: ['Strength', 'Constitution'],
-    Bard: ['Dexterity', 'Charisma'],
-    Cleric: ['Wisdom', 'Charisma'],
-    Druid: ['Intelligence', 'Wisdom'],
-    Fighter: ['Strength', 'Constitution'],
-    Monk: ['Strength', 'Dexterity'],
-    Paladin: ['Wisdom', 'Charisma'],
-    Ranger: ['Strength', 'Dexterity'],
-    Rogue: ['Dexterity', 'Intelligence'],
-    Sorcerer: ['Constitution', 'Charisma'],
-    Warlock: ['Wisdom', 'Charisma'],
-    Wizard: ['Intelligence', 'Wisdom'],
-    Artificer: ['Constitution', 'Intelligence']
-  };
-
-  skillProficiencies: Record<string, string[]> = {
-    Barbarian: ['Animal Handling', 'Athletics', 'Intimidation', 'Nature', 'Perception', 'Survival'],
-    Bard: [
-      'Acrobatics', 'Animal Handling', 'Arcana', 'Athletics', 'Deception', 'History',
-      'Insight', 'Intimidation', 'Investigation', 'Medicine', 'Nature', 'Perception',
-      'Performance', 'Persuasion', 'Religion', 'Sleight Of Hand', 'Stealth', 'Survival'
-    ],
-    Cleric: ['History', 'Insight', 'Medicine', 'Persuasion', 'Religion'],
-    Druid: ['Animal Handling', 'Insight', 'Medicine', 'Nature', 'Perception', 'Religion', 'Survival'],
-    Fighter: ['Acrobatics', 'Animal Handling', 'Athletics', 'History', 'Insight', 'Intimidation', 'Perception', 'Survival'],
-    Monk: ['Acrobatics', 'Athletics', 'History', 'Insight', 'Religion', 'Stealth'],
-    Paladin: ['Athletics', 'Insight', 'Intimidation', 'Medicine', 'Persuasion', 'Religion'],
-    Ranger: ['Animal Handling', 'Athletics', 'Insight', 'Investigation', 'Nature', 'Perception', 'Stealth', 'Survival'],
-    Rogue: ['Acrobatics', 'Athletics', 'Deception', 'Insight', 'Intimidation', 'Investigation', 'Perception', 'Performance', 'Persuasion', 'Sleight Of Hand', 'Stealth'],
-    Sorcerer: ['Arcana', 'Deception', 'Insight', 'Intimidation', 'Persuasion', 'Religion'],
-    Warlock: ['Arcana', 'Deception', 'History', 'Intimidation', 'Investigation', 'Nature', 'Religion'],
-    Wizard: ['Arcana', 'History', 'Insight', 'Investigation', 'Medicine', 'Religion'],
-    Artificer: ['Arcana', 'History', 'Investigation', 'Medicine', 'Nature', 'Perception', 'Sleight Of Hand'],
-  };
+  savingThrowProficiencies = savingThrowProficiencies;
+  skillProficiencies = skillProficiencies;
+  skillsConfig = skillsConfig;
+  portraits = portraits;
 
 
   onClassChange(event: Event) {
     this.spellsLoading = true;
-    console.log(this.formData)
     const selectedClass = this.formData.class;
     const spellLevel = Math.floor(Number(this.formData.level)/2) + 1;
-    console.log('SpellLevel:' + spellLevel)
     this.availableSubclasses = this.subclasses[selectedClass] || [];
     this.formData.subclass = '';
 
@@ -120,8 +66,10 @@ export class CreateCharacter {
 
     this.knownSpells = [];
     this.preparedSpells = [];
+    this.cantripsKnown = [];
 
     this.calculateMaxPreparedSpells(this.formData);
+    this.calculateCantripsKnown(this.formData);
 
     this.characterService.getKnownSpells(selectedClass, spellLevel)
       .pipe(finalize(() => {
@@ -165,24 +113,36 @@ export class CreateCharacter {
   prepareSpell(spell: Spell, event: Event){
     const input = event.target as HTMLInputElement;
     if (input.checked){
-      this.preparedSpells.push(spell);
-      this.preparedSpells.sort((a,b) => a.level - b.level);
+      if (spell.level == 0){
+        this.cantripsKnown.push(spell);
+        if (this.cantripsKnown.length >= this.maxKnownCantrips)
+          this.toastService.show('Max known cantrips reached', 'info');
+      }
+      else{
+        this.preparedSpells.push(spell);
+        this.preparedSpells.sort((a,b) => a.level - b.level);
+        if (this.preparedSpells.length >= this.maxPreparedSpells)
+          this.toastService.show('Max prepared spells reached', 'info');
+      }
     }
     else
-      this.preparedSpells = this.preparedSpells.filter(s => s.name != spell.name);
-
-    if (this.preparedSpells.length >= this.maxPreparedSpells)
-      this.toastService.show('Max prepared spells reached', 'info');
+      if (spell.level == 0)
+        this.cantripsKnown = this.cantripsKnown.filter(s => s.name != spell.name);
+      else
+        this.preparedSpells = this.preparedSpells.filter(s => s.name != spell.name);
   }
 
   isDisabledFromMaxPreparedLimit(spell: Spell) {
     const isSelected = this.preparedSpells.some(s => s.id === spell.id);
-    
     return this.preparedSpells.length >= this.maxPreparedSpells && !isSelected
   }
 
-  calculateMaxPreparedSpells(charData: CreateCharacterDto) {
+   isDisabledFromMaxCantripsLimit(spell: Spell) {
+    const isSelected = this.cantripsKnown.some(s => s.id === spell.id);
+    return this.cantripsKnown.length >= this.maxKnownCantrips && !isSelected
+  } 
 
+  calculateMaxPreparedSpells(charData: CreateCharacterDto) {
     let level = Number(charData.level);
 
     if (charData.class == 'Cleric' || charData.class == 'Druid'){
@@ -194,6 +154,11 @@ export class CreateCharacter {
     else {
       this.maxPreparedSpells = 0;
     }
+  }
+
+  calculateCantripsKnown(charData: CreateCharacterDto){
+    let level = Number(charData.level);
+    this.maxKnownCantrips = classesCantripsKnown[charData.class][level] ?? 0;
   }
 
   getSpellLevels(): number[] {
@@ -254,7 +219,10 @@ export class CreateCharacter {
   async submitForm() {
     try {
       console.log('Form data:', this.formData);
-      this.formData.characterSpells = this.preparedSpells;
+      this.formData.characterPreparedSpells = [
+        ...this.cantripsKnown,
+        ...this.preparedSpells
+      ];
 
       // Step 1: Create character
       const createdCharacter = await firstValueFrom(
@@ -268,8 +236,8 @@ export class CreateCharacter {
         await this.uploadAvatar(characterId, this.selectedFile);
       }
 
-      console.log('Character created successfully with ID:', characterId);
-      // TODO: Navigate or show success message
+      this.toastService.show('Character created successfully', 'success');
+      this.router.navigate(['/characters']);
     } catch (error) {
       console.error('Error creating character:', error);
     }
@@ -359,7 +327,7 @@ export class CreateCharacter {
         charismaModifier: 0
       },
 
-      characterSpells: []
+      characterPreparedSpells: []
     };
   }
 }

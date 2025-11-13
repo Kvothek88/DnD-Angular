@@ -17,7 +17,7 @@ export interface Character {
 
     characterAbilities: CharacterAbilities;
     characterSpellSlots?: CharacterSpellSlots;
-    characterSpells?: Spell[];
+    characterPreparedSpells?: Spell[];
 
     hitDice: number;
     maxHp: number;

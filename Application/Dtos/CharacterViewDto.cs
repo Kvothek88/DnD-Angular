@@ -23,7 +23,7 @@ public class CharacterViewDto
 
     public CharacterAbilitiesViewDto CharacterAbilities { get; set; } = null!;
     public CharacterSpellSlotsViewDto CharacterSpellSlots { get; set; } = null!;
-    public List<SpellViewDto>? CharacterSpells { get; set; }
+    public List<SpellViewDto>? CharacterPreparedSpells { get; set; }
 
     public int HitDice { get; set; }
     public int MaxHp { get; set; }

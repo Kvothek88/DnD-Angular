@@ -28,9 +28,9 @@ public class CharacterService : ICharacterService
         return await _characterrepository.GetAllAsync();
     }
 
-    public async Task<List<Spell>> GetCharacterKnownSpellsAsync(int id)
+    public async Task<List<Spell>> GetCharacterPreparedSpellsAsync(int id)
     {
-        var spells = await _characterrepository.GetCharacterKnownSpellsAsync(id);
+        var spells = await _characterrepository.GetCharacterPreparedSpellsAsync(id);
 
         return spells;
     }

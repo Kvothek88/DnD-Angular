@@ -20,8 +20,8 @@ public class CharacterProfile : Profile
         // Character → CharacterViewDto
         CreateMap<Character, CharacterViewDto>()
             .ForMember(
-                dest => dest.CharacterSpells,
-                opt => opt.MapFrom(src => src.CharacterSpells
+                dest => dest.CharacterPreparedSpells,
+                opt => opt.MapFrom(src => src.CharacterPreparedSpells
                     .Where(cs => cs.IsPrepared)
                     .Select(cs => cs.Spell)
                 )

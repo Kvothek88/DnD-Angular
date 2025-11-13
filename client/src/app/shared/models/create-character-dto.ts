@@ -52,5 +52,5 @@ export interface CreateCharacterDto {
 
   // Abilities (required in backend)
   characterAbilities: CreateCharacterAbilitiesDto;
-  characterSpells: Spell[]
+  characterPreparedSpells: Spell[]
 }

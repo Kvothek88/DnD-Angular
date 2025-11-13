@@ -33,7 +33,7 @@ public class CharacterConfig : IEntityTypeConfiguration<Character>
                .HasForeignKey<CharacterSpellSlots>(s => s.CharacterId)
                .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasMany(c => c.CharacterSpells)
+        builder.HasMany(c => c.CharacterPreparedSpells)
                .WithOne()
                .HasForeignKey(cs => cs.CharacterId)
                .OnDelete(DeleteBehavior.Cascade);

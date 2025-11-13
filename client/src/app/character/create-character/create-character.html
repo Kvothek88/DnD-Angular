@@ -284,37 +284,87 @@
 
       <!-- Main Content -->
       @if (!spellsLoading && knownSpells.length > 0) {
-        <!-- Known + Prepared Columns -->
-        <div class="grid grid-cols-2 gap-x-6">
 
-          <div class="flex flex-col space-y-2">
-            <label class="block text-2xl font-bold mb-2">Known Spells</label>
+        <!-- #region Druid, Cleric -->
+        @if (formData.class == 'Cleric' || formData.class == 'Druid'){
+          <!-- Known + Prepared Columns -->
+          <div class="grid grid-cols-2 gap-x-6">
+            <div class="flex flex-col space-y-2">
+              <label class="block text-2xl font-bold mb-2">Known Spells</label>
 
-            @for (level of getSpellLevels(); track level) {
-              <label class="text-xl font-bold">Level {{level}}</label>
+              @for (level of getSpellLevels(); track level) {
 
-              @for (spell of spellsByLevel[level]; track spell.id) {
-                <!-- Known Spells -->
+                @if (level==0){
+                  <label class="text-xl font-bold">Cantrips</label>
+                }
+                @else {
+                  <label class="text-xl font-bold">Level {{level}}</label>
+                }
                 
-                    <label class="flex items-center" [style.color]="isDisabledFromMaxPreparedLimit(spell) ? '#99a1af' : 'black'">
-                      <input type="checkbox" class="mr-2" (change)="prepareSpell(spell, $event)" [disabled]="isDisabledFromMaxPreparedLimit(spell)">
+                @for (spell of spellsByLevel[level]; track spell.id) {
+                  <!-- Known Spells -->
+                  
+                  @if (spell.level == 0){
+                    <label class="flex items-center" [style.color]="isDisabledFromMaxCantripsLimit(spell) ? '#99a1af' : 'black'">
+                    <input type="checkbox" class="mr-2" (change)="prepareSpell(spell, $event)" [disabled]="isDisabledFromMaxCantripsLimit(spell)">
                       {{ spell.name }}
                     </label>
-
+                    }
+                  @else {
+                    <label class="flex items-center" [style.color]="isDisabledFromMaxPreparedLimit(spell) ? '#99a1af' : 'black'">
+                    <input type="checkbox" class="mr-2" (change)="prepareSpell(spell, $event)" [disabled]="isDisabledFromMaxPreparedLimit(spell)">
+                      {{ spell.name }}
+                    </label>
+                  }
+                }
               }
-            }
-          </div>
+            </div>
+            
+            <div class="flex flex-col space-y-2">
 
-          <div class="flex flex-col space-y-2">
-            <label class="block text-2xl font-bold mb-2">Prepared Spells ({{preparedSpells.length}}/{{maxPreparedSpells}})</label>
+              <label class="block text-2xl font-bold mb-2">Known Cantrips ({{cantripsKnown.length}}/{{maxKnownCantrips}})</label>
+              @for (cantrip of cantripsKnown; track cantrip) {
+                <label class="flex items-center">
+                  {{ cantrip.name }}
+                </label>
+              }
+
+              <label class="block text-2xl font-bold mb-2">Prepared Spells ({{preparedSpells.length}}/{{maxPreparedSpells}})</label>
               @for (spell of preparedSpells; track spell) {
                 <label class="flex items-center">
                   {{ spell.name }}
                 </label>
               }
+            </div>
           </div>
+        }
+        <!-- #endregion -->
 
-        </div>
+        <!-- #region Wizard -->
+        @else if (formData.class == 'Wizard'){
+          <div class="grid grid-cols-3 gap-x-6">
+            <div class="flex flex-col space-y-2">
+              <label class="block text-2xl font-bold mb-2">Known Spells</label>
+
+              @for (level of getSpellLevels(); track level) {
+                <label class="text-xl font-bold">Level {{level}}</label>
+
+                @for (spell of spellsByLevel[level]; track spell.id) {
+                  <!-- Known Spells -->
+                  
+                      <label class="flex items-center" [style.color]="isDisabledFromMaxPreparedLimit(spell) ? '#99a1af' : 'black'">
+                        <input type="checkbox" class="mr-2" (change)="prepareSpell(spell, $event)" [disabled]="isDisabledFromMaxPreparedLimit(spell)">
+                        {{ spell.name }}
+                      </label>
+
+                }
+              }
+            </div>
+          </div>
+        }
+        <!-- #endregion -->
+        
+
       }
       @else if (!spellsLoading && knownSpells.length === 0 && classSelect.value != '') {
         <!-- No spells -->

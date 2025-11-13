@@ -27,7 +27,7 @@ public class CharacterRepository : ICharacterRepository
         var character = await _context.Characters
             .Include(c => c.CharacterAbilities)
             .Include(c => c.CharacterSpellSlots)
-            .Include(c => c.CharacterSpells).ThenInclude(cs => cs.Spell)
+            .Include(c => c.CharacterPreparedSpells).ThenInclude(cs => cs.Spell)
             .FirstOrDefaultAsync(c => c.Id == id);
 
         return _mapper.Map<CharacterViewDto>(character);
@@ -40,9 +40,9 @@ public class CharacterRepository : ICharacterRepository
             .ToListAsync();
     }
 
-    public async Task<List<Spell>> GetCharacterKnownSpellsAsync(int id)
+    public async Task<List<Spell>> GetCharacterPreparedSpellsAsync(int id)
     {
-        var spells = await _context.CharacterSpells
+        var spells = await _context.CharacterPreparedSpells
             .Where(cs => cs.CharacterId == id)
             .Include(cs => cs.Spell)
             .Select(cs => cs.Spell)

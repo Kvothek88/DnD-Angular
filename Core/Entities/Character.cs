@@ -23,7 +23,7 @@ public class Character : BaseEntity
 
     public CharacterAbilities CharacterAbilities { get; set; } = null!;
     public CharacterSpellSlots? CharacterSpellSlots { get; set; } = null!;
-    public List<CharacterSpell>? CharacterSpells { get; set; } = [];
+    public List<CharacterPreparedSpell>? CharacterPreparedSpells { get; set; } = [];
 
 
     public int HitDice { get; set; }
