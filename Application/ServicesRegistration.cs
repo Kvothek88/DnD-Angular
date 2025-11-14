@@ -45,6 +45,8 @@ public static class ServicesRegistration
                         ? src.SpellbookSpells.Select(sbs => sbs.Spell).ToList()
                         : new List<Spell>()
                 ));
+            cfg.CreateMap<SpellbookAddDto, Spellbook>();
+            cfg.CreateMap<SpellbookSpellAddDto, SpellbookSpell>();
 
         });
 

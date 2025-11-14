@@ -38,7 +38,7 @@ public class CharactersController : ControllerBase
         return Ok(characters);
     }
 
-    [HttpGet("known-spells/{id}")]
+    [HttpGet("prepared-spells/{id}")]
     public async Task<ActionResult<List<Spell>>> GetCharacterPreparedSpells(int id)
     {
         var spells = await _characterService.GetCharacterPreparedSpellsAsync(id);

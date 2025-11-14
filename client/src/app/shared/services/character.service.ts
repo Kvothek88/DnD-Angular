@@ -4,6 +4,7 @@ import { Character } from '../models/character';
 import { CharacterCardViewDto } from '../models/character-card-view-dto';
 import { Observable } from 'rxjs';
 import { Spell } from '../models/spell';
+import { CreateCharacterDto } from '../models/create-character-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class CharacterService {
     return this.http.get<CharacterCardViewDto[]>(this.baseUrl)
   }
 
-  createCharacter(character: any): Observable<any> {
+  createCharacter(character: CreateCharacterDto): Observable<any> {
     return this.http.post(this.baseUrl, character);
   }
 

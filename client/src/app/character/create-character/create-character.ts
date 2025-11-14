@@ -239,6 +239,12 @@ export class CreateCharacter {
         ...this.preparedSpells
       ];
 
+      this.formData.spellbook = {
+        spellbookSpells: this.spellBookSpells.map(s => ({
+          spellId: s.id
+        }))
+      };
+
       const createdCharacter = await firstValueFrom(
         this.characterService.createCharacter(this.formData)
       );
@@ -252,7 +258,7 @@ export class CreateCharacter {
       this.toastService.show('Character created successfully', 'success');
       this.router.navigate(['/characters']);
     } catch (error) {
-      console.error('Error creating character:', error);
+      this.toastService.show('Error creating character', 'error');
     }
   }
 
@@ -340,7 +346,8 @@ export class CreateCharacter {
         charismaModifier: 0
       },
 
-      characterPreparedSpells: []
+      characterPreparedSpells: [],
+      spellbook: {}
     };
   }
 }

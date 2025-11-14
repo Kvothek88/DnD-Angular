@@ -24,6 +24,7 @@ public class CreateCharacterDto
     public CreateCharacterAbilitiesDto CharacterAbilities { get; set; } = null!;
 
     public List<Spell> CharacterPreparedSpells { get; set; } = [];
+    public SpellbookAddDto? Spellbook { get; set; }
 
     public int HitDice { get; set; }
     public int CurrentHp { get; set; }
