@@ -1,6 +1,7 @@
 import { CharacterAbilities } from "./character-abilities";
 import { CharacterSpellSlots } from "./character-spell-slots";
 import { Spell } from "./spell";
+import { Spellbook } from "./spellbook";
 
 export interface Character {
     id: number;
@@ -18,6 +19,7 @@ export interface Character {
     characterAbilities: CharacterAbilities;
     characterSpellSlots?: CharacterSpellSlots;
     characterPreparedSpells?: Spell[];
+    spellbook?: Spellbook;
 
     hitDice: number;
     maxHp: number;

@@ -4,6 +4,7 @@ using Core.Entities;
 using Application.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper.QueryableExtensions;
+using System.Runtime.InteropServices;
 
 namespace Infrastructure.Data.Repositories;
 
@@ -24,14 +25,34 @@ public class CharacterRepository : ICharacterRepository
 
     public async Task<CharacterViewDto?> GetByIdAsync(int id)
     {
-        var character = await _context.Characters
-            .Include(c => c.CharacterAbilities)
-            .Include(c => c.CharacterSpellSlots)
-            .Include(c => c.CharacterPreparedSpells).ThenInclude(cs => cs.Spell)
-            .FirstOrDefaultAsync(c => c.Id == id);
+        var cls = await GetCharacterClass(id);
 
-        return _mapper.Map<CharacterViewDto>(character);
+        if (cls == "Wizard")
+        {
+            return _mapper.Map<CharacterViewDto>(await _context.Characters
+                .Include(c => c.CharacterAbilities)
+                .Include(c => c.CharacterSpellSlots)
+                .Include(c => c.CharacterPreparedSpells).ThenInclude(cs => cs.Spell)
+                .Include(c => c.Spellbook).ThenInclude(sb => sb.SpellbookSpells).ThenInclude(sbs => sbs.Spell)
+                .FirstOrDefaultAsync(c => c.Id == id));
+        } else
+        {
+            return _mapper.Map<CharacterViewDto>(await _context.Characters
+                .Include(c => c.CharacterAbilities)
+                .Include(c => c.CharacterSpellSlots)
+                .Include(c => c.CharacterPreparedSpells).ThenInclude(cs => cs.Spell)
+                .FirstOrDefaultAsync(c => c.Id == id));
+        }
     }
+
+    private async Task<string?> GetCharacterClass(int id)
+    {
+        return await _context.Characters
+            .Where(c => c.Id == id)
+            .Select(c => c.Class)
+            .FirstOrDefaultAsync();
+    }
+
 
     public async Task<List<CharacterCardViewDto>> GetAllAsync()
     {

@@ -1,5 +1,6 @@
 ﻿using Application.Dtos;
 using Application.Services.CharacterService;
+using AutoMapper.Configuration.Conventions;
 using Core.Entities;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -38,6 +39,13 @@ public static class ServicesRegistration
                 .ForMember(dest => dest.MaxHp, opt => opt.MapFrom(src => src.MaxHp))
                 .ForMember(dest => dest.ProficiencyBonus, opt => opt.MapFrom(src => src.ProficiencyBonus))
                 .ForMember(dest => dest.Initiative, opt => opt.MapFrom(src => src.Initiative));
+            cfg.CreateMap<Spellbook, SpellbookViewDto>()
+                .ForMember(dest => dest.Spells, opt => opt.MapFrom(src =>
+                    src.SpellbookSpells != null
+                        ? src.SpellbookSpells.Select(sbs => sbs.Spell).ToList()
+                        : new List<Spell>()
+                ));
+
         });
 
         return services;

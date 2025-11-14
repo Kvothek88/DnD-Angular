@@ -24,7 +24,7 @@ public class Character : BaseEntity
     public CharacterAbilities CharacterAbilities { get; set; } = null!;
     public CharacterSpellSlots? CharacterSpellSlots { get; set; } = null!;
     public List<CharacterPreparedSpell>? CharacterPreparedSpells { get; set; } = [];
-
+    public Spellbook? Spellbook { get; set; }
 
     public int HitDice { get; set; }
     public int MaxHp => HitDice + ((Level - 1) * (HitDice / 2 + 1)) + (CharacterAbilities.ConstitutionModifier * Level) + Level;

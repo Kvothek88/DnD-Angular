@@ -19,4 +19,6 @@ public class Spell : BaseEntity
     public int Range { get; set; }
     public string CastingTime { get; set; } = string.Empty;
     public string Classes {  get; set; } = string.Empty;
+
+    public List<SpellbookSpell>? SpellbookSpells { get; set; }
 }

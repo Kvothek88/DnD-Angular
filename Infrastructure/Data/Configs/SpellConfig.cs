@@ -1,6 +1,7 @@
 ﻿using Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Infrastructure.Data.Configs;
 
@@ -18,5 +19,10 @@ public class SpellConfig : IEntityTypeConfiguration<Spell>
         builder.Property(s => s.IsConcentration).IsRequired();
         builder.Property(s => s.IsDuration).IsRequired();
         builder.Property(s => s.IsRitual).IsRequired();
+
+        builder.HasMany(x => x.SpellbookSpells)
+            .WithOne(x => x.Spell)
+            .HasForeignKey(x => x.SpellId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
