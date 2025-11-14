@@ -1,6 +1,7 @@
 ﻿using Application.Dtos;
 using Application.Interfaces.Repositories;
 using AutoMapper;
+using Core.Constants;
 using Core.Entities;
 
 namespace Application.Services.CharacterService;
@@ -40,6 +41,7 @@ public class CharacterService : ICharacterService
         var character = _mapper.Map<Character>(characterDto);
 
         character.InitializeDerivedValues();
+        character.CharacterSpellSlots = CharacterDefaults.CalculateSlots(character.Class, character.Level);
 
         return await _characterrepository.AddCharacterAsync(character);
     }

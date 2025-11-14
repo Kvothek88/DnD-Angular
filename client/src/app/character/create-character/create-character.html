@@ -244,31 +244,31 @@
           <!-- First Column -->
           <div class="flex flex-col">
             <label class="font-semibold mb-1 text-lg">Strength</label>
-            <input type="number" (change)="calculateMaxPreparedSpells(formData)" [(ngModel)]="formData.characterAbilities.strength" name="strength" class="w-full p-1 bg-white rounded border text-center">
+            <input type="number" (change)="calculateMaxPreparedSpells()" [(ngModel)]="formData.characterAbilities.strength" name="strength" class="w-full p-1 bg-white rounded border text-center">
           </div>
           <div class="flex flex-col">
             <label class="font-semibold mb-1 text-lg">Dexterity</label>
-            <input type="number" (change)="calculateMaxPreparedSpells(formData)" [(ngModel)]="formData.characterAbilities.dexterity" name="dexterity" class="w-full p-1 bg-white rounded border text-center">
+            <input type="number" (change)="calculateMaxPreparedSpells()" [(ngModel)]="formData.characterAbilities.dexterity" name="dexterity" class="w-full p-1 bg-white rounded border text-center">
           </div>
 
           <!-- Second Row -->
           <div class="flex flex-col">
             <label class="font-semibold mb-1 text-lg">Constitution</label>
-            <input type="number" (change)="calculateMaxPreparedSpells(formData)" [(ngModel)]="formData.characterAbilities.constitution" name="constitution" class="w-full p-1 bg-white rounded border text-center">
+            <input type="number" (change)="calculateMaxPreparedSpells()" [(ngModel)]="formData.characterAbilities.constitution" name="constitution" class="w-full p-1 bg-white rounded border text-center">
           </div>
           <div class="flex flex-col">
             <label class="font-semibold mb-1 text-lg">Intelligence</label>
-            <input type="number" (change)="calculateMaxPreparedSpells(formData)" [(ngModel)]="formData.characterAbilities.intelligence" name="intelligence" class="w-full p-1 bg-white rounded border text-center">
+            <input type="number" (change)="calculateMaxPreparedSpells()" [(ngModel)]="formData.characterAbilities.intelligence" name="intelligence" class="w-full p-1 bg-white rounded border text-center">
           </div>
 
           <!-- Third Row -->
           <div class="flex flex-col">
             <label class="font-semibold mb-1 text-lg">Wisdom</label>
-            <input type="number" (change)="calculateMaxPreparedSpells(formData)" [(ngModel)]="formData.characterAbilities.wisdom" name="wisdom" class="w-full p-1 bg-white rounded border text-center">
+            <input type="number" (change)="calculateMaxPreparedSpells()" [(ngModel)]="formData.characterAbilities.wisdom" name="wisdom" class="w-full p-1 bg-white rounded border text-center">
           </div>
           <div class="flex flex-col">
             <label class="font-semibold mb-1 text-lg">Charisma</label>
-            <input type="number" (change)="calculateMaxPreparedSpells(formData)" [(ngModel)]="formData.characterAbilities.charisma" name="charisma" class="w-full p-1 bg-white rounded border text-center">
+            <input type="number" (change)="calculateMaxPreparedSpells()" [(ngModel)]="formData.characterAbilities.charisma" name="charisma" class="w-full p-1 bg-white rounded border text-center">
           </div>
 
         </div>
@@ -285,7 +285,7 @@
       <!-- Main Content -->
       @if (!spellsLoading && knownSpells.length > 0) {
 
-        <!-- #region Druid, Cleric -->
+        <!-- #region Druid, Cleric Spells -->
         @if (formData.class == 'Cleric' || formData.class == 'Druid'){
           <!-- Known + Prepared Columns -->
           <div class="grid grid-cols-2 gap-x-6">
@@ -309,7 +309,7 @@
                     <input type="checkbox" class="mr-2" (change)="prepareSpell(spell, $event)" [disabled]="isDisabledFromMaxCantripsLimit(spell)">
                       {{ spell.name }}
                     </label>
-                    }
+                  }
                   @else {
                     <label class="flex items-center" [style.color]="isDisabledFromMaxPreparedLimit(spell) ? '#99a1af' : 'black'">
                     <input type="checkbox" class="mr-2" (change)="prepareSpell(spell, $event)" [disabled]="isDisabledFromMaxPreparedLimit(spell)">
@@ -340,26 +340,78 @@
         }
         <!-- #endregion -->
 
-        <!-- #region Wizard -->
+        <!-- #region Wizard Spells -->
         @else if (formData.class == 'Wizard'){
           <div class="grid grid-cols-3 gap-x-6">
+            <!-- Eligible Spells -->
             <div class="flex flex-col space-y-2">
-              <label class="block text-2xl font-bold mb-2">Known Spells</label>
+              <label class="block text-2xl font-bold mb-2">Eligible Spells</label>
 
               @for (level of getSpellLevels(); track level) {
-                <label class="text-xl font-bold">Level {{level}}</label>
+                @if (level==0){
+                  <label class="text-xl font-bold">Cantrips</label>
+                }
+                @else {
+                  <label class="text-xl font-bold">Level {{level}}</label>
+                }
 
                 @for (spell of spellsByLevel[level]; track spell.id) {
-                  <!-- Known Spells -->
-                  
-                      <label class="flex items-center" [style.color]="isDisabledFromMaxPreparedLimit(spell) ? '#99a1af' : 'black'">
-                        <input type="checkbox" class="mr-2" (change)="prepareSpell(spell, $event)" [disabled]="isDisabledFromMaxPreparedLimit(spell)">
-                        {{ spell.name }}
-                      </label>
-
+                  @if (spell.level == 0){
+                    <label class="flex items-center" [style.color]="isDisabledFromMaxCantripsLimit(spell) ? '#99a1af' : 'black'">
+                      <input type="checkbox" class="mr-2" (change)="addToSpellbook(spell, $event)"[disabled]="isDisabledFromMaxCantripsLimit(spell)" >
+                      {{ spell.name }}
+                    </label>
+                  }
+                  @else {
+                    <label class="flex items-center">
+                      <input type="checkbox" class="mr-2" (change)="addToSpellbook(spell, $event)">
+                      {{ spell.name }}
+                    </label>
+                  }
                 }
               }
             </div>
+
+            <!-- Spellbook Spells -->
+            <div class="flex flex-col space-y-2">
+              <label class="block text-2xl font-bold mb-2">Spellbook</label>
+
+              @for (level of getSpellLevels(); track level){
+
+                @if (level != 0){
+                  <label class="text-xl font-bold">Level {{level}}</label>
+                }
+                
+                @for (spell of spellBookSpellsByLevel[level]; track spell.id) {
+                  @if (level != 0){
+                    <label class="flex items-center">
+                      <input type="checkbox" class="mr-2" (change)="prepareSpell(spell, $event)">
+                      {{ spell.name }}
+                    </label>
+                  }
+                }
+              }
+            </div>
+
+            <!-- Prepared Spells -->
+            <div class="flex flex-col space-y-2">
+              <label class="block text-2xl font-bold mb-2">Prepared Spells</label>
+
+              <label class="text-xl font-bold mb-2">Cantrips ({{cantripsKnown.length}}/{{maxKnownCantrips}})</label>
+              @for (cantrip of cantripsKnown; track cantrip) {
+                <label class="flex items-center">
+                  {{ cantrip.name }}
+                </label>
+              }
+
+              <label class="text-xl font-bold mb-2">Spells ({{preparedSpells.length}}/{{maxPreparedSpells}})</label>
+              @for (spell of preparedSpells; track spell) {
+                <label class="flex items-center">
+                  {{ spell.name }}
+                </label>
+              }
+            </div>
+
           </div>
         }
         <!-- #endregion -->

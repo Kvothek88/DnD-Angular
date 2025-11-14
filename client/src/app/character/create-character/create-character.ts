@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { CharacterService } from '../../shared/services/character.service';
 import { finalize, firstValueFrom } from 'rxjs';
 import { CreateCharacterDto } from '../../shared/models/create-character-dto';
-import { skillsConfig, portraits, races, classes, subclasses, sizes, alignments, levels, savingThrowProficiencies, skillProficiencies, classesCantripsKnown } from '../../shared/models/character.constants';
+import { skillsConfig, portraits, races, classes, subclasses, sizes, alignments, levels, savingThrowProficiencies, skillProficiencies, classesCantripsKnown, classesMaxPreparedSpells } from '../../shared/models/character.constants';
 import { Spell } from '../../shared/models/spell';
 import { ToastService } from '../../shared/services/toast.service';
 import { groupBy } from 'lodash';
@@ -30,9 +30,11 @@ export class CreateCharacter {
   isPortraitDropdownOpen = false;
   formData: CreateCharacterDto;
   knownSpells: Spell[] = [];
-  spellsByLevel: { [key: number]: any[] } = {};
+  spellsByLevel: { [key: number]: Spell[] } = {};
+  spellBookSpellsByLevel: { [key: number]: Spell[] } = {};
   preparedSpells: Spell[] = [];
   cantripsKnown: Spell[] = [];
+  spellBookSpells: Spell[] = [];
   spellsLoading: boolean = false;
   maxPreparedSpells: number = 0;
   maxKnownCantrips: number = 0;
@@ -67,9 +69,12 @@ export class CreateCharacter {
     this.knownSpells = [];
     this.preparedSpells = [];
     this.cantripsKnown = [];
+    this.spellBookSpells = [];
+    this.spellsByLevel = {};
+    this.spellBookSpellsByLevel = {};
 
-    this.calculateMaxPreparedSpells(this.formData);
-    this.calculateCantripsKnown(this.formData);
+    this.calculateCantripsKnown();
+    this.calculateMaxPreparedSpells();
 
     this.characterService.getKnownSpells(selectedClass, spellLevel)
       .pipe(finalize(() => {
@@ -132,6 +137,26 @@ export class CreateCharacter {
         this.preparedSpells = this.preparedSpells.filter(s => s.name != spell.name);
   }
 
+  addToSpellbook(spell: Spell, event: Event){
+    const input = event.target as HTMLInputElement;
+    if (input.checked){
+      if (spell.level == 0)
+        this.cantripsKnown.push(spell);
+      else
+        this.spellBookSpells.push(spell);
+    }
+    else {
+      if (spell.level == 0)
+        this.cantripsKnown = this.cantripsKnown.filter(s => s.name != spell.name); 
+      else {
+        this.spellBookSpells = this.spellBookSpells.filter(s => s.name != spell.name); 
+        this.preparedSpells = this.preparedSpells.filter(s => s.name != spell.name);
+      }
+    }
+
+    this.spellBookSpellsByLevel = groupBy(this.spellBookSpells, 'level');
+  }
+
   isDisabledFromMaxPreparedLimit(spell: Spell) {
     const isSelected = this.preparedSpells.some(s => s.id === spell.id);
     return this.preparedSpells.length >= this.maxPreparedSpells && !isSelected
@@ -140,25 +165,16 @@ export class CreateCharacter {
    isDisabledFromMaxCantripsLimit(spell: Spell) {
     const isSelected = this.cantripsKnown.some(s => s.id === spell.id);
     return this.cantripsKnown.length >= this.maxKnownCantrips && !isSelected
-  } 
-
-  calculateMaxPreparedSpells(charData: CreateCharacterDto) {
-    let level = Number(charData.level);
-
-    if (charData.class == 'Cleric' || charData.class == 'Druid'){
-      let wisModifier = Math.floor((charData.characterAbilities.wisdom-10)/2);
-      this.maxPreparedSpells = level + wisModifier;
-      if (this.maxPreparedSpells < 1)
-        this.maxPreparedSpells = 1;
-    }
-    else {
-      this.maxPreparedSpells = 0;
-    }
   }
 
-  calculateCantripsKnown(charData: CreateCharacterDto){
-    let level = Number(charData.level);
-    this.maxKnownCantrips = classesCantripsKnown[charData.class][level] ?? 0;
+  calculateMaxPreparedSpells(){
+    let level = Number(this.formData.level);
+    this.maxPreparedSpells = classesMaxPreparedSpells[this.formData.class][level] ?? 0;
+  }
+
+  calculateCantripsKnown(){
+    let level = Number(this.formData.level);
+    this.maxKnownCantrips = classesCantripsKnown[this.formData.class][level] ?? 0;
   }
 
   getSpellLevels(): number[] {
@@ -176,7 +192,6 @@ export class CreateCharacter {
     this.isPortraitDropdownOpen = false;
   }
 
-  // Optional: Close dropdown when clicking outside
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
     const target = event.target as HTMLElement;
@@ -224,14 +239,12 @@ export class CreateCharacter {
         ...this.preparedSpells
       ];
 
-      // Step 1: Create character
       const createdCharacter = await firstValueFrom(
         this.characterService.createCharacter(this.formData)
       );
 
       const characterId = createdCharacter.id;
 
-      // Step 2: Upload avatar if selected
       if (this.selectedFile && characterId) {
         await this.uploadAvatar(characterId, this.selectedFile);
       }

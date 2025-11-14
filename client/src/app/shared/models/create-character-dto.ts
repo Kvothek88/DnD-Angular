@@ -1,3 +1,4 @@
+import { CharacterSpellSlots } from "./character-spell-slots";
 import { CreateCharacterAbilitiesDto } from "./create-character-abilities-dto";
 import { Spell } from "./spell";
 
@@ -52,5 +53,5 @@ export interface CreateCharacterDto {
 
   // Abilities (required in backend)
   characterAbilities: CreateCharacterAbilitiesDto;
-  characterPreparedSpells: Spell[]
+  characterPreparedSpells: Spell[];
 }
