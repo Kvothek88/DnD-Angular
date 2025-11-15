@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { Character } from '../../shared/models/character';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -7,6 +7,7 @@ import { CharacterSaves } from "../character-saves/character-saves";
 import { ModifierPipe } from "../../shared/pipes/modifier-pipe";
 import { ToastService } from '../../shared/services/toast.service';
 import { CharacterSkills } from "../character-skills/character-skills";
+import { CharacterStateService } from '../../shared/services/character-state.service';
 
 @Component({
   selector: 'app-character-stats',
@@ -15,9 +16,19 @@ import { CharacterSkills } from "../character-skills/character-skills";
   templateUrl: './character-stats.html',
   styleUrl: './character-stats.css'
 })
-export class CharacterStats {
+export class CharacterStats implements OnInit {
 
-  constructor(private toastService: ToastService){}
+  constructor(
+    private toastService: ToastService,
+    private characterStateService: CharacterStateService){}
+
+  ngOnInit(): void {
+    this.characterStateService.innateSorceryActive$
+      .subscribe(val => {
+        this.innateSorceryActive = val;
+        this.spellSaveDC = this.calculateSpellSaveDC();
+      });
+  }
 
   @Input() character: Character | null = null;
 
@@ -29,6 +40,9 @@ export class CharacterStats {
   armor: number = 8;
   shield: number = 3;
 
+  // Sorcerer specific
+  innateSorceryActive = false;
+
   ngOnChanges(changes: SimpleChanges) {
     if (changes['character'] && this.character) {
       this.acTotal = this.calculateACTotal();
@@ -37,7 +51,6 @@ export class CharacterStats {
       this.spellSaveDC = this.calculateSpellSaveDC();
     }
   }
-
 
   abilitySave(ability: string, modifier: string){
 
@@ -93,7 +106,7 @@ export class CharacterStats {
 
   calculateSpellSaveDC(): number {
     if (this.character)
-      return this.character?.characterAbilities.wisdomModifier + this.character?.proficiencyBonus + 8
+      return this.character?.characterAbilities.wisdomModifier + this.character?.proficiencyBonus + 8 + (this.innateSorceryActive === true ? 1 : 0);
     else
       return 0;
   }

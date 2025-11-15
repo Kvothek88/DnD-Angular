@@ -19,7 +19,6 @@ export interface Character {
     characterAbilities: CharacterAbilities;
     characterSpellSlots?: CharacterSpellSlots;
     characterPreparedSpells?: Spell[];
-    spellbook?: Spellbook;
 
     hitDice: number;
     maxHp: number;
@@ -55,5 +54,8 @@ export interface Character {
     religionApplyProf: boolean;
     sleightOfHandApplyProf: boolean;
     stealthApplyProf: boolean;
-    survivalApplyProf: boolean;  
+    survivalApplyProf: boolean;
+
+    // Wizard specific
+    spellbook?: Spellbook;
 }

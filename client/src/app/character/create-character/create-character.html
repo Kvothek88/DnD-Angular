@@ -286,11 +286,17 @@
       @if (!spellsLoading && knownSpells.length > 0) {
 
         <!-- #region Druid, Cleric Spells -->
-        @if (formData.class == 'Cleric' || formData.class == 'Druid'){
+        @if (formData.class == 'Cleric' || formData.class == 'Druid' || formData.class == 'Sorcerer'){
           <!-- Known + Prepared Columns -->
           <div class="grid grid-cols-2 gap-x-6">
             <div class="flex flex-col space-y-2">
-              <label class="block text-2xl font-bold mb-2">Known Spells</label>
+
+              @if (formData.class == 'Sorcerer'){
+                <label class="block text-2xl font-bold mb-2">Eligible Spells</label>
+              } @else {
+                <label class="block text-2xl font-bold mb-2">Known Spells</label>
+              }
+                
 
               @for (level of getSpellLevels(); track level) {
 
@@ -414,6 +420,10 @@
 
           </div>
         }
+        <!-- #endregion -->
+
+        <!-- #region Sorcerer Spells -->
+
         <!-- #endregion -->
       }
       @else if (!spellsLoading && knownSpells.length === 0 && classSelect.value != '') {

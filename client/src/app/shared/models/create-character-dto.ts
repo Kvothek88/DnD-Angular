@@ -54,5 +54,7 @@ export interface CreateCharacterDto {
   // Abilities (required in backend)
   characterAbilities: CreateCharacterAbilitiesDto;
   characterPreparedSpells: Spell[];
+
+  // Wizard specific
   spellbook?: SpellbookAddDto;
 }

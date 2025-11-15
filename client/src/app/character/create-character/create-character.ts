@@ -239,11 +239,13 @@ export class CreateCharacter {
         ...this.preparedSpells
       ];
 
-      this.formData.spellbook = {
-        spellbookSpells: this.spellBookSpells.map(s => ({
-          spellId: s.id
-        }))
-      };
+      if (this.formData.class == 'Wizard'){
+        this.formData.spellbook = {
+          spellbookSpells: this.spellBookSpells.map(s => ({
+            spellId: s.id
+          }))
+        };
+      }
 
       const createdCharacter = await firstValueFrom(
         this.characterService.createCharacter(this.formData)

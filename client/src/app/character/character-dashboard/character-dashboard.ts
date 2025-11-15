@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { DiceRoller } from "../../features/dice-roller/dice-roller";
 import { ToastService } from '../../shared/services/toast.service';
+import { CharacterStateService } from '../../shared/services/character-state.service';
 
 @Component({
   selector: 'app-character-dashboard',
@@ -15,7 +16,9 @@ import { ToastService } from '../../shared/services/toast.service';
 export class CharacterDashboard {
   @Input() character: Character | null = null;
 
-  constructor(private toastService: ToastService) {}
+  constructor(
+    private toastService: ToastService,
+    private characterStateService: CharacterStateService) {}
 
   wildShapeForm : number = 0;
 
@@ -30,6 +33,10 @@ export class CharacterDashboard {
     } else {
       this.wildShapeForm = 0;
     }
+  }
+
+  toggleInnateSorcery() {
+    this.characterStateService.toggleInnateSorcery();
   }
 
 }

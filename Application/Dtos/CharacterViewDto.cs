@@ -24,7 +24,6 @@ public class CharacterViewDto
     public CharacterAbilitiesViewDto CharacterAbilities { get; set; } = null!;
     public CharacterSpellSlotsViewDto CharacterSpellSlots { get; set; } = null!;
     public List<SpellViewDto>? CharacterPreparedSpells { get; set; }
-    public SpellbookViewDto? Spellbook { get; set; } = null!;
 
     public int HitDice { get; set; }
     public int MaxHp { get; set; }
@@ -60,4 +59,8 @@ public class CharacterViewDto
     public bool SleightOfHandApplyProf { get; set; }   // Dex
     public bool StealthApplyProf { get; set; }         // Dex
     public bool SurvivalApplyProf { get; set; }        // Wis
+
+
+    // Wizard specific
+    public SpellbookViewDto? Spellbook { get; set; } = null!;
 }
