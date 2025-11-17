@@ -61,6 +61,7 @@ public class Character : BaseEntity
     public bool StealthApplyProf { get; set; }         // Dex
     public bool SurvivalApplyProf { get; set; }        // Wis
 
+    public List<CharacterProficiency> CharacterProficiencies { get; set; } = [];
 
     // Wizard specific
     public Spellbook? Spellbook { get; set; }

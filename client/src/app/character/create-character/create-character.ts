@@ -3,7 +3,10 @@ import { FormsModule } from '@angular/forms';
 import { CharacterService } from '../../shared/services/character.service';
 import { finalize, firstValueFrom } from 'rxjs';
 import { CreateCharacterDto } from '../../shared/models/create-character-dto';
-import { skillsConfig, portraits, races, classes, subclasses, sizes, alignments, levels, savingThrowProficiencies, skillProficiencies, classesCantripsKnown, classesMaxPreparedSpells } from '../../shared/models/character.constants';
+import { skillsConfig, portraits, races, classes, subclasses, sizes, 
+         alignments, levels, savingThrowProficiencies, skillProficiencies, 
+         classesCantripsKnown, classesMaxPreparedSpells, classProficiencies,
+         proficiencyTypes, proficiencyItems } from '../../shared/models/character.constants';
 import { Spell } from '../../shared/models/spell';
 import { ToastService } from '../../shared/services/toast.service';
 import { groupBy } from 'lodash';
@@ -52,6 +55,16 @@ export class CreateCharacter {
   skillsConfig = skillsConfig;
   portraits = portraits;
 
+  weaponProficiencyTypes: {id: number, name: string}[] = [];
+  toolProficiencyTypes: {id: number, name: string}[] = [];
+  armorProficiencyTypes: {id: number, name: string}[] = [];
+  shieldProficiencyTypes: {id: number, name: string}[] = [];
+
+  weaponProficiencies: {id: number, name: string}[] = [];
+  toolProficiencies: {id: number, name: string}[] = [];
+  armorProficiencies: {id: number, name: string}[] = [];
+  shieldProficiencies: {id: number, name: string}[] = [];
+
 
   onClassChange(event: Event) {
     this.spellsLoading = true;
@@ -66,15 +79,10 @@ export class CreateCharacter {
       }
     });
 
-    this.knownSpells = [];
-    this.preparedSpells = [];
-    this.cantripsKnown = [];
-    this.spellBookSpells = [];
-    this.spellsByLevel = {};
-    this.spellBookSpellsByLevel = {};
-
+    this.resetOptions();
     this.calculateCantripsKnown();
     this.calculateMaxPreparedSpells();
+    this.calculateClassProficiencies();
 
     this.characterService.getKnownSpells(selectedClass, spellLevel)
       .pipe(finalize(() => {
@@ -181,6 +189,71 @@ export class CreateCharacter {
     return Object.keys(this.spellsByLevel)
       .map(Number)
       .sort((a, b) => a - b);
+  }
+
+  calculateClassProficiencies(){
+    classProficiencies[this.formData.class]['Weapon'].forEach(item => {
+      let dict = proficiencyTypes.find(t => t.name == item);
+      let dictItem: any = null;
+      if (dict == null)
+        dictItem = proficiencyItems.find(t => t.name == item);
+      if (dict != null && !this.weaponProficiencyTypes.some(w => w.id == dict.id)) 
+        this.weaponProficiencyTypes.push(dict);
+      else if (dictItem != null && !this.weaponProficiencies.some(w => w.id == dictItem.id))
+        this.weaponProficiencies.push(dictItem);
+    })
+
+    classProficiencies[this.formData.class]['Tools'].forEach(item => {
+      let dict = proficiencyTypes.find(t => t.name == item);
+      let dictItem: any = null;
+      if (dict == null)
+        dictItem = proficiencyItems.find(t => t.name == item);
+      if (dict != null && !this.toolProficiencyTypes.some(w => w.id == dict.id)) 
+        this.toolProficiencyTypes.push(dict);
+      else if (dictItem != null && !this.toolProficiencies.some(w => w.id == dictItem.id))
+        this.toolProficiencies.push(dictItem);
+    })
+
+    classProficiencies[this.formData.class]['Armor'].forEach(item => {
+      let dict = proficiencyTypes.find(t => t.name == item);
+      let dictItem: any = null;
+      if (dict == null)
+        dictItem = proficiencyItems.find(t => t.name == item);
+      if (dict != null && !this.armorProficiencyTypes.some(w => w.id == dict.id)) 
+        this.armorProficiencyTypes.push(dict);
+      else if (dictItem != null && !this.armorProficiencies.some(w => w.id == dictItem.id))
+        this.armorProficiencies.push(dictItem);
+    })
+
+    classProficiencies[this.formData.class]['Shield'].forEach(item => {
+      let dict = proficiencyTypes.find(t => t.name == item);
+      let dictItem: any = null;
+      if (dict == null)
+        dictItem = proficiencyItems.find(t => t.name == item);
+      if (dict != null && !this.shieldProficiencyTypes.some(w => w.id == dict.id)) 
+        this.shieldProficiencyTypes.push(dict);
+      else if (dictItem != null && !this.shieldProficiencies.some(w => w.id == dictItem.id))
+        this.shieldProficiencies.push(dictItem);
+    })
+  }
+
+  resetOptions() {
+    this.knownSpells = [];
+    this.preparedSpells = [];
+    this.cantripsKnown = [];
+    this.spellBookSpells = [];
+    this.spellsByLevel = {};
+    this.spellBookSpellsByLevel = {};
+
+    this.weaponProficiencyTypes = [];
+    this.toolProficiencyTypes = [];
+    this.armorProficiencyTypes = [];
+    this.shieldProficiencyTypes = [];
+
+    this.weaponProficiencies = [];
+    this.toolProficiencies = [];
+    this.armorProficiencies = [];
+    this.shieldProficiencies = [];
   }
 
   togglePortraitDropdown() {
@@ -349,6 +422,7 @@ export class CreateCharacter {
       },
 
       characterPreparedSpells: [],
+      characterProficiencies: [],
       spellbook: {}
     };
   }

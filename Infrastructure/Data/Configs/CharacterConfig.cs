@@ -38,5 +38,9 @@ public class CharacterConfig : IEntityTypeConfiguration<Character>
                .HasForeignKey(cs => cs.CharacterId)
                .OnDelete(DeleteBehavior.Cascade);
 
+        builder.HasMany(x => x.CharacterProficiencies)
+            .WithOne(x => x.Character)
+            .HasForeignKey(x => x.CharacterId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

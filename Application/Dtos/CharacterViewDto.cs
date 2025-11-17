@@ -60,6 +60,8 @@ public class CharacterViewDto
     public bool StealthApplyProf { get; set; }         // Dex
     public bool SurvivalApplyProf { get; set; }        // Wis
 
+    public List<CharacterProficiencyViewDto> CharacterProficiencies { get; set; } = [];
+
 
     // Wizard specific
     public SpellbookViewDto? Spellbook { get; set; } = null!;

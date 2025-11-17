@@ -21,6 +21,10 @@ public class CharacterDbContext : DbContext
     public DbSet<Spell> Spells { get; set; }
     public DbSet<Spellbook> Spellbooks { get; set; }
     public DbSet<SpellbookSpell> SpellbookSpells { get; set; }
+    public DbSet<DictionaryCategory> DictionaryCategories { get; set; }
+    public DbSet<Dictionary> Dictionaries { get; set; }
+    public DbSet<DictionaryItem> DictionaryItems { get; set; }
+    public DbSet<CharacterProficiency> CharacterProficiencies { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

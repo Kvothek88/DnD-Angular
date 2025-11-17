@@ -1,3 +1,4 @@
+import { CharacterProficiency } from "./character-proficiency";
 import { CreateCharacterAbilitiesDto } from "./create-character-abilities-dto";
 import { Spell } from "./spell";
 import { SpellbookAddDto } from "./spellbook-add-dto";
@@ -54,6 +55,7 @@ export interface CreateCharacterDto {
   // Abilities (required in backend)
   characterAbilities: CreateCharacterAbilitiesDto;
   characterPreparedSpells: Spell[];
+  characterProficiencies: CharacterProficiency[];
 
   // Wizard specific
   spellbook?: SpellbookAddDto;

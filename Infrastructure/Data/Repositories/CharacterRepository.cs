@@ -33,6 +33,8 @@ public class CharacterRepository : ICharacterRepository
                 .Include(c => c.CharacterAbilities)
                 .Include(c => c.CharacterSpellSlots)
                 .Include(c => c.CharacterPreparedSpells).ThenInclude(cs => cs.Spell)
+                .Include(c => c.CharacterProficiencies).ThenInclude(cp => cp.Proficiency)
+                .Include(c => c.CharacterProficiencies).ThenInclude(cp => cp.ProficiencyType)
                 .Include(c => c.Spellbook).ThenInclude(sb => sb.SpellbookSpells).ThenInclude(sbs => sbs.Spell)
                 .FirstOrDefaultAsync(c => c.Id == id));
         } else
@@ -41,6 +43,8 @@ public class CharacterRepository : ICharacterRepository
                 .Include(c => c.CharacterAbilities)
                 .Include(c => c.CharacterSpellSlots)
                 .Include(c => c.CharacterPreparedSpells).ThenInclude(cs => cs.Spell)
+                .Include(c => c.CharacterProficiencies).ThenInclude(cp => cp.Proficiency)
+                .Include(c => c.CharacterProficiencies).ThenInclude(cp => cp.ProficiencyType)
                 .FirstOrDefaultAsync(c => c.Id == id));
         }
     }
