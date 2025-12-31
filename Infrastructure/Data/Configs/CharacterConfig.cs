@@ -10,7 +10,7 @@ public class CharacterConfig : IEntityTypeConfiguration<Character>
     {
         builder.HasKey(c => c.Id);
 
-        builder.Property(c => c.Name).IsRequired().HasMaxLength(255);
+        builder.Property(c => c.Name).HasMaxLength(255);
         builder.Property(c => c.Race).HasMaxLength(255);
         builder.Property(c => c.Background).HasMaxLength(255);
         builder.Property(c => c.Religion).HasMaxLength(255);

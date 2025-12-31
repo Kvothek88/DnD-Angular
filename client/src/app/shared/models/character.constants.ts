@@ -147,9 +147,31 @@ export const classesCantripsKnown: Record<string, number[]> = {
   Cleric:    [3,3,3,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5],
   Druid:     [2,2,2,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4],
   Sorcerer:  [4,4,4,5,5,5,5,5,6,6,6,6,6,6,6,6,6,6,6,6],
-  Paladin:   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-  Ranger:    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-  Warlock:   [2,2,2,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4]
+  Warlock:   [2,2,2,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4],
+  Bard:      [2,2,2,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4],
+  Paladin:   Array(20).fill(0),
+  Ranger:    Array(20).fill(0),
+  Barbarian: Array(20).fill(0),
+  Fighter:   Array(20).fill(0),
+  Monk:      Array(20).fill(0),
+  Rogue:     Array(20).fill(0)
+};
+
+type ClassSpellInfo = { isSpellcaster: boolean; hasCantrips: boolean };
+
+export const classSpellcasting: Record<string, ClassSpellInfo> = {
+  Barbarian: { isSpellcaster: false, hasCantrips: false },
+  Bard:      { isSpellcaster: true,  hasCantrips: true },
+  Cleric:    { isSpellcaster: true,  hasCantrips: true },
+  Druid:     { isSpellcaster: true,  hasCantrips: true },
+  Fighter:   { isSpellcaster: false, hasCantrips: false },
+  Monk:      { isSpellcaster: false, hasCantrips: false },
+  Paladin:   { isSpellcaster: true,  hasCantrips: false },
+  Ranger:    { isSpellcaster: true,  hasCantrips: false },
+  Rogue:     { isSpellcaster: false, hasCantrips: false },
+  Sorcerer:  { isSpellcaster: true,  hasCantrips: true },
+  Warlock:   { isSpellcaster: true,  hasCantrips: true },
+  Wizard:    { isSpellcaster: true,  hasCantrips: true }
 };
 
 export const classesMaxPreparedSpells: Record<string, number[]> = {
@@ -159,7 +181,8 @@ export const classesMaxPreparedSpells: Record<string, number[]> = {
   Paladin:  [2,3,4,5,6,6,7,7,8,8,10,10,11,11,12,12,14,14,15,15],
   Ranger:   [2,3,4,5,6,6,7,7,8,8,10,10,11,11,12,12,14,14,15,15],
   Sorcerer: [2,4,6,7,9,10,11,12,14,15,16,16,17,17,18,18,19,20,21,22],
-  Warlock:  [2,3,4,5,6,7,8,9,10,10,11,11,12,12,13,13,14,14,15,15]
+  Warlock:  [2,3,4,5,6,7,8,9,10,10,11,11,12,12,13,13,14,14,15,15],
+  Bard:     [5,6,7,8,9,10,11,12,14,15,16,16,17,17,18,18,19,20,21,22]
 };
 
 export const proficiencyTypes = [
@@ -283,19 +306,94 @@ export const classProficiencies: {
     Shield: string[];
   };
 } = {
+  Barbarian: {
+    Weapon: ['Simple Weapons', 'Martial Weapons'],
+    Tools: [],
+    Armor: ['Light Armor', 'Medium Armor'],
+    Shield: ['Shields']
+  },
+
+  Bard: {
+    Weapon: ['Simple Weapons', 'Hand Crossbow', 'Longsword', 'Rapier', 'Shortsword'],
+    Tools: ['Three Musical Instruments'],
+    Armor: ['Light Armor'],
+    Shield: []
+  },
+
   Cleric: {
     Weapon: ['Simple Weapons'],
     Tools: [],
     Armor: ['Light Armor', 'Medium Armor'],
     Shield: ['Shields']
   },
+
   Druid: {
-    Weapon: ['Simple Weapons'],
+    Weapon: [
+      'Clubs', 'Daggers', 'Darts', 'Javelins', 'Maces', 'Quarterstaffs',
+      'Scimitars', 'Sickles', 'Slings', 'Spears'
+    ],
     Tools: ['Herbalism Kit'],
+    Armor: ['Light Armor', 'Medium Armor'],
+    Shield: ['Shields'] // traditionally non-metal
+  },
+
+  Fighter: {
+    Weapon: ['Simple Weapons', 'Martial Weapons'],
+    Tools: [],
+    Armor: ['Light Armor', 'Medium Armor', 'Heavy Armor'],
+    Shield: ['Shields']
+  },
+
+  Monk: {
+    Weapon: ['Simple Weapons', 'Shortsword'],
+    Tools: ['One Artisan Tool or One Musical Instrument'],
+    Armor: [],
+    Shield: []
+  },
+
+  Paladin: {
+    Weapon: ['Simple Weapons', 'Martial Weapons'],
+    Tools: [],
+    Armor: ['Light Armor', 'Medium Armor', 'Heavy Armor'],
+    Shield: ['Shields']
+  },
+
+  Ranger: {
+    Weapon: ['Simple Weapons', 'Martial Weapons'],
+    Tools: [],
+    Armor: ['Light Armor', 'Medium Armor'],
+    Shield: ['Shields']
+  },
+
+  Rogue: {
+    Weapon: ['Simple Weapons', 'Hand Crossbow', 'Longsword', 'Rapier', 'Shortsword'],
+    Tools: ['Thieves’ Tools'],
     Armor: ['Light Armor'],
-    Shield: ['Shields'] 
+    Shield: []
+  },
+
+  Sorcerer: {
+    Weapon: ['Daggers', 'Darts', 'Slings', 'Quarterstaffs', 'Light Crossbows'],
+    Tools: [],
+    Armor: [],
+    Shield: []
+  },
+
+  Warlock: {
+    Weapon: ['Simple Weapons'],
+    Tools: [],
+    Armor: ['Light Armor'],
+    Shield: []
+  },
+
+  Wizard: {
+    Weapon: ['Daggers', 'Darts', 'Slings', 'Quarterstaffs', 'Light Crossbows'],
+    Tools: [],
+    Armor: [],
+    Shield: []
   }
 };
+
 
 
 

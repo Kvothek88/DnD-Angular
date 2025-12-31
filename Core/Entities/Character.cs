@@ -10,16 +10,16 @@ namespace Core.Entities;
 public class Character : BaseEntity
 {
     // Character Info
-    public string Name { get; set; } = string.Empty;
-    public string Race { get; set; } = string.Empty;
-    public string Background { get; set; } = string.Empty;
-    public string Religion { get; set; } = string.Empty;
-    public string Class { get; set; } = string.Empty;
-    public string Subclass { get; set; } = string.Empty;
-    public string Size { get; set; } = string.Empty;
-    public string Alignment { get; set; } = string.Empty;
-    public int Level { get; set; }
-    public string? ImageFrame {  get; set; }
+    public required string Name { get; set; } = string.Empty;
+    public required string Race { get; set; } = string.Empty;
+    public required string Background { get; set; } = string.Empty;
+    public required string Religion { get; set; } = string.Empty;
+    public required string Class { get; set; } = string.Empty;
+    public required string Subclass { get; set; } = string.Empty;
+    public required string Size { get; set; } = string.Empty;
+    public required string Alignment { get; set; } = string.Empty;
+    public required int Level { get; set; }
+    public  string? ImageFrame {  get; set; }
 
     public CharacterAbilities CharacterAbilities { get; set; } = null!;
     public CharacterSpellSlots? CharacterSpellSlots { get; set; } = null!;
@@ -74,7 +74,7 @@ public class Character : BaseEntity
         if (CharacterDefaults.ClassHitDice.TryGetValue(Class, out var hitDice))
             HitDice = hitDice;
         else
-            HitDice = 8; // default if class not found
+            HitDice = 8;
 
         // Populate Speed based on Race
         if (CharacterDefaults.RaceSpeed.TryGetValue(Race, out var speed))

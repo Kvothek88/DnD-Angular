@@ -7,6 +7,8 @@
     <!-- 1st Column: Basic Info & Avatar -->
     <div class="flex flex-col space-y-4 bg-yellow-100 rounded-2xl p-4">
 
+      <!-- BASIC INFO -->
+
       <h3 class="text-3xl font-bold text-center mb-6">Info</h3>
       <!-- Name -->
       <div>
@@ -96,7 +98,7 @@
         </select>
       </div>
 
-      <!-- Avatar Frame -->
+      <!-- AVATAR FRAME -->
       <div>
         <label class="block text-2xl font-bold mb-1">Avatar Frame</label>
         <div class="relative w-[177px]">
@@ -134,7 +136,7 @@
         </div>
       </div>
 
-      <!-- Character Avatar (file upload) -->
+      <!-- AVATAR (File upload) -->
       <div>
         <label class="block text-2xl font-bold mb-1">Character Avatar</label>
         <div class="w-full">
@@ -169,7 +171,7 @@
 
       <h3 class="text-3xl font-bold text-center mb-6">Stats</h3>
 
-      <!-- Saving Throws -->
+      <!-- SAVING THROWS -->
       <div>
         <h3 class="text-2xl font-bold mb-2">Saving Throws Proficiency</h3>
         <div class="grid grid-cols-2 gap-2">
@@ -198,7 +200,7 @@
         </div>
       </div>
 
-      <!-- Skills -->
+      <!-- SKILLS -->
       <div>
         <h3 class="text-2xl font-bold mb-2">Skills Proficiency</h3>
         @if (classSelect.value){
@@ -234,9 +236,8 @@
       </div>
 
 
-      <!-- w-full text-xl p-2 bg-white rounded shadow border placeholder:text-gray-400 placeholder:italic -->
 
-      <!-- Character Abilities -->
+      <!-- CHARACTER ABILITIES -->
       <div>
         <h3 class="text-2xl font-bold mb-4">Abilities</h3>
         <div class="grid grid-cols-2 gap-x-6 gap-y-4">
@@ -348,49 +349,72 @@
       @if (!spellsLoading && knownSpells.length > 0) {
 
         <!-- #region Druid, Cleric Spells -->
-        @if (formData.class == 'Cleric' || formData.class == 'Druid' || formData.class == 'Sorcerer'){
+        @if (formData.class == 'Cleric' ||
+             formData.class == 'Druid' || 
+             formData.class == 'Bard' ||
+             formData.class == 'Sorcerer' ||
+             formData.class == 'Ranger' ||
+             formData.class == 'Paladin'){
           <!-- Known + Prepared Columns -->
           <div class="grid grid-cols-2 gap-x-6">
-            <div class="flex flex-col space-y-2">
+            <div class="flex flex-col space-y-1">
 
-              @if (formData.class == 'Sorcerer'){
+              @if (formData.class == 'Sorcerer' || formData.class == 'Bard'){
                 <label class="block text-2xl font-bold mb-2">Eligible Spells</label>
               } @else {
                 <label class="block text-2xl font-bold mb-2">Known Spells</label>
               }
                 
-
               @for (level of getSpellLevels(); track level) {
 
-                @if (level==0){
-                  <label class="text-xl font-bold">Cantrips</label>
-                }
-                @else {
-                  <label class="text-xl font-bold">Level {{level}}</label>
-                }
-                
-                @for (spell of spellsByLevel[level]; track spell.id) {
-                  <!-- Known Spells -->
-                  
-                  @if (spell.level == 0){
-                    <label class="flex items-center" [style.color]="isDisabledFromMaxCantripsLimit(spell) ? '#99a1af' : 'black'">
-                    <input type="checkbox" class="mr-2" (change)="prepareSpell(spell, $event)" [disabled]="isDisabledFromMaxCantripsLimit(spell)">
-                      {{ spell.name }}
-                    </label>
+                <div class="flex items-center cursor-pointer" (click)="toggleSpellListLevel(level)">
+                  <span [style.transform]="expandedLevels[level] ? 'rotate(90deg)' : 'rotate(0deg)'" class="transition-transform mr-1">▶</span>
+                  @if (level == 0) {
+                    <label class="text-xl font-bold">Cantrips</label>
                   }
                   @else {
-                    <label class="flex items-center" [style.color]="isDisabledFromMaxPreparedLimit(spell) ? '#99a1af' : 'black'">
-                    <input type="checkbox" class="mr-2" (change)="prepareSpell(spell, $event)" [disabled]="isDisabledFromMaxPreparedLimit(spell)">
-                      {{ spell.name }}
-                    </label>
+                    <label class="text-xl font-bold">Level {{level}}</label>
                   }
+                </div>
+
+                @if (expandedLevels[level]) {
+                  <div class="ml-4 mt-1">
+                    @for (spell of spellsByLevel[level]; track spell.id) {
+                      @if (spell.level == 0) {
+                        <label class="flex items-center" [style.color]="isDisabledFromMaxCantripsLimit(spell) ? '#99a1af' : 'black'">
+                          <input 
+                            type="checkbox" 
+                            class="mr-2" 
+                            (change)="prepareSpell(spell, $event)" 
+                            [disabled]="isDisabledFromMaxCantripsLimit(spell)"
+                            [checked]="isCantripKnown(spell)">
+                          {{ spell.name }}
+                        </label>
+                      }
+                      @else {
+                        <label class="flex items-center" [style.color]="isDisabledFromMaxPreparedLimit(spell) ? '#99a1af' : 'black'">
+                          <input 
+                            type="checkbox" 
+                            class="mr-2" 
+                            (change)="prepareSpell(spell, $event)" 
+                            [disabled]="isDisabledFromMaxPreparedLimit(spell)"
+                            [checked]="isPrepared(spell)">
+                          {{ spell.name }}
+                        </label>
+                      }
+                    }
+                  </div>
                 }
               }
+
             </div>
             
             <div class="flex flex-col space-y-2">
 
-              <label class="block text-2xl font-bold mb-2">Known Cantrips ({{cantripsKnown.length}}/{{maxKnownCantrips}})</label>
+              @if (maxKnownCantrips > 0) {
+                <label class="block text-2xl font-bold mb-2">Known Cantrips ({{cantripsKnown.length}}/{{maxKnownCantrips}})</label>
+              }
+
               @for (cantrip of cantripsKnown; track cantrip) {
                 <label class="flex items-center">
                   {{ cantrip.name }}
@@ -416,6 +440,47 @@
               <label class="block text-2xl font-bold mb-2">Eligible Spells</label>
 
               @for (level of getSpellLevels(); track level) {
+
+                <div class="flex items-center cursor-pointer" (click)="toggleSpellListLevel(level)">
+                  <span [style.transform]="expandedLevels[level] ? 'rotate(90deg)' : 'rotate(0deg)'" class="transition-transform mr-1">▶</span>
+                  @if (level == 0) {
+                    <label class="text-xl font-bold">Cantrips</label>
+                  }
+                  @else {
+                    <label class="text-xl font-bold">Level {{level}}</label>
+                  }
+                </div>
+
+                @if (expandedLevels[level]) {
+                  <div class="ml-4 mt-1">
+                    @for (spell of spellsByLevel[level]; track spell.id) {
+                      @if (spell.level == 0) {
+                        <label class="flex items-center" [style.color]="isDisabledFromMaxCantripsLimit(spell) ? '#99a1af' : 'black'">
+                          <input 
+                            type="checkbox" 
+                            class="mr-2" 
+                            (change)="addToSpellbook(spell, $event)" 
+                            [disabled]="isDisabledFromMaxCantripsLimit(spell)"
+                            [checked]="isCantripKnown(spell)">
+                          {{ spell.name }}
+                        </label>
+                      }
+                      @else {
+                        <label class="flex items-center" [style.color]="isDisabledFromMaxPreparedLimit(spell) ? '#99a1af' : 'black'">
+                          <input 
+                            type="checkbox" 
+                            class="mr-2" 
+                            (change)="addToSpellbook(spell, $event)"
+                            [checked]="isPrepared(spell)">
+                          {{ spell.name }}
+                        </label>
+                      }
+                    }
+                  </div>
+                }
+              }              
+
+              <!-- @for (level of getSpellLevels(); track level) {
                 @if (level==0){
                   <label class="text-xl font-bold">Cantrips</label>
                 }
@@ -437,7 +502,7 @@
                     </label>
                   }
                 }
-              }
+              } -->
             </div>
 
             <!-- Spellbook Spells -->
@@ -484,7 +549,7 @@
         }
         <!-- #endregion -->
 
-        <!-- #region Sorcerer Spells -->
+        <!-- #region Bard Spells -->
 
         <!-- #endregion -->
       }

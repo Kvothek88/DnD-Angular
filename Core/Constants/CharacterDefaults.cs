@@ -106,8 +106,6 @@ public static class CharacterDefaults
         ["Druid"] = FullCasterSlots,
         ["Sorcerer"] = FullCasterSlots,
         ["Wizard"] = FullCasterSlots,
-
-        // 2024 change: Warlock uses Half-Caster slots now
         ["Paladin"] = HalfCasterSlots,
         ["Ranger"] = HalfCasterSlots,
         ["Warlock"] = HalfCasterSlots

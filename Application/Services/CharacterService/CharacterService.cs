@@ -41,7 +41,9 @@ public class CharacterService : ICharacterService
         var character = _mapper.Map<Character>(characterDto);
 
         character.InitializeDerivedValues();
-        character.CharacterSpellSlots = CharacterDefaults.CalculateSlots(character.Class, character.Level);
+
+        if (character.CharacterPreparedSpells?.Count > 0)
+            character.CharacterSpellSlots = CharacterDefaults.CalculateSlots(character.Class, character.Level);
 
         return await _characterrepository.AddCharacterAsync(character);
     }

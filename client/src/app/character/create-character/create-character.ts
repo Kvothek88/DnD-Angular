@@ -6,7 +6,8 @@ import { CreateCharacterDto } from '../../shared/models/create-character-dto';
 import { skillsConfig, portraits, races, classes, subclasses, sizes, 
          alignments, levels, savingThrowProficiencies, skillProficiencies, 
          classesCantripsKnown, classesMaxPreparedSpells, classProficiencies,
-         proficiencyTypes, proficiencyItems } from '../../shared/models/character.constants';
+         proficiencyTypes, proficiencyItems, 
+         classSpellcasting} from '../../shared/models/character.constants';
 import { Spell } from '../../shared/models/spell';
 import { ToastService } from '../../shared/services/toast.service';
 import { groupBy } from 'lodash';
@@ -41,6 +42,7 @@ export class CreateCharacter {
   spellsLoading: boolean = false;
   maxPreparedSpells: number = 0;
   maxKnownCantrips: number = 0;
+  expandedLevels: Record<number, boolean> = {};
 
   // Static data for dropdowns
   races = races;
@@ -93,6 +95,9 @@ export class CreateCharacter {
         next: response => {
           this.knownSpells = response;
           this.spellsByLevel = groupBy(this.knownSpells, 'level');
+          for (let level of this.getSpellLevels()) {
+            this.expandedLevels[level] = false;
+          }
           console.log(this.spellsByLevel);
         },
         error: err => console.log(err)
@@ -175,14 +180,44 @@ export class CreateCharacter {
     return this.cantripsKnown.length >= this.maxKnownCantrips && !isSelected
   }
 
+  toggleSpellListLevel(level: number) {
+    this.expandedLevels[level] = !this.expandedLevels[level];
+    Object.keys(this.expandedLevels).forEach(key => {
+      const k = Number(key);
+      if (k != level){
+        this.expandedLevels[k] = false;
+      }
+    })
+  }
+
+  isCantripKnown(spell: Spell): boolean {
+    return this.cantripsKnown.some(s => s.id === spell.id);
+  }
+
+  isPrepared(spell: Spell): boolean {
+    return this.preparedSpells.some(s => s.id === spell.id);
+  }
+
   calculateMaxPreparedSpells(){
-    let level = Number(this.formData.level);
-    this.maxPreparedSpells = classesMaxPreparedSpells[this.formData.class][level] ?? 0;
+    const level = Number(this.formData.level);
+    const cls = this.formData.class;
+
+    if (classSpellcasting[cls].isSpellcaster){
+      this.maxPreparedSpells = classesMaxPreparedSpells[this.formData.class][level];
+    } else {
+      this.maxPreparedSpells = 0;
+    }
   }
 
   calculateCantripsKnown(){
-    let level = Number(this.formData.level);
-    this.maxKnownCantrips = classesCantripsKnown[this.formData.class][level] ?? 0;
+    const level = Number(this.formData.level);
+    const cls = this.formData.class;
+
+    if (classSpellcasting[cls].hasCantrips){
+      this.maxKnownCantrips = classesCantripsKnown[this.formData.class][level];
+    } else {
+      this.maxKnownCantrips = 0;
+    }
   }
 
   getSpellLevels(): number[] {
@@ -306,7 +341,6 @@ export class CreateCharacter {
   // -------------------------------
   async submitForm() {
     try {
-      console.log('Form data:', this.formData);
       this.formData.characterPreparedSpells = [
         ...this.cantripsKnown,
         ...this.preparedSpells
@@ -319,6 +353,8 @@ export class CreateCharacter {
           }))
         };
       }
+
+      console.log('Form data:', this.formData);
 
       const createdCharacter = await firstValueFrom(
         this.characterService.createCharacter(this.formData)
@@ -422,8 +458,7 @@ export class CreateCharacter {
       },
 
       characterPreparedSpells: [],
-      characterProficiencies: [],
-      spellbook: {}
+      characterProficiencies: []
     };
   }
 }
