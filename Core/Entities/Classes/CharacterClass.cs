@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Core.Entities.Classes;
+﻿namespace Core.Entities.Classes;
 
 public class CharacterClass : BaseEntity
 {
     public string Name { get; set; } = string.Empty;
     public int HitDice { get; set; }
+    public bool IsSpellcaster { get; set; }
 
     public List<CharacterSubclass> Subclasses { get; set; } = [];
 

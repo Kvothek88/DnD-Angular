@@ -22,6 +22,10 @@ public class CharacterPreparedSpellConfig : IEntityTypeConfiguration<CharacterPr
                .HasForeignKey(cs => cs.SpellId)
                .OnDelete(DeleteBehavior.Cascade);
 
+        builder.HasOne(cs => cs.CharacterClass)
+               .WithMany()
+               .HasForeignKey(cs => cs.CharacterClassId);
+
         builder.ToTable("CharacterPreparedSpells");
     }
 }

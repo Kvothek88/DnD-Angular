@@ -24,13 +24,23 @@ public class CharacterConfig : IEntityTypeConfiguration<Character>
         // One-to-one with CharacterStats
         builder.HasOne(c => c.CharacterAbilities)
                .WithOne()
-               .HasForeignKey<CharacterAbilities>(s => s.CharacterId)
+               .HasForeignKey<CharacterAbilities>(ca => ca.CharacterId)
                .OnDelete(DeleteBehavior.Cascade);
 
         // One-to-one with CharacterSpellSlots
         builder.HasOne(c => c.CharacterSpellSlots)
                .WithOne()
-               .HasForeignKey<CharacterSpellSlots>(s => s.CharacterId)
+               .HasForeignKey<CharacterSpellSlots>(cs => cs.CharacterId)
+               .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasOne(c => c.Background)
+               .WithOne()
+               .HasForeignKey<CharacterBackground>(cb => cb.CharacterId)
+               .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasOne(c => c.PhysicalCharacteristics)
+               .WithOne()
+               .HasForeignKey<CharacterPhysicalCharacteristics>(cp => cp.CharacterId)
                .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(c => c.CharacterPreparedSpells)
@@ -38,9 +48,22 @@ public class CharacterConfig : IEntityTypeConfiguration<Character>
                .HasForeignKey(cs => cs.CharacterId)
                .OnDelete(DeleteBehavior.Cascade);
 
+        builder.HasMany(c => c.Advancements)
+               .WithOne()
+               .HasForeignKey(cs => cs.CharacterId)
+               .OnDelete(DeleteBehavior.Cascade);
+
         builder.HasMany(x => x.CharacterProficiencies)
-            .WithOne(x => x.Character)
-            .HasForeignKey(x => x.CharacterId)
-            .OnDelete(DeleteBehavior.Cascade);
+               .WithOne(x => x.Character)
+               .HasForeignKey(x => x.CharacterId)
+               .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasMany(x => x.Features)
+               .WithMany()
+               .UsingEntity<CharacterFeature>();
+
+        builder.HasMany(x => x.GeneralFeats)
+               .WithMany()
+               .UsingEntity<CharacterFeat>();
     }
 }

@@ -7,13 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Entities.Classes;
+namespace Core.Entities;
 
-public class Feature : BaseEntity, IAbilityImprove
+public class Feat : BaseEntity, IOptionalAbilityImprove
 {
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public List<Prerequisite> Prerequisites { get; set; } = [];
+
 
     public List<AbilityScoreBonus>? AbilityBonuses { get; set; } = [];
 }
