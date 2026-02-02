@@ -1,6 +1,9 @@
-﻿namespace Core.Entities.ASI;
+﻿using Core.Entities.CharacterEntities;
+
+namespace Core.Entities.ASI;
 
 public class FeatAdvancement : Advancement
 {
-    public Feat Feat { get; set; }
+    public int? FeatId { get; set; }
+    public Feat? Feat { get; set; }
 }

@@ -1,4 +1,6 @@
-﻿namespace Core.Entities.Classes;
+﻿using Core.Entities.Features;
+
+namespace Core.Entities.Classes;
 
 public class CharacterClass : BaseEntity
 {
@@ -8,5 +10,7 @@ public class CharacterClass : BaseEntity
 
     public List<CharacterSubclass> Subclasses { get; set; } = [];
 
-    public List<Feature> Features { get; set; } = [];
+    public List<CharacterClassPrimaryProficiency> PrimaryProficiencies { get; set; } = [];
+    public List<CharacterClassMulticlassProficiency> MulticlassProficiencies { get; set; } = [];
+    public List<CharacterClassFeature> Features { get; set; } = [];
 }

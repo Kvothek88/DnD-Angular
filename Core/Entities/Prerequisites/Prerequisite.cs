@@ -1,6 +1,6 @@
 ﻿namespace Core.Entities.Prerequisites;
 
-public class Prerequisite : BaseEntity
+public class Prerequisite
 {
     public PrerequisiteOwnerType OwnerType { get; set; }
     public int OwnerId { get; set; }

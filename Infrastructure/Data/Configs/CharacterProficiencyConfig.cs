@@ -1,4 +1,4 @@
-﻿using Core.Entities;
+﻿using Core.Entities.CharacterEntities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -10,26 +10,19 @@ public class CharacterProficiencyConfig : IEntityTypeConfiguration<CharacterProf
     {
         builder.HasKey(cp => cp.Id);
 
-        builder.HasOne(cp => cp.Character)
-            .WithMany(c => c.CharacterProficiencies)
-            .HasForeignKey(cp => cp.CharacterId)
-            .OnDelete(DeleteBehavior.Cascade);
+        builder.HasIndex(cp => new { cp.CharacterId, cp.GrantedProficiencyId })
+               .IsUnique();
 
-        builder.HasOne(cp => cp.Proficiency)
-            .WithMany()
-            .HasForeignKey(cp => cp.ProficiencyId)
-            .OnDelete(DeleteBehavior.NoAction);
+        builder.HasOne<Character>()
+               .WithMany(c => c.Proficiencies)
+               .HasForeignKey(cp => cp.CharacterId);
 
-        builder.HasOne(cp => cp.ProficiencyType)
-            .WithMany()
-            .HasForeignKey(cp => cp.ProficiencyTypeId)
-            .OnDelete(DeleteBehavior.NoAction);
+        builder.HasOne(cp => cp.GrantedProficiency)
+               .WithMany()
+               .HasForeignKey(cp => cp.GrantedProficiencyId)
+               .OnDelete(DeleteBehavior.Restrict);
 
-        builder.ToTable(cp => cp.HasCheckConstraint(
-           "CK_CharacterProficiency_OneOrTheOther",
-            @"(ProficiencyId IS NOT NULL AND ProficiencyTypeId IS NULL)
-                OR
-                (ProficiencyId IS NULL AND ProficiencyTypeId IS NOT NULL)"
-            ));
+        builder.ToTable("CharacterProficiencies");
     }
 }
+

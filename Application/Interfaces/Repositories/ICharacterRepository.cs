@@ -1,12 +1,12 @@
 ﻿using Application.Dtos;
-using Core.Entities;
-using System.Runtime.CompilerServices;
+using Core.Entities.CharacterEntities;
+using Core.Entities.Spells;
 
 namespace Application.Interfaces.Repositories;
 
 public interface ICharacterRepository
 {
-    Task<CharacterViewDto> GetByIdAsync(int id);
+    Task<Character> GetByIdAsync(int id);
     Task<List<CharacterCardViewDto>> GetAllAsync();
     Task<List<Spell>> GetCharacterPreparedSpellsAsync(int id);
     Task<CharacterViewDto> AddCharacterAsync(Character character);

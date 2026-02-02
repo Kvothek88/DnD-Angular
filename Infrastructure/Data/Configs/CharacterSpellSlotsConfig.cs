@@ -1,4 +1,4 @@
-﻿using Core.Entities;
+﻿using Core.Entities.CharacterEntities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -8,10 +8,8 @@ public class CharacterSpellSlotsConfig : IEntityTypeConfiguration<CharacterSpell
 {
     public void Configure(EntityTypeBuilder<CharacterSpellSlots> builder)
     {
-        // Primary key
         builder.HasKey(s => s.Id);
 
-        // Optional: configure property defaults or constraints
         builder.Property(s => s.MaxLevel1).HasDefaultValue(0);
         builder.Property(s => s.MaxLevel2).HasDefaultValue(0);
         builder.Property(s => s.MaxLevel3).HasDefaultValue(0);
@@ -32,7 +30,6 @@ public class CharacterSpellSlotsConfig : IEntityTypeConfiguration<CharacterSpell
         builder.Property(s => s.UsedLevel8).HasDefaultValue(0);
         builder.Property(s => s.UsedLevel9).HasDefaultValue(0);
 
-        // Optional: indexes for performance
         builder.HasIndex(s => s.CharacterId).IsUnique();
     }
 }

@@ -1,7 +1,15 @@
-﻿namespace Core.Entities.Classes;
+﻿using Core.Entities.CharacterEntities;
 
-public class ClassAdvancement : Advancement
+namespace Core.Entities.Classes;
+
+public class ClassAdvancement : BaseEntity
 {
-    public int ClassId { get; set; }
-    public CharacterClass Class { get; set; } = null!;
+    public int CharacterId { get; set; }
+    public Character Character { get; set; } = null!;
+
+    public int? ClassId { get; set; }
+    public CharacterClass? Class { get; set; } = null!;
+
+    public int Level { get; set; }
+    public ClassEntryType? EntryType { get; set; }
 }

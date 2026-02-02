@@ -1,4 +1,4 @@
-﻿using Core.Entities;
+﻿using Core.Entities.CharacterEntities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -8,19 +8,25 @@ public class CharacterPreparedSpellConfig : IEntityTypeConfiguration<CharacterPr
 {
     public void Configure(EntityTypeBuilder<CharacterPreparedSpell> builder)
     {
-        // Composite Primary Key
-        builder.HasKey(cs => new { cs.CharacterId, cs.SpellId });
+        builder.HasKey(cps => cps.Id);
+
+        builder.HasIndex(cps => new
+        {
+            cps.CharacterId,
+            cps.SpellId,
+            cps.CharacterClassId
+        })
+        .IsUnique();
 
         // Relationships
-        builder.HasOne<Character>()
+        builder.HasOne(ca => ca.Character)
                .WithMany(c => c.CharacterPreparedSpells)
-               .HasForeignKey(cs => cs.CharacterId)
-               .OnDelete(DeleteBehavior.Cascade);
+               .HasForeignKey(cs => cs.CharacterId);
 
         builder.HasOne(cs => cs.Spell)
                .WithMany()
                .HasForeignKey(cs => cs.SpellId)
-               .OnDelete(DeleteBehavior.Cascade);
+               .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(cs => cs.CharacterClass)
                .WithMany()

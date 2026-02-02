@@ -1,10 +1,10 @@
 ﻿using Application.Dtos;
-using AutoMapper;
-using Core.Entities;
 using Application.Interfaces.Repositories;
-using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using System.Runtime.InteropServices;
+using Core.Entities.CharacterEntities;
+using Core.Entities.Spells;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data.Repositories;
 
@@ -23,40 +23,15 @@ public class CharacterRepository : ICharacterRepository
         _mapperConfig = _mapper.ConfigurationProvider;
     }
 
-    public async Task<CharacterViewDto?> GetByIdAsync(int id)
-    {
-        var cls = await GetCharacterClass(id);
-
-        if (cls == "Wizard")
-        {
-            return _mapper.Map<CharacterViewDto>(await _context.Characters
-                .Include(c => c.CharacterAbilities)
-                .Include(c => c.CharacterSpellSlots)
-                .Include(c => c.CharacterPreparedSpells).ThenInclude(cs => cs.Spell)
-                .Include(c => c.CharacterProficiencies).ThenInclude(cp => cp.Proficiency)
-                .Include(c => c.CharacterProficiencies).ThenInclude(cp => cp.ProficiencyType)
-                .Include(c => c.Spellbook).ThenInclude(sb => sb.SpellbookSpells).ThenInclude(sbs => sbs.Spell)
-                .FirstOrDefaultAsync(c => c.Id == id));
-        } else
-        {
-            return _mapper.Map<CharacterViewDto>(await _context.Characters
-                .Include(c => c.CharacterAbilities)
-                .Include(c => c.CharacterSpellSlots)
-                .Include(c => c.CharacterPreparedSpells).ThenInclude(cs => cs.Spell)
-                .Include(c => c.CharacterProficiencies).ThenInclude(cp => cp.Proficiency)
-                .Include(c => c.CharacterProficiencies).ThenInclude(cp => cp.ProficiencyType)
-                .FirstOrDefaultAsync(c => c.Id == id));
-        }
-    }
-
-    private async Task<string?> GetCharacterClass(int id)
+    public async Task<Character?> GetByIdAsync(int id)
     {
         return await _context.Characters
-            .Where(c => c.Id == id)
-            .Select(c => c.Class)
-            .FirstOrDefaultAsync();
+            .Include(c => c.Features).ThenInclude(f => f.Feature).ThenInclude(f => f.Spell)
+            .Include(c => c.Feats).ThenInclude(f => f.Feat)
+            .Include(c => c.Proficiencies).ThenInclude(c => c.GrantedProficiency).ThenInclude(g => g.Proficiency)
+            .Include(c => c.CharacterPreparedSpells).ThenInclude(cps => cps.Spell)
+            .FirstOrDefaultAsync(c => c.Id == id);
     }
-
 
     public async Task<List<CharacterCardViewDto>> GetAllAsync()
     {

@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Core.Entities.CharacterEntities;
 
 namespace Core.Entities.Classes;
 
-public class SubclassAdvancement : Advancement
+public class SubclassAdvancement : BaseEntity
 {
-    public int SubclassId { get; set; }
-    public CharacterSubclass Subclass { get; set; } = null!;
+    public int CharacterId { get; set; }
+    public Character Character { get; set; } = null!;
+
+    public int? SubclassId { get; set; }
+    public CharacterSubclass? Subclass { get; set; } = null!;
+
+    public int Level { get; set; }
 }

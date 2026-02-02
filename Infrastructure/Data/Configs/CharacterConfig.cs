@@ -1,4 +1,4 @@
-﻿using Core.Entities;
+﻿using Core.Entities.CharacterEntities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -11,59 +11,70 @@ public class CharacterConfig : IEntityTypeConfiguration<Character>
         builder.HasKey(c => c.Id);
 
         builder.Property(c => c.Name).HasMaxLength(255);
-        builder.Property(c => c.Race).HasMaxLength(255);
-        builder.Property(c => c.Background).HasMaxLength(255);
         builder.Property(c => c.Religion).HasMaxLength(255);
-        builder.Property(c => c.Class).HasMaxLength(255);
-        builder.Property(c => c.Subclass).HasMaxLength(255);
-        builder.Property(c => c.Size).HasMaxLength(255);
         builder.Property(c => c.Alignment).HasMaxLength(255);
-
         builder.Property(c => c.Level).IsRequired();
+        builder.Property(c => c.ImageFrame).HasMaxLength(255);
 
-        // One-to-one with CharacterStats
-        builder.HasOne(c => c.CharacterAbilities)
-               .WithOne()
-               .HasForeignKey<CharacterAbilities>(ca => ca.CharacterId)
-               .OnDelete(DeleteBehavior.Cascade);
+        builder.Property(c => c.MaxHp).IsRequired();
+        builder.Property(c => c.CurrentHp).IsRequired();
+        builder.Property(c => c.TempHp).IsRequired();
+        builder.Property(c => c.NegativeHp).IsRequired();
+        builder.Property(c => c.Speed).IsRequired();
 
-        // One-to-one with CharacterSpellSlots
+        // One-to-one
         builder.HasOne(c => c.CharacterSpellSlots)
                .WithOne()
-               .HasForeignKey<CharacterSpellSlots>(cs => cs.CharacterId)
-               .OnDelete(DeleteBehavior.Cascade);
+               .HasForeignKey<CharacterSpellSlots>(cs => cs.CharacterId);
+
+        // One to many
+        builder.HasOne(c => c.Race)
+               .WithMany()
+               .HasForeignKey(c => c.RaceId)
+               .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(c => c.Background)
-               .WithOne()
-               .HasForeignKey<CharacterBackground>(cb => cb.CharacterId)
+               .WithMany()
+               .HasForeignKey(c => c.BackgroundId)
+               .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasMany(c => c.ClassAdvancements)
+               .WithOne(ca => ca.Character)
+               .HasForeignKey(ca => ca.CharacterId)
                .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasOne(c => c.PhysicalCharacteristics)
+        builder.HasMany(c => c.SubclassAdvancements)
+               .WithOne(sa => sa.Character)
+               .HasForeignKey(sa => sa.CharacterId)
+               .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasMany(c => c.Features)
                .WithOne()
-               .HasForeignKey<CharacterPhysicalCharacteristics>(cp => cp.CharacterId)
+               .HasForeignKey(cf => cf.CharacterId)
+               .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasMany(c => c.Feats)
+               .WithOne()
+               .HasForeignKey(cf => cf.CharacterId)
+               .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasMany(c => c.Proficiencies)
+               .WithOne()
+               .HasForeignKey(cp => cp.CharacterId)
                .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(c => c.CharacterPreparedSpells)
                .WithOne()
-               .HasForeignKey(cs => cs.CharacterId)
+               .HasForeignKey(ps => ps.CharacterId)
                .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasMany(c => c.Advancements)
-               .WithOne()
-               .HasForeignKey(cs => cs.CharacterId)
-               .OnDelete(DeleteBehavior.Cascade);
-
-        builder.HasMany(x => x.CharacterProficiencies)
-               .WithOne(x => x.Character)
-               .HasForeignKey(x => x.CharacterId)
-               .OnDelete(DeleteBehavior.Cascade);
-
-        builder.HasMany(x => x.Features)
-               .WithMany()
-               .UsingEntity<CharacterFeature>();
-
-        builder.HasMany(x => x.GeneralFeats)
-               .WithMany()
-               .UsingEntity<CharacterFeat>();
+        builder.Ignore(c => c.Spellbook);
+        builder.Ignore(c => c.FightingStyles);
+        builder.Ignore(c => c.BardicInspiration);
+        builder.Ignore(c => c.Ki);
+        builder.Ignore(c => c.Sorcery);
+        builder.Ignore(c => c.ChannelDivinity);
+        builder.Ignore(c => c.Rage);
+        builder.Ignore(c => c.ArcaneTradition);
     }
 }

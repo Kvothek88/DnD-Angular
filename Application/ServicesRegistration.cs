@@ -1,7 +1,10 @@
 ﻿using Application.Dtos;
+using Application.Services;
 using Application.Services.CharacterService;
-using AutoMapper.Configuration.Conventions;
 using Core.Entities;
+using Core.Entities.CharacterEntities;
+using Core.Entities.Dictionaries;
+using Core.Entities.Spells;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application;
@@ -11,6 +14,9 @@ public static class ServicesRegistration
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
         services.AddScoped<ICharacterService, CharacterService>();
+        services.AddScoped<ICharacterEvaluationService, CharacterEvaluationService>();
+        services.AddScoped<ICharacterStatsService, CharacterStatsService>();
+        services.AddScoped<IPrerequisiteEvaluator, PrerequisiteEvaluator>();
         return services;
     }
 
@@ -21,7 +27,7 @@ public static class ServicesRegistration
             cfg.CreateMap<CharacterAbilities, CharacterAbilitiesViewDto>();
             cfg.CreateMap<CharacterSpellSlots, CharacterSpellSlotsViewDto>();
             cfg.CreateMap<Character, CharacterCardViewDto>();
-            cfg.CreateMap<CharacterProficiency, CharacterProficiencyViewDto>();
+            cfg.CreateMap<GrantedProficiency, CharacterProficiencyViewDto>();
             cfg.CreateMap<Dictionary, ReferenceViewDto>();
             cfg.CreateMap<DictionaryItem, ReferenceViewDto>();
             cfg.CreateMap<Spell, SpellViewDto>();
@@ -35,13 +41,11 @@ public static class ServicesRegistration
                 .ForMember(
                     dest => dest.CharacterPreparedSpells,
                     opt => opt.MapFrom(src => src.CharacterPreparedSpells
-                        .Where(cs => cs.IsPrepared)
                         .Select(cs => cs.Spell)
                     )
-                )
-                .ForMember(dest => dest.MaxHp, opt => opt.MapFrom(src => src.MaxHp))
-                .ForMember(dest => dest.ProficiencyBonus, opt => opt.MapFrom(src => src.ProficiencyBonus))
-                .ForMember(dest => dest.Initiative, opt => opt.MapFrom(src => src.Initiative));
+                );
+                //.ForMember(dest => dest.MaxHp, opt => opt.MapFrom(src => src.MaxHp))
+                //.ForMember(dest => dest.ProficiencyBonus, opt => opt.MapFrom(src => src.ProficiencyBonus));
             cfg.CreateMap<Spellbook, SpellbookViewDto>()
                 .ForMember(dest => dest.Spells, opt => opt.MapFrom(src =>
                     src.SpellbookSpells != null
@@ -50,7 +54,8 @@ public static class ServicesRegistration
                 ));
             cfg.CreateMap<SpellbookAddDto, Spellbook>();
             cfg.CreateMap<SpellbookSpellAddDto, SpellbookSpell>();
-
+            cfg.CreateMap<Race, ReferenceViewDto>();
+            cfg.CreateMap<Background, ReferenceViewDto>();
         });
 
         return services;

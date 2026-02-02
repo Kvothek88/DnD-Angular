@@ -1,4 +1,5 @@
-﻿using Core.Interfaces;
+﻿using Core.Entities.CharacterEntities;
+using Core.Interfaces;
 
 namespace Core.Entities.ASI;
 

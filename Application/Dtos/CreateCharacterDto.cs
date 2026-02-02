@@ -1,4 +1,4 @@
-﻿using Core.Entities;
+﻿using Core.Entities.Spells;
 using System;
 using System.Collections.Generic;
 using System.Linq;

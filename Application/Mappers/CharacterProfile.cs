@@ -1,6 +1,8 @@
 ﻿using Application.Dtos;
 using AutoMapper;
 using Core.Entities;
+using Core.Entities.CharacterEntities;
+using Core.Entities.Spells;
 
 namespace Application.Mappers;
 
@@ -22,15 +24,14 @@ public class CharacterProfile : Profile
             .ForMember(
                 dest => dest.CharacterPreparedSpells,
                 opt => opt.MapFrom(src => src.CharacterPreparedSpells
-                    .Where(cs => cs.IsPrepared)
                     .Select(cs => cs.Spell)
                 )
-            )
-            .ForMember(dest => dest.MaxHp, opt => opt.MapFrom(src => src.MaxHp))
-            .ForMember(dest => dest.ProficiencyBonus, opt => opt.MapFrom(src => src.ProficiencyBonus))
-            .ForMember(dest => dest.Initiative, opt => opt.MapFrom(src => src.Initiative));
+            );
 
         CreateMap<Character, CharacterCardViewDto>();
+
+        CreateMap<Race, ReferenceViewDto>();
+        CreateMap<Background, ReferenceViewDto>();
     }
 }
 

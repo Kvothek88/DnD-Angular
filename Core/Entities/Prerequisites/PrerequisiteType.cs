@@ -2,9 +2,11 @@
 
 public enum PrerequisiteType
 {
-    Race,
     Ability,
     Level,
     Class,
+    ClassLevel,
+    Subclass,
+    SubclassLevel,
     Spellcasting
 }
